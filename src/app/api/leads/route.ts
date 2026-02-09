@@ -1,0 +1,90 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+
+const leadSchema = z.object({
+  name: z.string().min(2).max(100),
+  email: z.string().email().max(254),
+});
+
+// Simple in-memory rate limiting
+const rateLimit = new Map<string, { count: number; resetTime: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimit.get(ip);
+
+  if (!entry || now > entry.resetTime) {
+    rateLimit.set(ip, { count: 1, resetTime: now + 3600000 });
+    return false;
+  }
+
+  if (entry.count >= 5) {
+    return true;
+  }
+
+  entry.count++;
+  return false;
+}
+
+export async function POST(request: Request) {
+  try {
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      "unknown";
+
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
+    const body = await request.json();
+    const result = leadSchema.safeParse(body);
+
+    if (!result.success) {
+      return NextResponse.json(
+        { error: "Invalid input", details: result.error.flatten() },
+        { status: 400 }
+      );
+    }
+
+    const data = result.data;
+    const webhookUrl = process.env.N8N_LEAD_WEBHOOK_URL;
+
+    if (webhookUrl) {
+      const webhookResponse = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          timestamp: new Date().toISOString(),
+          source: "website-lead-popup",
+        }),
+      });
+
+      if (!webhookResponse.ok) {
+        console.error("Lead webhook failed:", webhookResponse.status);
+        return NextResponse.json(
+          { error: "Failed to process. Please try again." },
+          { status: 500 }
+        );
+      }
+    } else {
+      console.log("=== NEW LEAD CAPTURE ===");
+      console.log("Name:", data.name);
+      console.log("Email:", data.email);
+      console.log("========================");
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Lead capture error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

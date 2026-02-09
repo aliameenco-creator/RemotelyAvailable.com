@@ -1,0 +1,37 @@
+export const siteConfig = {
+  name: "RemotelyAvailable",
+  url: "https://remotelyavailable.com",
+  description:
+    "We build AI automations, voice agents, chatbots, and intelligent websites that save businesses 40+ hours per week. Book a free strategy call.",
+  tagline: "AI Systems That Actually Work",
+  email: "hello@remotelyavailable.com",
+  calendlyUrl: "#",
+} as const;
+
+export const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+] as const;
+
+export const socialLinks = {
+  twitter: "#",
+  linkedin: "#",
+  github: "#",
+} as const;
+
+export const chatConfig = {
+  welcomeMessage:
+    "Hi! I'm the RemotelyAvailable AI assistant. I'd love to learn about your business and how we can help with AI automation. What's your name?",
+  botName: "RA Assistant",
+  placeholder: "Type a message...",
+} as const;
+
+export const leadPopupConfig = {
+  pageThreshold: 3,
+  delayMs: 2000,
+  heading: "Get a Free AI Automation Blueprint",
+  subtext:
+    "We'll send you a personalized plan showing how AI can save your business 40+ hours a week.",
+} as const;

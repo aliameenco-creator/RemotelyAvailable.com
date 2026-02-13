@@ -5,12 +5,13 @@ export const siteConfig = {
     "We build AI automations, voice agents, chatbots, and intelligent websites that save businesses 40+ hours per week. Book a free strategy call.",
   tagline: "AI Systems That Actually Work",
   email: "hello@remotelyavailable.com",
-  calendlyUrl: "#",
+  calendlyUrl: "https://calendly.com/creative-remotelyavailable/30min",
 } as const;
 
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;

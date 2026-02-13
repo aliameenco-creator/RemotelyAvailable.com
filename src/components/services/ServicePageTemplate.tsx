@@ -61,7 +61,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
               </p>
               <div className="mt-8">
                 <Button href="/contact" size="lg" icon={<ArrowRight size={18} />}>
-                  Get Started
+                  Talk to Us
                 </Button>
               </div>
             </div>

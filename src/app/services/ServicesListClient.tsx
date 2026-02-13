@@ -69,12 +69,12 @@ export function ServicesListClient() {
                 Not Sure Which Service You Need?
               </h2>
               <p className="mt-3 text-text-secondary max-w-lg mx-auto">
-                Book a free strategy call. We&apos;ll listen to your challenges and
+                Talk to us. We&apos;ll listen to your challenges and
                 recommend the highest-ROI starting point for your business.
               </p>
               <div className="mt-6">
                 <Button href="/contact" icon={<ArrowRight size={18} />}>
-                  Book a Free Strategy Call
+                  Talk to Us
                 </Button>
               </div>
             </div>

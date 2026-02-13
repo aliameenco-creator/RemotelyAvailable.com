@@ -7,6 +7,7 @@ import { ScrollReveal } from "@/components/effects/ScrollReveal";
 import { GradientOrb } from "@/components/effects/GradientOrb";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { siteConfig } from "@/lib/constants";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact RemotelyAvailable | Book a Free AI Strategy Call",
@@ -105,7 +106,8 @@ export default function ContactPage() {
 
             {/* Sidebar */}
             <div className="space-y-6">
-              {contactInfo.map((info, i) => (
+              {/* Email & Response Time cards */}
+              {contactInfo.slice(0, 2).map((info, i) => (
                 <ScrollReveal key={info.title} delay={i * 0.1}>
                   <Card className="p-6" hover={false}>
                     <div className="flex gap-4">
@@ -127,6 +129,31 @@ export default function ContactPage() {
                   </Card>
                 </ScrollReveal>
               ))}
+
+              {/* Book a Call card → Calendly */}
+              <ScrollReveal delay={0.2}>
+                <Link href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer" className="block group">
+                  <div className="glass rounded-[var(--radius-card)] p-6 border border-white/[0.08] transition-all duration-300 group-hover:border-primary-600/40 group-hover:bg-primary-600/5">
+                    <div className="flex gap-4 items-start">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-600/10 text-primary-400 transition-colors group-hover:bg-primary-600/20">
+                        <Calendar size={20} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-semibold text-text-primary">
+                          Book a Call
+                        </h3>
+                        <p className="text-sm font-medium text-text-secondary">
+                          30-min strategy session
+                        </p>
+                        <p className="text-xs text-text-muted mt-1">
+                          Free. No commitment.
+                        </p>
+                      </div>
+                      <ArrowRight size={16} className="text-primary-400 mt-1 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </Link>
+              </ScrollReveal>
 
               <ScrollReveal delay={0.3}>
                 <div className="glass rounded-[var(--radius-card)] p-6">

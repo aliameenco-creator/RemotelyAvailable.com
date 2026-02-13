@@ -27,14 +27,14 @@ const row2 = [
 
 function ToolCard({ name, src }: { name: string; src: string }) {
   return (
-    <div className="flex flex-col items-center gap-3 mx-4 sm:mx-6">
-      <div className="glass flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-2xl p-4 transition-all duration-300 hover:bg-white/[0.07] hover:border-white/[0.14] hover:scale-105">
+    <div className="flex flex-col items-center gap-3 shrink-0" style={{ width: "120px" }}>
+      <div className="glass flex h-20 w-20 sm:h-[88px] sm:w-[88px] items-center justify-center rounded-2xl p-4 transition-all duration-300 hover:bg-white/[0.07] hover:border-white/[0.14] hover:scale-105">
         <Image
           src={src}
           alt={name}
           width={56}
           height={56}
-          className="h-10 w-10 sm:h-14 sm:w-14 object-contain"
+          className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
         />
       </div>
       <span className="text-xs text-text-muted font-medium whitespace-nowrap">
@@ -51,20 +51,20 @@ function MarqueeRow({
   tools: typeof row1;
   direction: "left" | "right";
 }) {
-  // Duplicate the items for seamless loop
-  const items = [...tools, ...tools];
+  // Repeat 4x to guarantee no gaps on any screen size
+  const items = [...tools, ...tools, ...tools, ...tools];
 
   return (
     <div className="relative overflow-hidden">
       {/* Fade edges */}
-      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-bg-base to-transparent" />
-      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-bg-base to-transparent" />
+      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 sm:w-24 bg-gradient-to-r from-bg-base to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 sm:w-24 bg-gradient-to-l from-bg-base to-transparent" />
 
       <div
         className={
           direction === "left"
-            ? "animate-marquee-left flex w-max"
-            : "animate-marquee-right flex w-max"
+            ? "animate-marquee-left flex gap-6 sm:gap-8 w-max"
+            : "animate-marquee-right flex gap-6 sm:gap-8 w-max"
         }
       >
         {items.map((tool, i) => (

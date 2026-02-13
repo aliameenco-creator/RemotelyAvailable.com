@@ -79,7 +79,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.5 }}
           >
             <Button href="/contact" size="lg" icon={<ArrowRight size={18} />}>
-              Book a Free Strategy Call
+              Talk to Us
             </Button>
             <Button href="/services" variant="secondary" size="lg">
               See Our Services

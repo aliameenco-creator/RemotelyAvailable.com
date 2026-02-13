@@ -31,13 +31,13 @@ export function CTABanner() {
               Ready to Put AI to Work for Your Business?
             </h2>
             <p className="mt-4 text-lg text-text-secondary">
-              Book a free 30-minute strategy call. We&apos;ll map out the AI
-              opportunities in your business and show you exactly what&apos;s
-              possible.
+              Tell us about your business. We&apos;ll map out the AI
+              opportunities and show you exactly what&apos;s possible — no
+              fluff, no hard sell.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Button href="/contact" size="lg" icon={<ArrowRight size={18} />}>
-                Book Your Free Strategy Call
+                Talk to Us
               </Button>
             </div>
             <p className="mt-4 text-sm text-text-muted">

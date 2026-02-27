@@ -27,6 +27,7 @@ const serviceOptions = [
   { value: "ai-chatbots", label: "AI Chatbots & Virtual Assistants" },
   { value: "ai-consulting", label: "AI Strategy & Consulting" },
   { value: "ai-content-systems", label: "AI Content Systems" },
+  { value: "shopify-automation", label: "Shopify Email Automation" },
   { value: "other", label: "Not sure / Other" },
 ];
 

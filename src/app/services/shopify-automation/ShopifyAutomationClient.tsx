@@ -17,7 +17,6 @@ import {
   TrendingUp,
   ChevronDown,
   Download,
-  Calendar,
 } from "lucide-react";
 import { AnimatePresence } from "motion/react";
 import { Container } from "@/components/layout/Container";
@@ -155,12 +154,20 @@ function PlaybookForm() {
           <Check size={32} className="text-green-400" />
         </div>
         <h3 className="font-display text-xl font-bold text-text-primary">
-          Check Your Inbox!
+          Your Playbook Is Ready!
         </h3>
         <p className="mt-2 text-text-secondary">
-          Your playbook is on its way. I&apos;ll also send you a personalised
+          Click below to download. I&apos;ll also send you a personalised
           audit of your store within 48 hours.
         </p>
+        <a
+          href="/downloads/10K-Email-Playbook-For-Shopify-Owners.pdf"
+          download
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary-600 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-primary-600/30 transition-all duration-300 hover:bg-primary-500 hover:scale-105"
+        >
+          <Download size={18} />
+          Download Playbook (PDF)
+        </a>
       </div>
     );
   }
@@ -364,7 +371,6 @@ const steps = [
 /* ──────────────────── Main Component ──────────────────── */
 export default function ShopifyAutomationClient() {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
-  const [activeTab, setActiveTab] = useState<"playbook" | "audit">("playbook");
 
   return (
     <main className="overflow-hidden">
@@ -397,32 +403,10 @@ export default function ShopifyAutomationClient() {
               revenue &mdash; all on autopilot.
             </p>
 
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Button
-                href="#audit"
-                size="lg"
-                icon={<ArrowRight size={18} />}
-              >
-                Get Your Free Revenue Audit
-              </Button>
-              <Button
-                href="#playbook"
-                variant="secondary"
-                size="lg"
-                icon={<Download size={18} />}
-              >
-                Download the Free Playbook
-              </Button>
-            </div>
-
-            <p className="mt-6 text-sm text-text-muted">
-              Trusted by Shopify brands &bull; No long-term contracts &bull;
-              Results guaranteed or your money back
-            </p>
           </div>
 
           {/* Video Placeholder */}
-          <div className="mx-auto mt-16 max-w-3xl animate-fade-in-up" style={{ animationDelay: "0.2s", animationFillMode: "both" }}>
+          <div className="mx-auto mt-10 max-w-3xl animate-fade-in-up" style={{ animationDelay: "0.2s", animationFillMode: "both" }}>
             <div className="relative aspect-video overflow-hidden rounded-[var(--radius-card)] border border-white/10 bg-bg-card shadow-2xl shadow-primary-600/10">
               {/* REPLACE VIDEO URL HERE — swap this placeholder with a YouTube/Vimeo embed */}
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-bg-surface to-bg-card">
@@ -440,7 +424,69 @@ export default function ShopifyAutomationClient() {
                 </p>
               </div>
             </div>
+
+            <div className="mt-8 flex flex-col items-center">
+              <Button
+                href="#playbook"
+                variant="secondary"
+                size="lg"
+                icon={<Download size={18} />}
+              >
+                Download the Free Playbook
+              </Button>
+              <p className="mt-4 text-sm text-text-muted">
+                Trusted by Shopify brands &bull; No long-term contracts &bull;
+                Results guaranteed or your money back
+              </p>
+            </div>
           </div>
+        </Container>
+      </section>
+
+      {/* ============ SOCIAL PROOF ============ */}
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-bg-base via-bg-surface/50 to-bg-base" />
+        <Container className="relative z-10">
+          <ScrollReveal>
+            <div className="mx-auto max-w-3xl text-center mb-16">
+              <span className="mb-4 inline-block rounded-full border border-primary-600/30 bg-primary-600/10 px-4 py-1.5 text-sm font-medium text-primary-400">
+                Results
+              </span>
+              <h2 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
+                The Results Speak for Themselves
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal>
+            <div className="mx-auto max-w-5xl grid grid-cols-1 gap-6 md:grid-cols-3">
+              {results.map((result, i) => (
+                <Card key={i} className="h-full" glow>
+                  <p className="text-sm font-medium text-primary-400 mb-4">
+                    {result.label}
+                  </p>
+                  <ul className="space-y-3">
+                    {result.stats.map((stat, j) => (
+                      <li
+                        key={j}
+                        className="flex items-start gap-2 text-sm text-text-secondary"
+                      >
+                        <TrendingUp
+                          size={16}
+                          className="mt-0.5 shrink-0 text-green-400"
+                        />
+                        {stat}
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              ))}
+            </div>
+            <p className="mt-8 text-center text-xs text-text-muted max-w-md mx-auto">
+              Based on industry benchmarks for Shopify stores in this revenue
+              range. Results will be replaced with real case studies.
+            </p>
+          </ScrollReveal>
         </Container>
       </section>
 
@@ -596,62 +642,15 @@ export default function ShopifyAutomationClient() {
 
                 <div className="mt-8">
                   <Button
-                    href="#audit"
+                    href="/contact"
                     size="lg"
                     icon={<ArrowRight size={18} />}
                   >
-                    Book Your Free Audit &mdash; See How Much You&apos;re Losing
+                    Contact Us &mdash; Let&apos;s Talk About Your Store
                   </Button>
                 </div>
               </div>
             </div>
-          </ScrollReveal>
-        </Container>
-      </section>
-
-      {/* ============ SECTION 5: SOCIAL PROOF ============ */}
-      <section className="py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-bg-base via-bg-surface/50 to-bg-base" />
-        <Container className="relative z-10">
-          <ScrollReveal>
-            <div className="mx-auto max-w-3xl text-center mb-16">
-              <span className="mb-4 inline-block rounded-full border border-primary-600/30 bg-primary-600/10 px-4 py-1.5 text-sm font-medium text-primary-400">
-                Results
-              </span>
-              <h2 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
-                The Results Speak for Themselves
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal>
-            <div className="mx-auto max-w-5xl grid grid-cols-1 gap-6 md:grid-cols-3">
-              {results.map((result, i) => (
-                <Card key={i} className="h-full" glow>
-                  <p className="text-sm font-medium text-primary-400 mb-4">
-                    {result.label}
-                  </p>
-                  <ul className="space-y-3">
-                    {result.stats.map((stat, j) => (
-                      <li
-                        key={j}
-                        className="flex items-start gap-2 text-sm text-text-secondary"
-                      >
-                        <TrendingUp
-                          size={16}
-                          className="mt-0.5 shrink-0 text-green-400"
-                        />
-                        {stat}
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              ))}
-            </div>
-            <p className="mt-8 text-center text-xs text-text-muted max-w-md mx-auto">
-              Based on industry benchmarks for Shopify stores in this revenue
-              range. Results will be replaced with real case studies.
-            </p>
           </ScrollReveal>
         </Container>
       </section>
@@ -702,11 +701,11 @@ export default function ShopifyAutomationClient() {
             </p>
             <div className="mt-6 text-center">
               <Button
-                href="#audit"
+                href="/contact"
                 size="lg"
-                icon={<Calendar size={18} />}
+                icon={<ArrowRight size={18} />}
               >
-                Book Your Free 15-Minute Audit Call
+                Get Started &mdash; Contact Us
               </Button>
             </div>
           </ScrollReveal>
@@ -756,77 +755,15 @@ export default function ShopifyAutomationClient() {
             </div>
           </ScrollReveal>
 
-          <div className="mx-auto max-w-4xl">
-            <div className="mb-8 flex justify-center">
-              <div className="inline-flex rounded-xl border border-white/10 bg-bg-card p-1">
-                <button
-                  onClick={() => setActiveTab("playbook")}
-                  className={cn(
-                    "rounded-lg px-6 py-2.5 text-sm font-medium transition-all",
-                    activeTab === "playbook"
-                      ? "bg-primary-600 text-white shadow-lg"
-                      : "text-text-secondary hover:text-text-primary"
-                  )}
-                >
-                  Free Playbook
-                </button>
-                <button
-                  onClick={() => setActiveTab("audit")}
-                  className={cn(
-                    "rounded-lg px-6 py-2.5 text-sm font-medium transition-all",
-                    activeTab === "audit"
-                      ? "bg-primary-600 text-white shadow-lg"
-                      : "text-text-secondary hover:text-text-primary"
-                  )}
-                >
-                  Free Audit Call
-                </button>
-              </div>
-            </div>
-
-            {activeTab === "playbook" ? (
-              <div className="mx-auto max-w-lg glass rounded-[var(--radius-card)] p-8 border-primary-600/20 border">
-                <h3 className="font-display text-2xl font-bold text-text-primary text-center">
-                  Get the Free $10K Email Playbook
-                </h3>
-                <p className="mt-2 text-center text-sm text-text-secondary mb-6">
-                  Discover the 5 email flows that top Shopify stores use to
-                  recover thousands in lost revenue every month.
-                </p>
-                <PlaybookForm />
-              </div>
-            ) : (
-              <div
-                id="audit"
-                className="mx-auto max-w-lg glass rounded-[var(--radius-card)] p-8 border-primary-600/20 border scroll-mt-24"
-              >
-                <h3 className="font-display text-2xl font-bold text-text-primary text-center">
-                  Get Your Free Revenue Audit
-                </h3>
-                <p className="mt-2 text-center text-sm text-text-secondary mb-6">
-                  I&apos;ll look at your store and show you exactly how much
-                  revenue you&apos;re leaving on the table. No pitch, no
-                  obligation &mdash; just numbers.
-                </p>
-                {/* REPLACE WITH CALENDLY EMBED — use Calendly inline embed widget */}
-                <div className="rounded-xl border border-white/10 bg-bg-card p-8 text-center">
-                  <Calendar
-                    size={48}
-                    className="mx-auto text-primary-400 mb-4"
-                  />
-                  <p className="text-text-secondary text-sm mb-4">
-                    Calendly booking widget will appear here.
-                  </p>
-                  <Button
-                    href="https://calendly.com/creative-remotelyavailable/30min"
-                    size="lg"
-                    icon={<ArrowRight size={18} />}
-                  >
-                    Book Now on Calendly
-                  </Button>
-                </div>
-              </div>
-            )}
+          <div className="mx-auto max-w-lg glass rounded-[var(--radius-card)] p-8 border-primary-600/20 border">
+            <h3 className="font-display text-2xl font-bold text-text-primary text-center">
+              Get the Free $10K Email Playbook
+            </h3>
+            <p className="mt-2 text-center text-sm text-text-secondary mb-6">
+              Discover the 5 email flows that top Shopify stores use to
+              recover thousands in lost revenue every month.
+            </p>
+            <PlaybookForm />
           </div>
         </Container>
       </section>
@@ -850,11 +787,11 @@ export default function ShopifyAutomationClient() {
               </p>
               <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                 <Button
-                  href="#audit"
+                  href="/contact"
                   size="lg"
                   icon={<ArrowRight size={18} />}
                 >
-                  Book Your Free Audit
+                  Contact Us
                 </Button>
                 <Button
                   href="#playbook"

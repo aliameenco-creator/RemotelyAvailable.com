@@ -204,7 +204,7 @@ export function Navbar() {
             isMobileOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0",
             isScrolled
               ? "bg-bg-card/90 backdrop-blur-xl border border-t-0 border-white/[0.08] rounded-b-2xl mx-4 -mt-1 px-2"
-              : "px-0"
+              : "bg-bg-base/95 backdrop-blur-xl border border-white/[0.08] rounded-2xl mt-2 px-2"
           )}
         >
           <div className="flex flex-col gap-1 pb-4 pt-3">

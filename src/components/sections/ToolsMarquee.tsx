@@ -52,8 +52,8 @@ function MarqueeRow({
   tools: typeof row1;
   direction: "left" | "right";
 }) {
-  // Repeat 2x for continuous scroll effect
-  const items = [...tools, ...tools];
+  // Repeat 4x for seamless continuous scroll on all screen sizes
+  const items = [...tools, ...tools, ...tools, ...tools];
 
   return (
     <div className="relative overflow-hidden">

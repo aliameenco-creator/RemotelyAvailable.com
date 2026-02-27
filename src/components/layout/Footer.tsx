@@ -13,6 +13,7 @@ const footerSections = [
       { label: "AI Chatbots", href: "/services/ai-chatbots" },
       { label: "AI Consulting", href: "/services/ai-consulting" },
       { label: "AI Content Systems", href: "/services/ai-content-systems" },
+      { label: "Shopify Automation", href: "/services/shopify-automation" },
     ],
   },
   {
@@ -99,10 +100,10 @@ export function Footer() {
               &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <Link href="#" className="text-sm text-text-muted hover:text-text-secondary transition-colors">
+              <Link href="/privacy" className="text-sm text-text-muted hover:text-text-secondary transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="#" className="text-sm text-text-muted hover:text-text-secondary transition-colors">
+              <Link href="/terms" className="text-sm text-text-muted hover:text-text-secondary transition-colors">
                 Terms of Service
               </Link>
             </div>

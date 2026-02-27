@@ -1,82 +1,65 @@
 "use client";
 
-import { motion } from "motion/react";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
-import { GradientOrb } from "@/components/effects/GradientOrb";
-import { GridPattern } from "@/components/effects/GridPattern";
 import { GradientText } from "@/components/ui/GradientText";
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Effects */}
-      <GridPattern className="opacity-60" />
-      <GradientOrb
-        color="primary"
-        size="lg"
-        animation={1}
-        className="top-1/4 -left-20"
-      />
-      <GradientOrb
-        color="accent"
-        size="lg"
-        animation={2}
-        className="bottom-1/4 -right-20"
-      />
-      <GradientOrb
-        color="primary"
-        size="md"
-        animation={2}
-        className="top-1/3 right-1/4"
-      />
+      {/* Background Effects — grid hidden on mobile, orbs hidden on mobile */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden hidden sm:block" aria-hidden="true">
+        <svg className="absolute inset-0 h-full w-full opacity-60" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="0.8" fill="rgba(255,255,255,0.04)" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+        </svg>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg-base" />
+      </div>
+
+      {/* Gradient orbs — hidden on mobile for performance */}
+      <div className="pointer-events-none absolute top-1/4 -left-20 hidden h-96 w-96 rounded-full bg-primary-600/15 blur-[100px] sm:block animate-orb-1" aria-hidden="true" />
+      <div className="pointer-events-none absolute bottom-1/4 -right-20 hidden h-96 w-96 rounded-full bg-accent-600/15 blur-[100px] sm:block animate-orb-2" aria-hidden="true" />
 
       <Container className="relative z-10">
         <div className="mx-auto max-w-4xl text-center">
           {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
+          <div className="animate-fade-in-up">
             <span className="mb-6 inline-block rounded-full border border-primary-600/30 bg-primary-600/10 px-4 py-1.5 text-sm font-medium text-primary-400">
               AI Automation Agency
             </span>
-          </motion.div>
+          </div>
 
           {/* Headline */}
-          <motion.h1
-            className="font-display text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <h1
+            className="font-display text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl animate-fade-in-up"
+            style={{ animationDelay: "0.1s", animationFillMode: "both" }}
           >
             We Build{" "}
             <GradientText>AI Systems</GradientText>
             <br />
             That Actually Work
-          </motion.h1>
+          </h1>
 
           {/* Subheadline */}
-          <motion.p
-            className="mx-auto mt-6 max-w-2xl text-lg text-text-secondary leading-relaxed sm:text-xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
+          <p
+            className="mx-auto mt-6 max-w-2xl text-lg text-text-secondary leading-relaxed sm:text-xl animate-fade-in-up"
+            style={{ animationDelay: "0.2s", animationFillMode: "both" }}
           >
             Automations, voice agents, chatbots, and intelligent websites —
             engineered to save your team{" "}
             <span className="text-text-primary font-medium">40+ hours a week</span> and
             drive real business results.
-          </motion.p>
+          </p>
 
           {/* CTAs */}
-          <motion.div
-            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+          <div
+            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center animate-fade-in-up"
+            style={{ animationDelay: "0.3s", animationFillMode: "both" }}
           >
             <Button href="/contact" size="lg" icon={<ArrowRight size={18} />}>
               Talk to Us
@@ -84,34 +67,27 @@ export function Hero() {
             <Button href="/services" variant="secondary" size="lg">
               See Our Services
             </Button>
-          </motion.div>
+          </div>
 
           {/* Trust line */}
-          <motion.p
-            className="mt-6 text-sm text-text-muted"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+          <p
+            className="mt-6 text-sm text-text-muted animate-fade-in-up"
+            style={{ animationDelay: "0.4s", animationFillMode: "both" }}
           >
             No commitment. 30-minute call. Real strategy.
-          </motion.p>
+          </p>
         </div>
       </Container>
 
       {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in-up"
+        style={{ animationDelay: "0.8s", animationFillMode: "both" }}
       >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        >
+        <div className="animate-bounce">
           <ChevronDown size={24} className="text-text-muted" />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

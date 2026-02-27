@@ -16,6 +16,16 @@ export const navLinks = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
+export const serviceNavLinks = [
+  { label: "AI Automations", href: "/services/ai-automations" },
+  { label: "AI Websites", href: "/services/ai-websites" },
+  { label: "AI Voice Agents", href: "/services/ai-voice-agents" },
+  { label: "AI Chatbots", href: "/services/ai-chatbots" },
+  { label: "AI Consulting", href: "/services/ai-consulting" },
+  { label: "AI Content Systems", href: "/services/ai-content-systems" },
+  { label: "Shopify Automation", href: "/services/shopify-automation", isNew: true },
+] as const;
+
 export const socialLinks = {
   twitter: "#",
   linkedin: "#",

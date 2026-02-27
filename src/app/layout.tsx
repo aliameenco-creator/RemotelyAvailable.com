@@ -3,7 +3,7 @@ import { inter, outfit } from "@/lib/fonts";
 import { siteConfig } from "@/lib/constants";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { ChatWidget } from "@/components/chat/ChatWidget";
+
 import { LeadCapturePopup } from "@/components/popups/LeadCapturePopup";
 import "./globals.css";
 
@@ -74,7 +74,7 @@ export default function RootLayout({
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
-        <ChatWidget />
+
         <LeadCapturePopup />
       </body>
     </html>

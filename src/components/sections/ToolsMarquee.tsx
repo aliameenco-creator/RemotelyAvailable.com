@@ -34,6 +34,7 @@ function ToolCard({ name, src }: { name: string; src: string }) {
           alt={name}
           width={56}
           height={56}
+          loading="lazy"
           className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
         />
       </div>
@@ -51,8 +52,8 @@ function MarqueeRow({
   tools: typeof row1;
   direction: "left" | "right";
 }) {
-  // Repeat 4x to guarantee no gaps on any screen size
-  const items = [...tools, ...tools, ...tools, ...tools];
+  // Repeat 2x for continuous scroll effect
+  const items = [...tools, ...tools];
 
   return (
     <div className="relative overflow-hidden">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { inter, outfit } from "@/lib/fonts";
 import { siteConfig } from "@/lib/constants";
 import { Navbar } from "@/components/layout/Navbar";
@@ -48,6 +49,9 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: ["/og-default.jpg"],
   },
+  verification: {
+    google: "google229667d2bd1884ec",
+  },
   robots: {
     index: true,
     follow: true,
@@ -68,9 +72,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3V69ZN');`,
+          }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${outfit.variable} font-body antialiased`}
       >
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3V69ZN"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />

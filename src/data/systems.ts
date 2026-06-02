@@ -59,7 +59,7 @@ export const systems: System[] = [
       "AI powered content repurposing system that turns existing social media carousel images into fresh, branded content for your own business or personal brand.",
     detailDescription:
       "Turn existing social media carousels into fresh, branded assets in minutes. Automate your visual content pipeline with enterprise-grade precision.",
-    price: 19,
+    price: 29,
     libraryImage: "/images/systems/content-repurposing-library.jpg",
     detailImage: "/images/systems/content-repurposing-detail.jpg",
     featured: true,

@@ -31,6 +31,20 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/systems",
+        destination: "/ai-automation-systems",
+        permanent: true,
+      },
+      {
+        source: "/systems/:slug",
+        destination: "/ai-automation-systems/:slug",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

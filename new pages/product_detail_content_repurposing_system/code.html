@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Content Repurposing System | Nexus AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#434655",
+                        "on-error": "#690005",
+                        "primary": "#b7c4ff",
+                        "on-error-container": "#ffdad6",
+                        "border-gray": "#27272A",
+                        "text-primary": "#FAFAFA",
+                        "tertiary": "#ffb598",
+                        "secondary-container": "#47464a",
+                        "surface-tint": "#b7c4ff",
+                        "on-surface-variant": "#c4c5d8",
+                        "inverse-primary": "#1d4fdf",
+                        "primary-container": "#2b59e8",
+                        "on-secondary-container": "#b7b4b8",
+                        "inverse-surface": "#e5e1e4",
+                        "surface-variant": "#353437",
+                        "on-tertiary": "#591c00",
+                        "outline": "#8e90a1",
+                        "tertiary-container": "#b44100",
+                        "on-secondary-fixed-variant": "#47464a",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "text-secondary": "#9CA3AF",
+                        "surface": "#131315",
+                        "surface-container-lowest": "#0e0e10",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#7f2b00",
+                        "on-secondary-fixed": "#1b1b1e",
+                        "surface-container": "#201f22",
+                        "secondary-fixed": "#e4e1e6",
+                        "surface-container-highest": "#353437",
+                        "tertiary-fixed-dim": "#ffb598",
+                        "on-tertiary-fixed": "#370e00",
+                        "on-tertiary-container": "#ffdfd4",
+                        "on-primary-container": "#e1e5ff",
+                        "primary-fixed": "#dde1ff",
+                        "secondary-fixed-dim": "#c8c5ca",
+                        "on-secondary": "#303033",
+                        "on-background": "#e5e1e4",
+                        "on-primary-fixed-variant": "#0038b6",
+                        "on-primary": "#002682",
+                        "on-surface": "#e5e1e4",
+                        "surface-container-high": "#2a2a2c",
+                        "on-primary-fixed": "#001452",
+                        "background": "#131315",
+                        "surface-bright": "#39393b",
+                        "secondary": "#c8c5ca",
+                        "tertiary-fixed": "#ffdbce",
+                        "error-container": "#93000a",
+                        "surface-dim": "#131315",
+                        "surface-container-low": "#1c1b1d",
+                        "inverse-on-surface": "#313032"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "base": "8px",
+                        "margin-desktop": "64px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "label-sm": ["Outfit"],
+                        "display-lg-mobile": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "label-lg": ["Outfit"],
+                        "body-md": ["Outfit"],
+                        "body-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #09090B; color: #FAFAFA; font-family: 'Outfit', sans-serif; }
+        .glass-panel { background: rgba(17, 17, 20, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(39, 39, 42, 0.5); }
+    </style>
+</head>
+<body class="bg-background text-text-primary min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/20 shadow-sm">
+<div class="flex justify-between items-center h-20 px-margin-desktop max-w-[1280px] mx-auto">
+<div class="text-headline-md font-headline-md font-bold text-primary">Nexus AI</div>
+<div class="hidden md:flex gap-gutter items-center">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-lg text-label-lg active:scale-95 transition-transform hover:text-primary duration-200" href="#">Systems</a>
+<a class="text-on-surface-variant font-medium font-label-lg text-label-lg active:scale-95 transition-transform hover:text-primary duration-200" href="#">Consulting</a>
+<a class="text-on-surface-variant font-medium font-label-lg text-label-lg active:scale-95 transition-transform hover:text-primary duration-200" href="#">Case Studies</a>
+<a class="text-on-surface-variant font-medium font-label-lg text-label-lg active:scale-95 transition-transform hover:text-primary duration-200" href="#">About</a>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">search</span></button>
+<button class="bg-primary-container text-text-primary px-lg py-sm rounded-full font-label-lg text-label-lg hover:bg-inverse-primary transition-colors">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-[120px] pb-xxl px-margin-mobile md:px-margin-desktop max-w-[1280px] mx-auto w-full flex flex-col gap-xxl">
+<!-- Hero Section -->
+<section class="grid md:grid-cols-2 gap-xl items-center">
+<div class="flex flex-col gap-lg">
+<div class="inline-flex items-center gap-xs px-sm py-xs border border-border-gray rounded-lg w-fit">
+<span class="material-symbols-outlined text-primary text-label-sm">auto_awesome</span>
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">Premium System</span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-text-primary">Content Repurposing System</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    Turn existing social media carousels into fresh, branded assets in minutes. Automate your visual content pipeline with enterprise-grade precision.
+                </p>
+<div class="flex items-center gap-sm mt-sm">
+<span class="font-headline-xl text-headline-xl text-primary">£29</span>
+<span class="font-body-md text-body-md text-text-secondary">/month</span>
+</div>
+<div class="flex flex-wrap gap-md mt-md">
+<button class="bg-primary-container text-text-primary px-xl py-md rounded-full font-label-lg text-label-lg hover:bg-inverse-primary transition-colors shadow-[0_0_15px_rgba(43,89,232,0.3)]">Pricing &amp; Complete Setup</button>
+<button class="bg-surface border border-border-gray text-text-primary px-xl py-md rounded-xl font-label-lg text-label-lg hover:bg-surface-variant transition-colors flex items-center gap-sm">
+                        Contact Support
+                        <span class="material-symbols-outlined text-label-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="relative h-[400px] md:h-[500px] rounded-xl overflow-hidden glass-panel flex items-center justify-center group cursor-crosshair">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary-container/10 to-transparent"></div>
+<img alt="System Preview" class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500" data-alt="A sophisticated digital interface floating in a dark, high-tech environment. The screen displays complex data visualizations and geometric patterns glowing in neon blue and stark white against a deep black background. The mood is futuristic and precise, perfectly capturing a modern corporate AI aesthetic with subtle glassmorphism effects." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIH4nkPeRvnSl_6aHDQRblm8OdmNjmqCO5YVKgq8RQYMYJTVJyaM4Kv046No1rvPMn553U2BQuGfPtf-PmlC9j0h4Ry-7QAcriJnMRxihiDw_-yPBLAms2PF98tTaKkRzMMwOcYic6FD2T7ATeEPgImsjVoYBZZHeoVxgEII1cQOBzcZd4m1rIsmDqY-qSuVLcmnbY9vSVhPXqkB7_3eJNowyFZtIY95NRwyfGRi7MRoc3LFFyX_J08qQLbAu0ovFPo7RA5yIJafQ"/>
+<div class="absolute inset-0 border border-white/10 rounded-xl pointer-events-none"></div>
+<div class="absolute flex flex-col items-center justify-center gap-sm bg-surface/80 backdrop-blur-md px-xl py-md rounded-full border border-border-gray">
+<span class="material-symbols-outlined text-primary text-headline-md">play_circle</span>
+<span class="font-label-sm text-label-sm text-text-primary uppercase tracking-widest">System Demo</span>
+</div>
+</div>
+</section>
+<!-- Feature Bento Grid -->
+<section class="grid md:grid-cols-3 gap-md">
+<div class="md:col-span-2 glass-panel rounded-xl p-lg flex flex-col gap-md relative overflow-hidden">
+<div class="absolute top-0 right-0 p-lg opacity-10">
+<span class="material-symbols-outlined text-[120px]">timer</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-text-primary relative z-10">Time is Capital</h3>
+<p class="font-body-md text-body-md text-on-surface-variant relative z-10 max-w-md">
+                    Stop manually recreating content. Our system saves up to <strong>2 hours per carousel</strong>, allowing your creative team to focus on strategy rather than pixel-pushing. The core value lies in frictionless brand consistency at scale.
+                </p>
+<div class="mt-auto pt-md relative z-10">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">trending_down</span>
+<span class="font-label-lg text-label-lg text-text-primary">85% Reduction in production time</span>
+</div>
+</div>
+</div>
+<div class="glass-panel rounded-xl p-lg flex flex-col gap-md">
+<h3 class="font-headline-md text-headline-md text-text-primary">What it does</h3>
+<ul class="flex flex-col gap-sm">
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[20px] mt-xs">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Repurposes carousel images instantly</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[20px] mt-xs">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Applies strict brand guidelines</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[20px] mt-xs">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Nano Banana API integration</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[20px] mt-xs">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Multi-platform formatting</span>
+</li>
+</ul>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full py-xl border-t border-outline-variant/10">
+<div class="max-w-[1280px] mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="text-headline-sm font-headline-sm font-bold text-primary">
+                Nexus AI
+            </div>
+<div class="flex flex-wrap gap-md justify-center">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Cookie Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Contact Support</a>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">
+                © 2024 Nexus AI Automation Agency. All rights reserved.
+            </div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,251 @@
+{
+  "name": "RemotelyAvailable - Lead Follow-up Emails",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-capture",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-lead-001",
+      "name": "Lead Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 0],
+      "webhookId": "ra-lead-capture"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true }) }}",
+        "options": {}
+      },
+      "id": "respond-001",
+      "name": "Respond to Website",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [420, -140]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Email Leads"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.body.name }}",
+            "Email": "={{ $json.body.email }}",
+            "Source": "={{ $json.body.source }}",
+            "Captured At": "={{ $json.body.timestamp }}",
+            "Status": "New"
+          },
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Captured At",
+              "displayName": "Captured At",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "sheets-lead-001",
+      "name": "Save to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [420, 80]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Lead Webhook').item.json.body.email }}",
+        "subject": "Your AI Automation Blueprint is Coming, {{ $('Lead Webhook').item.json.body.name }}!",
+        "message": "<html><body style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #09090B; color: #FAFAFA;\"><div style=\"background: linear-gradient(135deg, #111114, #18181B); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 40px;\"><h1 style=\"color: #FAFAFA; font-size: 24px; margin-bottom: 16px;\">Hey {{ $('Lead Webhook').item.json.body.name }}! 👋</h1><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">Thanks for your interest in AI automation! We're putting together your personalized AI blueprint right now.</p><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">In the meantime, here's what you should know:</p><ul style=\"color: #A1A1AA; font-size: 15px; line-height: 1.8;\"><li>Our clients typically save <strong style=\"color: #FAFAFA;\">40+ hours per week</strong> with AI automation</li><li>We handle everything from chatbots to full workflow automation</li><li>Every solution is custom-built for your specific business needs</li></ul><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">Want to fast-track things? Book a free 30-minute strategy call:</p><div style=\"text-align: center; margin: 32px 0;\"><a href=\"CALENDLY_PLACEHOLDER\" style=\"display: inline-block; background: #2B59E8; color: white; padding: 14px 32px; border-radius: 32px; text-decoration: none; font-weight: 600; font-size: 16px;\">Book Your Free Strategy Call →</a></div><p style=\"color: #71717A; font-size: 14px;\">Talk soon,<br>The RemotelyAvailable Team</p></div></body></html>",
+        "options": {}
+      },
+      "id": "gmail-welcome-001",
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [660, 80]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "days"
+      },
+      "id": "wait-1day-001",
+      "name": "Wait 24 Hours",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [880, 80]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Lead Webhook').item.json.body.email }}",
+        "subject": "Your AI Automation Blueprint, {{ $('Lead Webhook').item.json.body.name }}",
+        "message": "<html><body style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #09090B; color: #FAFAFA;\"><div style=\"background: linear-gradient(135deg, #111114, #18181B); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 40px;\"><h1 style=\"color: #FAFAFA; font-size: 24px; margin-bottom: 16px;\">Your AI Automation Blueprint 🚀</h1><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">Hey {{ $('Lead Webhook').item.json.body.name }},</p><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">Here's your personalized overview of how AI automation can transform your business:</p><h2 style=\"color: #5B7FEF; font-size: 18px; margin-top: 24px;\">🤖 AI Chatbot</h2><p style=\"color: #A1A1AA; font-size: 15px; line-height: 1.6;\">Engage visitors 24/7, qualify leads automatically, and book meetings while you sleep. Our AI chatbots handle 80% of customer inquiries without human intervention.</p><h2 style=\"color: #5B7FEF; font-size: 18px; margin-top: 24px;\">📞 AI Voice Agent</h2><p style=\"color: #A1A1AA; font-size: 15px; line-height: 1.6;\">Automated phone calls for appointment reminders, follow-ups, and customer surveys. Natural-sounding voices that represent your brand professionally.</p><h2 style=\"color: #5B7FEF; font-size: 18px; margin-top: 24px;\">⚡ Workflow Automation</h2><p style=\"color: #A1A1AA; font-size: 15px; line-height: 1.6;\">Connect your tools, eliminate manual data entry, and create intelligent workflows that adapt to your business logic.</p><h2 style=\"color: #5B7FEF; font-size: 18px; margin-top: 24px;\">🌐 AI-Powered Website</h2><p style=\"color: #A1A1AA; font-size: 15px; line-height: 1.6;\">Websites that convert visitors into customers with personalized content, smart forms, and integrated AI assistants.</p><div style=\"text-align: center; margin: 32px 0;\"><a href=\"CALENDLY_PLACEHOLDER\" style=\"display: inline-block; background: #2B59E8; color: white; padding: 14px 32px; border-radius: 32px; text-decoration: none; font-weight: 600; font-size: 16px;\">Let's Build Your AI System →</a></div><p style=\"color: #71717A; font-size: 14px;\">Ready when you are,<br>The RemotelyAvailable Team</p></div></body></html>",
+        "options": {}
+      },
+      "id": "gmail-blueprint-001",
+      "name": "Send Blueprint Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1100, 80]
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "days"
+      },
+      "id": "wait-3days-001",
+      "name": "Wait 3 Days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1320, 80]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Lead Webhook').item.json.body.email }}",
+        "subject": "Quick question, {{ $('Lead Webhook').item.json.body.name }}",
+        "message": "<html><body style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #09090B; color: #FAFAFA;\"><div style=\"background: linear-gradient(135deg, #111114, #18181B); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 40px;\"><h1 style=\"color: #FAFAFA; font-size: 24px; margin-bottom: 16px;\">Still Thinking About AI? 🤔</h1><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">Hey {{ $('Lead Webhook').item.json.body.name }},</p><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">I wanted to share a quick success story that might help:</p><div style=\"background: rgba(43, 89, 232, 0.1); border-left: 3px solid #2B59E8; padding: 20px; border-radius: 0 8px 8px 0; margin: 24px 0;\"><p style=\"color: #FAFAFA; font-size: 15px; line-height: 1.6; margin: 0;\"><strong>\"We went from spending 60 hours a week on manual follow-ups to fully automated AI systems that handle everything. Our team now focuses on what actually matters — growing the business.\"</strong></p><p style=\"color: #71717A; font-size: 13px; margin-top: 8px; margin-bottom: 0;\">— A RemotelyAvailable Client</p></div><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">The businesses that adopt AI automation now will have a massive competitive advantage in the next 12 months.</p><p style=\"color: #A1A1AA; font-size: 16px; line-height: 1.6;\">If you're ready to explore what's possible, I'd love to chat for 30 minutes — completely free, no strings attached:</p><div style=\"text-align: center; margin: 32px 0;\"><a href=\"CALENDLY_PLACEHOLDER\" style=\"display: inline-block; background: #2B59E8; color: white; padding: 14px 32px; border-radius: 32px; text-decoration: none; font-weight: 600; font-size: 16px;\">Claim Your Free Strategy Call →</a></div><p style=\"color: #71717A; font-size: 14px;\">Best,<br>The RemotelyAvailable Team</p><p style=\"color: #52525B; font-size: 12px; margin-top: 24px;\">P.S. If you're not interested, no worries at all — we won't send any more emails.</p></div></body></html>",
+        "options": {}
+      },
+      "id": "gmail-followup-001",
+      "name": "Send Follow-up Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1540, 80]
+    }
+  ],
+  "connections": {
+    "Lead Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Website",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Save to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Welcome Email": {
+      "main": [
+        [
+          {
+            "node": "Wait 24 Hours",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 24 Hours": {
+      "main": [
+        [
+          {
+            "node": "Send Blueprint Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Blueprint Email": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 Days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3 Days": {
+      "main": [
+        [
+          {
+            "node": "Send Follow-up Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

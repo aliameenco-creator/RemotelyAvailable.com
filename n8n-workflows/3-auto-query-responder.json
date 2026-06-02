@@ -1,0 +1,230 @@
+{
+  "name": "RemotelyAvailable - Auto Query Responder",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-form",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-contact-001",
+      "name": "Contact Form Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 0],
+      "webhookId": "ra-contact-form"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true }) }}",
+        "options": {}
+      },
+      "id": "respond-contact-001",
+      "name": "Respond to Website",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [440, -160]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Contact Submissions"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.body.name }}",
+            "Email": "={{ $json.body.email }}",
+            "Company": "={{ $json.body.company }}",
+            "Service": "={{ $json.body.service }}",
+            "Budget": "={{ $json.body.budget }}",
+            "Message": "={{ $json.body.message }}",
+            "Timestamp": "={{ $json.body.timestamp }}",
+            "Status": "New"
+          },
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Service",
+              "displayName": "Service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Budget",
+              "displayName": "Budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "sheets-contact-001",
+      "name": "Save to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [440, 60]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are the client relations manager at RemotelyAvailable.com, an AI automation agency.\n\nGenerate a professional, warm, personalized email response to a contact form inquiry.\n\nGuidelines:\n- Address them by first name\n- Reference their specific business/industry and the service they're interested in\n- Provide 2-3 relevant insights about how AI automation could help their specific situation\n- If they mentioned a budget, acknowledge it tactfully\n- End with a clear CTA to book a free 30-minute strategy call: CALENDLY_PLACEHOLDER\n- Keep the tone professional but warm — not salesy\n- Length: 150-250 words\n- Do NOT include a subject line — just the email body\n- Sign off as \"The RemotelyAvailable Team\"\n- Format the response as plain text (no HTML tags)",
+              "role": "system"
+            },
+            {
+              "content": "=New inquiry from our website:\n\nName: {{ $('Contact Form Webhook').item.json.body.name }}\nEmail: {{ $('Contact Form Webhook').item.json.body.email }}\nCompany: {{ $('Contact Form Webhook').item.json.body.company }}\nService interested in: {{ $('Contact Form Webhook').item.json.body.service }}\nBudget: {{ $('Contact Form Webhook').item.json.body.budget }}\nMessage: {{ $('Contact Form Webhook').item.json.body.message }}\n\nPlease write a personalized response email for this prospect.",
+              "role": "user"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 600
+        }
+      },
+      "id": "openai-responder-001",
+      "name": "Generate AI Response",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [700, 60]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Contact Form Webhook').item.json.body.email }}",
+        "subject": "=Thanks for reaching out, {{ $('Contact Form Webhook').item.json.body.name }} — Here's what we can do for you",
+        "message": "=<html><body style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #09090B; color: #FAFAFA;\"><div style=\"background: linear-gradient(135deg, #111114, #18181B); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 40px;\"><div style=\"color: #A1A1AA; font-size: 16px; line-height: 1.8; white-space: pre-wrap;\">{{ $json.message.content }}</div><div style=\"text-align: center; margin: 32px 0;\"><a href=\"CALENDLY_PLACEHOLDER\" style=\"display: inline-block; background: #2B59E8; color: white; padding: 14px 32px; border-radius: 32px; text-decoration: none; font-weight: 600; font-size: 16px;\">Book Your Free Strategy Call →</a></div></div></body></html>",
+        "options": {}
+      },
+      "id": "gmail-response-001",
+      "name": "Send Auto Response",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [960, 60]
+    }
+  ],
+  "connections": {
+    "Contact Form Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Website",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Save to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Generate AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate AI Response": {
+      "main": [
+        [
+          {
+            "node": "Send Auto Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

@@ -1,0 +1,12 @@
+/* Remotely Available — Webfonts
+ *
+ * Serif (Georgia) is a system font — no @font-face needed; it resolves from the OS.
+ * Plus Jakarta Sans + Space Mono are loaded from Google Fonts.
+ *
+ * NOTE: The uploaded font zips (Georgia-Font.zip, Plus_Jakarta_Sans.zip, Space_Mono.zip)
+ * were not accessible in the project, so these are loaded over the network from Google
+ * Fonts. To self-host the binaries, re-upload the font files and we'll swap these
+ * @import lines for local @font-face declarations.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');

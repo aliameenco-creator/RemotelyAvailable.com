@@ -1,0 +1,35 @@
+<!-- @dsCard group="Components" viewport="700x320" name="Forms — Input" subtitle="Dark well, mono label, copper focus, error state" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; padding: 26px; background: var(--ra-base); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 620px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { Input, Button } = window.RemotelyAvailableDesignSystem_66c958;
+    function Demo() {
+      return (
+        <div className="grid">
+          <Input label="Work email" placeholder="you@company.com" hint="We reply within a day." defaultValue="" />
+          <Input label="Company" placeholder="Acme Inc." defaultValue="Remotely Available" />
+          <Input label="Monthly budget" placeholder="$10k+" error="Required field" />
+          <div style={{display:'flex',alignItems:'flex-end'}}>
+            <Button variant="primary" size="lg" style={{width:'100%'}}>Request a teardown</Button>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

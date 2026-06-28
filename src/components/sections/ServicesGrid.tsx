@@ -16,8 +16,8 @@ export function ServicesGrid() {
         <ScrollReveal>
           <SectionHeading
             badge="What We Do"
-            title="AI Solutions Built for Real Impact"
-            description="From workflow automations to voice agents, we build AI systems that solve specific business problems — not generic demos."
+            title="Everything your business needs to grow"
+            description="From websites and social media to design, SEO, and automation — we handle the work that moves your business forward, and use AI where it genuinely helps."
           />
         </ScrollReveal>
 

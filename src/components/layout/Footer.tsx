@@ -1,18 +1,17 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Container } from "./Container";
+import { Wordmark } from "@/components/layout/Wordmark";
 import { siteConfig, navLinks, socialLinks } from "@/lib/constants";
 
 const footerSections = [
   {
     title: "Services",
     links: [
-      { label: "AI Automations", href: "/services/ai-automations" },
-      { label: "AI Websites", href: "/services/ai-websites" },
-      { label: "AI Voice Agents", href: "/services/ai-voice-agents" },
-      { label: "AI Chatbots", href: "/services/ai-chatbots" },
-      { label: "AI Consulting", href: "/services/ai-consulting" },
-      { label: "AI Content Systems", href: "/services/ai-content-systems" },
+      { label: "Web Development", href: "/services/web-development" },
+      { label: "Social Media", href: "/services/social-media-management" },
+      { label: "AI Automation", href: "/services/ai-automations" },
+      { label: "SEO & Content", href: "/services/seo-content" },
+      { label: "Design", href: "/services/design" },
       { label: "Shopify Automation", href: "/services/shopify-automation" },
     ],
   },
@@ -20,7 +19,8 @@ const footerSections = [
     title: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "Services", href: "/services" },
+      { label: "Projects", href: "/projects" },
+      { label: "Resources", href: "/resources" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -34,15 +34,7 @@ export function Footer() {
           <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
             {/* Brand Column */}
             <div className="lg:col-span-2">
-              <Link href="/" className="inline-block">
-                <Image
-                  src="/images/logo-white.png"
-                  alt={siteConfig.name}
-                  width={200}
-                  height={28}
-                  className="h-7 w-auto"
-                />
-              </Link>
+              <Wordmark size={19} />
               <p className="mt-4 max-w-sm text-text-secondary leading-relaxed">
                 We build AI systems that save businesses 40+ hours a week.
                 Automations, voice agents, chatbots, and intelligent websites —

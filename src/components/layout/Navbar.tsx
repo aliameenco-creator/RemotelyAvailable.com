@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { navLinks, serviceNavLinks, siteConfig } from "@/lib/constants";
+import { Wordmark } from "@/components/layout/Wordmark";
+import { navLinks, serviceNavLinks } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -66,25 +66,9 @@ export function Navbar() {
           )}
         >
           {/* Logo */}
-          <Link
-            href="/"
-            className={cn(
-              "flex items-center group transition-all duration-300 hover:opacity-80",
-              isScrolled ? "pl-2" : "pl-0"
-            )}
-          >
-            <Image
-              src="/images/logo-white.png"
-              alt={siteConfig.name}
-              width={200}
-              height={28}
-              className={cn(
-                "w-auto transition-all duration-500",
-                isScrolled ? "h-5" : "h-7"
-              )}
-              priority
-            />
-          </Link>
+          <div className={cn("flex items-center transition-all duration-300", isScrolled ? "pl-2" : "pl-0")}>
+            <Wordmark size={isScrolled ? 16 : 18} />
+          </div>
 
           {/* Desktop Nav */}
           <div className="hidden items-center gap-0.5 md:flex">

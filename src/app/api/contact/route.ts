@@ -3,12 +3,12 @@ import { z } from "zod";
 import nodemailer from "nodemailer";
 
 const serviceLabels: Record<string, string> = {
-  "ai-automations": "AI Workflow Automations",
-  "ai-websites": "AI-Powered Websites",
-  "ai-voice-agents": "AI Voice Agents",
-  "ai-chatbots": "AI Chatbots & Virtual Assistants",
-  "ai-consulting": "AI Strategy & Consulting",
-  "ai-content-systems": "AI Content Systems",
+  "web-development": "Web Development",
+  "social-media-management": "Social Media Management",
+  "ai-automations": "AI Automation",
+  "seo-content": "SEO & Content",
+  design: "Design & Branding",
+  "shopify-automation": "Shopify Email Automation",
   other: "Other / Not Sure",
 };
 
@@ -25,12 +25,12 @@ const contactSchema = z.object({
   email: z.string().email().max(254),
   company: z.string().max(100).optional(),
   service: z.enum([
+    "web-development",
+    "social-media-management",
     "ai-automations",
-    "ai-websites",
-    "ai-voice-agents",
-    "ai-chatbots",
-    "ai-consulting",
-    "ai-content-systems",
+    "seo-content",
+    "design",
+    "shopify-automation",
     "other",
   ]),
   budget: z

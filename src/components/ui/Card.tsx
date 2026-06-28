@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 interface CardProps {
@@ -5,15 +6,18 @@ interface CardProps {
   className?: string;
   hover?: boolean;
   glow?: boolean;
+  style?: CSSProperties;
 }
 
-export function Card({ children, className, hover = true, glow = false }: CardProps) {
+export function Card({ children, className, hover = true, glow = false, style }: CardProps) {
   return (
     <div
+      style={style}
       className={cn(
-        "glass rounded-[var(--radius-card)] p-6",
-        hover && "transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.07] hover:border-white/[0.14]",
-        glow && "hover:shadow-lg hover:shadow-primary-600/10",
+        "rounded-[var(--radius-card)] p-6 bg-bg-card border border-[var(--border-subtle)] shadow-[var(--shadow-md)]",
+        hover &&
+          "transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:shadow-[var(--shadow-lg)] hover:border-[var(--border-copper)]",
+        glow && "border-[var(--border-copper)] shadow-[var(--glow-copper)]",
         className
       )}
     >

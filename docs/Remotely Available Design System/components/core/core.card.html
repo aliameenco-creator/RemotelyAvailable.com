@@ -1,0 +1,52 @@
+<!-- @dsCard group="Components" viewport="700x340" name="Buttons, Badges & Eyebrow" subtitle="Actions, status labels, mono kicker" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; padding: 26px; background: var(--ra-base); }
+  .group { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; }
+  .rule { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ra-cream-40); width: 100%; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { Button, Badge, Eyebrow } = window.RemotelyAvailableDesignSystem_66c958;
+    function Demo() {
+      return (
+        <div>
+          <div className="group">
+            <span className="rule">Buttons — variants</span>
+            <Button variant="primary">Book a teardown</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="outline" trailing={<span>→</span>}>See results</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="primary" disabled>Disabled</Button>
+          </div>
+          <div className="group">
+            <span className="rule">Buttons — sizes</span>
+            <Button size="sm">Small</Button>
+            <Button size="md">Medium</Button>
+            <Button size="lg">Large</Button>
+          </div>
+          <div className="group">
+            <span className="rule">Badges & eyebrow</span>
+            <Badge tone="copper">New</Badge>
+            <Badge tone="success" dot>Live</Badge>
+            <Badge tone="lavender" variant="outline">AI-assisted</Badge>
+            <Badge tone="neutral" variant="soft">Retained</Badge>
+            <Eyebrow style={{marginLeft: 8}}>Services</Eyebrow>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

@@ -1,29 +1,33 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { inter, outfit } from "@/lib/fonts";
+import { jakarta, spaceMono } from "@/lib/fonts";
 import { siteConfig } from "@/lib/constants";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-
-import { LeadCapturePopup } from "@/components/popups/LeadCapturePopup";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: "/apple-icon.png",
+  },
   title: {
-    default: `${siteConfig.name} — AI Automation Agency | Custom AI Solutions for Business`,
+    default: `${siteConfig.name} — Digital Agency | Web, Social, Design, SEO & Automation`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: [
-    "AI automation agency",
-    "AI solutions for business",
-    "business automation",
-    "AI voice agents",
-    "AI chatbots",
-    "workflow automation",
-    "AI consulting",
-    "AI website development",
+    "digital agency",
+    "web development agency",
+    "social media management",
+    "graphic design and branding",
+    "SEO and content marketing",
+    "business process automation",
+    "AI automation",
+    "done-for-you marketing",
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
@@ -32,7 +36,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — AI Systems That Actually Work`,
+    title: `${siteConfig.name} — We give you your time back`,
     description: siteConfig.description,
     images: [
       {
@@ -45,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — AI Systems That Actually Work`,
+    title: `${siteConfig.name} — We give you your time back`,
     description: siteConfig.description,
     images: ["/og-default.jpg"],
   },
@@ -86,7 +90,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
       </head>
       <body
-        className={`${inter.variable} ${outfit.variable} font-body antialiased`}
+        className={`${jakarta.variable} ${spaceMono.variable} font-body antialiased`}
       >
         <noscript>
           <iframe
@@ -96,11 +100,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-
-        <LeadCapturePopup />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

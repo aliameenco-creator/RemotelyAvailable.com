@@ -31,6 +31,36 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      // Old AI-branded service URLs → new outcome-led structure
+      {
+        source: "/services/ai-websites",
+        destination: "/services/web-development",
+        permanent: true,
+      },
+      {
+        source: "/services/ai-content-systems",
+        destination: "/services/seo-content",
+        permanent: true,
+      },
+      {
+        source: "/services/ai-voice-agents",
+        destination: "/services/ai-automations",
+        permanent: true,
+      },
+      {
+        source: "/services/ai-chatbots",
+        destination: "/services/ai-automations",
+        permanent: true,
+      },
+      {
+        source: "/services/ai-consulting",
+        destination: "/services/ai-automations",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

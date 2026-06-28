@@ -7,6 +7,10 @@ import {
   MessageSquareText,
   Lightbulb,
   FileText,
+  Code2,
+  Megaphone,
+  Palette,
+  Search,
 } from "lucide-react";
 import type { ServiceIconName } from "@/data/services";
 
@@ -17,6 +21,10 @@ const iconMap: Record<ServiceIconName, typeof Workflow> = {
   "message-square-text": MessageSquareText,
   lightbulb: Lightbulb,
   "file-text": FileText,
+  code: Code2,
+  megaphone: Megaphone,
+  palette: Palette,
+  search: Search,
 };
 
 interface ServiceIconProps {

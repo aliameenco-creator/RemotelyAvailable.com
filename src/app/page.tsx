@@ -1,12 +1,14 @@
-import { Hero } from "@/components/sections/Hero";
-import { SocialProof } from "@/components/sections/SocialProof";
-import { ToolsMarquee } from "@/components/sections/ToolsMarquee";
-import { ServicesGrid } from "@/components/sections/ServicesGrid";
-import { ProcessSteps } from "@/components/sections/ProcessSteps";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { CTABanner } from "@/components/sections/CTABanner";
-import { FAQ } from "@/components/sections/FAQ";
-import { homeFaqs } from "@/data/faq";
+import {
+  Hero,
+  StatBar,
+  ToolsGrid,
+  ServicesPreview,
+  Process,
+  Team,
+  Testimonials,
+  CtaBand,
+  Faq,
+} from "@/components/landing/LandingSections";
 import { siteConfig } from "@/lib/constants";
 
 export default function HomePage() {
@@ -30,13 +32,14 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
-      <SocialProof />
-      <ToolsMarquee />
-      <ServicesGrid />
-      <ProcessSteps />
+      <StatBar />
+      <ToolsGrid />
+      <ServicesPreview />
+      <Process />
+      <Team />
       <Testimonials />
-      <CTABanner />
-      <FAQ faqs={homeFaqs} />
+      <CtaBand />
+      <Faq />
     </>
   );
 }

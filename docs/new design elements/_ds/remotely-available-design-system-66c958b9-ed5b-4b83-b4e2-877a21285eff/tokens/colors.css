@@ -1,0 +1,68 @@
+/* Remotely Available — Color tokens
+ * Dark, warm-technical palette: near-black base, copper primary, lavender secondary, cream text.
+ */
+
+:root {
+  /* ---- Base palette (raw values) ---- */
+  --ra-base:            #1a1a1a; /* page background */
+  --ra-base-grad-top:   #272727; /* subtle vertical base gradient */
+  --ra-base-grad-bottom:#1f1f1f;
+  --ra-surface:         #252525; /* raised surface / card / slide */
+  --ra-surface-2:       #2e2e2e; /* second-level surface, hover */
+  --ra-ink:             #141414; /* deepest wells, insets */
+
+  --ra-copper:          #e38c35; /* primary accent */
+  --ra-copper-bright:   #f0a04f; /* hover / hot state */
+  --ra-copper-deep:     #c4742a; /* press state */
+
+  --ra-lavender:        #6e77cb; /* secondary accent */
+  --ra-lavender-bright: #868fde;
+  --ra-lavender-deep:   #5a63b4;
+
+  --ra-cream:           #f5f1e8; /* primary text on dark */
+
+  /* Cream-derived text tints (opacity over dark) */
+  --ra-cream-70:        rgba(245, 241, 232, 0.70);
+  --ra-cream-55:        rgba(245, 241, 232, 0.55);
+  --ra-cream-40:        rgba(245, 241, 232, 0.40);
+  --ra-cream-25:        rgba(245, 241, 232, 0.25);
+  --ra-cream-12:        rgba(245, 241, 232, 0.12);
+  --ra-cream-08:        rgba(245, 241, 232, 0.08);
+
+  /* Copper tints (for glows, hairlines, washes) */
+  --ra-copper-25:       rgba(227, 140, 53, 0.25);
+  --ra-copper-16:       rgba(227, 140, 53, 0.16);
+  --ra-copper-08:       rgba(227, 140, 53, 0.08);
+  --ra-copper-045:      rgba(227, 140, 53, 0.045); /* grid texture */
+
+  /* Semantic status */
+  --ra-success:         #4f9d6b;
+  --ra-warning:         #e3b035;
+  --ra-danger:          #d2604a;
+
+  /* ---- Semantic aliases ---- */
+  --surface-page:       var(--ra-base);
+  --surface-card:       var(--ra-surface);
+  --surface-raised:     var(--ra-surface-2);
+  --surface-well:       var(--ra-ink);
+
+  --text-primary:       var(--ra-cream);
+  --text-secondary:     var(--ra-cream-70);
+  --text-muted:         var(--ra-cream-55);
+  --text-faint:         var(--ra-cream-40);
+  --text-on-copper:     var(--ra-base);
+  --text-accent:        var(--ra-copper);
+  --text-italic-accent: var(--ra-lavender); /* serif italic accents */
+
+  --accent-primary:     var(--ra-copper);
+  --accent-primary-hover: var(--ra-copper-bright);
+  --accent-primary-active: var(--ra-copper-deep);
+  --accent-secondary:   var(--ra-lavender);
+  --accent-secondary-hover: var(--ra-lavender-bright);
+
+  --border-subtle:      var(--ra-cream-12);
+  --border-strong:      var(--ra-cream-25);
+  --border-copper:      var(--ra-copper-25);
+
+  --eyebrow:            var(--ra-copper); /* mono kicker labels */
+}

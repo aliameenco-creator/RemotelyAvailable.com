@@ -21,12 +21,11 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const serviceOptions = [
-  { value: "ai-automations", label: "AI Workflow Automations" },
-  { value: "ai-websites", label: "AI-Powered Websites" },
-  { value: "ai-voice-agents", label: "AI Voice Agents" },
-  { value: "ai-chatbots", label: "AI Chatbots & Virtual Assistants" },
-  { value: "ai-consulting", label: "AI Strategy & Consulting" },
-  { value: "ai-content-systems", label: "AI Content Systems" },
+  { value: "web-development", label: "Web Development" },
+  { value: "social-media-management", label: "Social Media Management" },
+  { value: "ai-automations", label: "AI Automation" },
+  { value: "seo-content", label: "SEO & Content" },
+  { value: "design", label: "Design & Branding" },
   { value: "shopify-automation", label: "Shopify Email Automation" },
   { value: "other", label: "Not sure / Other" },
 ];

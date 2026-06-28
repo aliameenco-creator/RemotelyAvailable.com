@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Services — Remotely Available</title>
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/colors.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/typography.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/base.css">
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: var(--ra-base); }
+  button { white-space: nowrap; }
+  .svc-row:nth-child(even) .svc-visual { order: -1; }
+  @media (max-width: 860px){ .svc-row{ grid-template-columns: 1fr !important; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/_ds_bundle.js"></script>
+<script type="text/babel" src="lib/shared.jsx"></script>
+
+<script type="text/babel">
+const { Button, Badge, Card, Eyebrow, Stat } = window.RemotelyAvailableDesignSystem_66c958;
+
+const SERVICES = [
+  { icon: 'bolt', tag: 'Most popular', name: 'AI Automations', tagline: 'Eliminate repetitive work. Reclaim your team’s time.',
+    body: 'We map the manual processes draining your team and rebuild them as reliable, monitored automations — wired into the tools you already use.',
+    bullets: ['Workflow & process automation', 'CRM, email & data sync', 'Document & report generation', 'Error monitoring + alerting'],
+    stat: { value: '42 hrs', label: 'reclaimed / week' } },
+  { icon: 'globe', name: 'AI Websites', tagline: 'Websites that think, adapt, and convert.',
+    body: 'Conversion-focused sites with AI baked in — personalized journeys, instant answers, and content that updates itself.',
+    bullets: ['Conversion-optimized design', 'On-page AI assistant', 'Dynamic personalization', 'SEO + analytics built in'],
+    stat: { value: '+38%', label: 'conversion lift' } },
+  { icon: 'mic', name: 'AI Voice Agents', tagline: 'Human-quality voice that answers and books, 24/7.',
+    body: 'Voice agents that pick up every call, qualify leads, and book appointments — indistinguishable from your best rep.',
+    bullets: ['Inbound & outbound calling', 'Appointment booking', 'CRM logging + follow-up', 'Multi-language support'],
+    stat: { value: '200+', label: 'calls / day handled' } },
+  { icon: 'chat', name: 'AI Chatbots', tagline: 'Resolve support instantly, on every channel.',
+    body: 'Support bots trained on your knowledge base that resolve issues, escalate intelligently, and never sleep.',
+    bullets: ['Trained on your docs', 'Web, WhatsApp & Slack', 'Smart human handoff', 'Continuous learning'],
+    stat: { value: '98%', label: 'auto-resolved' } },
+  { icon: 'layers', name: 'AI Content Systems', tagline: 'On-brand content pipelines that never sleep.',
+    body: 'End-to-end content engines — research, draft, review, publish — that keep your brand voice and your calendar full.',
+    bullets: ['Editorial pipeline', 'Brand-voice guardrails', 'Human review gates', 'Multi-channel publishing'],
+    stat: { value: '5×', label: 'output / month' } },
+  { icon: 'cart', name: 'Shopify Automation', tagline: 'Hands-off operations for high-volume stores.',
+    body: 'Inventory, fulfillment, support, and marketing automations purpose-built for commerce teams that move fast.',
+    bullets: ['Order & inventory ops', 'Returns automation', 'Abandoned-cart recovery', 'Vendor + 3PL sync'],
+    stat: { value: '12 hrs', label: 'ops saved / week' } },
+];
+
+function ServiceRow({ s }) {
+  return (
+    <div className="svc-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center', padding: '56px 0', borderBottom: '1px solid var(--ra-cream-08)' }}>
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+          <span style={{ width: 46, height: 46, borderRadius: 12, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--ra-copper-08)', border: '1px solid var(--ra-copper-25)', color: 'var(--ra-copper)' }}><Icon name={s.icon} size={20} /></span>
+          {s.tag ? <Badge tone="copper" variant="soft">{s.tag}</Badge> : null}
+        </div>
+        <h2 style={{ font: 'var(--text-h2)', fontSize: 32, letterSpacing: '-0.02em' }}>{s.name}</h2>
+        <p style={{ marginTop: 8, fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 19, color: 'var(--ra-lavender)' }}>{s.tagline}</p>
+        <p style={{ marginTop: 16, color: 'var(--ra-cream-55)', fontSize: 16, lineHeight: 1.7, maxWidth: 480 }}>{s.body}</p>
+        <div style={{ marginTop: 22 }}>
+          <Button variant="outline" size="sm" trailing={<Icon name="arrow" size={14} />}>Book a teardown</Button>
+        </div>
+      </div>
+      <div className="svc-visual">
+        <Card variant="glow" style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+          <Stat value={s.stat.value} label={s.stat.label} delta="typical client outcome" />
+          <div style={{ height: 1, background: 'var(--ra-cream-08)' }} />
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {s.bullets.map((b) => (
+              <li key={b} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14.5, color: 'var(--ra-cream-70)' }}>
+                <span style={{ color: 'var(--ra-copper)', flex: 'none' }}><Icon name="check" size={16} /></span>{b}
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+const TIERS = [
+  { name: 'Sprint', price: 'from $4k', tagline: 'One focused automation, shipped fast.', features: ['Single workflow build', '2-week delivery', '30-day support', 'Team handoff session'], variant: 'default', cta: 'Start a sprint' },
+  { name: 'System', price: 'from $12k', tagline: 'A connected suite of AI systems.', features: ['Multi-workflow build', 'Voice / chat / content', 'Integrations included', '90-day support + tuning', 'Priority response'], variant: 'glow', cta: 'Scope a system', featured: true },
+  { name: 'Partner', price: 'Retainer', tagline: 'We run your AI roadmap with you.', features: ['Dedicated build team', 'Monthly optimization', 'New automations on demand', 'Quarterly strategy', 'SLA + monitoring'], variant: 'default', cta: 'Talk partnership' },
+];
+function Pricing() {
+  return (
+    <Section>
+      <SectionHead kicker="Engagement Models" title={<>Ways to <AccentTitle>Work Together</AccentTitle></>}
+        lead="Every engagement is fixed-scope and fixed-price, quoted after a free discovery call. Start small or go all in." />
+      <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, alignItems: 'start' }}>
+        {TIERS.map((tier) => (
+          <Card key={tier.name} variant={tier.variant} style={{ display: 'flex', flexDirection: 'column', gap: 18, transform: tier.featured ? 'scale(1.02)' : 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Eyebrow>{tier.name}</Eyebrow>
+              {tier.featured ? <Badge tone="copper" variant="solid">Best value</Badge> : null}
+            </div>
+            <div>
+              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 38, color: 'var(--ra-cream)', letterSpacing: '-0.02em', lineHeight: 1 }}>{tier.price}</div>
+              <p style={{ marginTop: 10, color: 'var(--ra-cream-55)', fontSize: 14.5, lineHeight: 1.6 }}>{tier.tagline}</p>
+            </div>
+            <div style={{ height: 1, background: 'var(--ra-cream-08)' }} />
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {tier.features.map((f) => (
+                <li key={f} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--ra-cream-70)' }}>
+                  <span style={{ color: 'var(--ra-copper)', flex: 'none' }}><Icon name="check" size={15} /></span>{f}
+                </li>
+              ))}
+            </ul>
+            <Button variant={tier.featured ? 'primary' : 'outline'} style={{ marginTop: 'auto' }}>{tier.cta}</Button>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Hero() {
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden' }}>
+      <Glow style={{ top: -240, left: '50%', transform: 'translateX(-50%)' }} size={680} />
+      <Section pad="var(--space-9)" style={{ position: 'relative', paddingTop: 80, textAlign: 'center' }}>
+        <span style={{ display: 'inline-block', marginBottom: 22 }}><Badge tone="lavender" variant="soft">Services</Badge></span>
+        <h1 style={{ font: 'var(--text-display)', fontSize: 'clamp(2.4rem, 5vw, 4rem)', letterSpacing: '-0.025em', lineHeight: 1.05, maxWidth: 800, margin: '0 auto', textWrap: 'balance' }}>
+          AI Systems, <AccentTitle>Built to Order</AccentTitle>
+        </h1>
+        <p style={{ margin: '24px auto 0', maxWidth: 560, fontSize: 18, lineHeight: 1.6, color: 'var(--ra-cream-55)' }}>
+          Six core services, one promise: every system we ship solves a specific business problem and pays for itself in reclaimed hours.
+        </p>
+        <div style={{ display: 'flex', gap: 14, justifyContent: 'center', marginTop: 32, flexWrap: 'wrap' }}>
+          <Button size="lg" leading={<Icon name="arrow" size={16} />}>Book a discovery call</Button>
+          <Button size="lg" variant="outline" onClick={() => location.href='Case Study.html'}>See the results</Button>
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+function CtaBand() {
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden', borderTop: '1px solid var(--ra-cream-08)' }}>
+      <Glow style={{ top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} size={560} />
+      <Section style={{ position: 'relative', textAlign: 'center' }}>
+        <h2 style={{ font: 'var(--text-h1)', fontSize: 'clamp(2rem, 4vw, 2.8rem)', letterSpacing: '-0.02em', maxWidth: 600, margin: '0 auto', textWrap: 'balance' }}>
+          Not sure where to <AccentTitle>start?</AccentTitle>
+        </h2>
+        <p style={{ margin: '18px auto 0', maxWidth: 500, fontSize: 17, color: 'var(--ra-cream-55)', lineHeight: 1.6 }}>
+          That’s what the free call is for. We’ll find your highest-leverage automation and tell you exactly what it takes.
+        </p>
+        <div style={{ marginTop: 30 }}><Button size="lg" leading={<Icon name="arrow" size={16} />}>Talk to Us</Button></div>
+      </Section>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <Nav active="Services" />
+      <main>
+        <Hero />
+        <Section style={{ paddingTop: 0 }}>
+          {SERVICES.map((s) => <ServiceRow key={s.name} s={s} />)}
+        </Section>
+        <div style={{ background: 'var(--ra-ink)', borderTop: '1px solid var(--ra-cream-08)' }}>
+          <Pricing />
+        </div>
+        <CtaBand />
+      </main>
+      <Footer />
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#1a1a1a"/><rect x="28" y="28" width="44" height="44" rx="8" fill="none" stroke="#e38c35" stroke-width="3"/><path d="M40 50l7 7 14-14" fill="none" stroke="#6e77cb" stroke-width="3" stroke-linecap="round"/></svg>
+</template>
+</body>
+</html>

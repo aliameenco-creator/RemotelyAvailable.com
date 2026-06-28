@@ -1,0 +1,10 @@
+/* Remotely Available — Design System
+ * Global stylesheet entry point. Consumers link THIS file.
+ * Keep this as @import lines only — all real rules live in the imported token files.
+ */
+
+@import url('tokens/fonts.css');
+@import url('tokens/colors.css');
+@import url('tokens/typography.css');
+@import url('tokens/spacing.css');
+@import url('tokens/base.css');

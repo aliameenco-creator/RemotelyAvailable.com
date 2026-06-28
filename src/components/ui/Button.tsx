@@ -15,11 +15,11 @@ interface ButtonProps {
 
 const variants = {
   primary:
-    "bg-primary-600 text-white hover:bg-primary-500 active:bg-primary-700 rounded-[var(--radius-pill)] shadow-lg shadow-primary-600/20 hover:shadow-primary-500/30",
+    "bg-primary-600 text-[#1a1a1a] hover:bg-primary-400 active:bg-primary-700",
   secondary:
-    "bg-bg-card text-text-primary border border-bg-subtle hover:border-text-muted hover:bg-bg-elevated rounded-[var(--radius-button)]",
+    "bg-transparent text-text-primary border border-[var(--border-strong)] hover:border-primary-600 hover:bg-[var(--ra-cream-08)]",
   ghost:
-    "text-text-secondary hover:text-text-primary hover:bg-white/5 rounded-[var(--radius-button)]",
+    "text-text-secondary hover:text-text-primary hover:bg-[var(--ra-cream-08)]",
 };
 
 const sizes = {
@@ -40,9 +40,11 @@ export function Button({
   icon,
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 cursor-pointer",
+    "inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius-pill)] cursor-pointer",
+    "transition-[background,border-color,transform] duration-[120ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+    "active:scale-[0.97]",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500",
-    "disabled:opacity-50 disabled:cursor-not-allowed",
+    "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100",
     variants[variant],
     sizes[size],
     className

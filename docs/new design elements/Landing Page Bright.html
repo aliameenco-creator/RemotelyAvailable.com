@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remotely Available — AI Systems That Actually Work</title>
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/colors.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/typography.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/base.css">
+<style>
+  /* ===== LIGHT THEME — remap the dark design-system tokens to a bright palette =====
+     Text (cream) becomes dark ink; surfaces become white/off-white; copper + lavender
+     accents are kept. Placed after the linked token stylesheets so :root wins. */
+  :root {
+    --ra-base:             #f6f3ec;  /* warm off-white page */
+    --ra-base-grad-top:    #fbf9f4;
+    --ra-base-grad-bottom: #f0ece3;
+    --ra-surface:          #ffffff;  /* cards */
+    --ra-surface-2:        #f3efe6;  /* hover surface */
+    --ra-ink:              #efeade;  /* light wells, footer / stat-bar bg */
+
+    /* primary "text" token (was cream) → dark ink, plus its opacity tints */
+    --ra-cream:    #211f1b;
+    --ra-cream-70: rgba(33, 31, 27, 0.72);
+    --ra-cream-55: rgba(33, 31, 27, 0.56);
+    --ra-cream-40: rgba(33, 31, 27, 0.42);
+    --ra-cream-25: rgba(33, 31, 27, 0.20);
+    --ra-cream-12: rgba(33, 31, 27, 0.11);
+    --ra-cream-08: rgba(33, 31, 27, 0.06);
+
+    /* copper / lavender accents unchanged; shadows softened for light surfaces */
+    --shadow-sm: 0 1px 2px rgba(60, 45, 20, 0.08);
+    --shadow-md: 0 8px 26px rgba(60, 45, 20, 0.09);
+    --shadow-lg: 0 22px 54px rgba(60, 45, 20, 0.13);
+    --glow-copper: 0 0 0 1px var(--ra-copper-25), 0 14px 44px rgba(227, 140, 53, 0.14);
+    --glow-lavender: 0 0 0 1px rgba(110,119,203,0.32), 0 14px 44px rgba(110,119,203,0.14);
+    --grid-line: rgba(227, 140, 53, 0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--ra-base); }
+  button { white-space: nowrap; }
+
+  /* hero gradient-video background + light scrim for legibility */
+  .hero-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+  }
+  .hero-scrim {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(246,243,236,0.97) 0%, rgba(246,243,236,0.9) 32%, rgba(246,243,236,0.52) 64%, rgba(246,243,236,0.12) 100%),
+      linear-gradient(180deg, rgba(246,243,236,0.55) 0%, transparent 24%, transparent 60%, var(--ra-base) 100%);
+  }
+  @media (max-width: 760px){
+    .hero-scrim {
+      background: linear-gradient(180deg, rgba(246,243,236,0.9) 0%, rgba(246,243,236,0.78) 55%, var(--ra-base) 100%);
+    }
+    .hero-stats { gap: 26px !important; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-video { display: none; }
+  }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(var(--ra-copper-045) 1px, transparent 1px),
+      linear-gradient(90deg, var(--ra-copper-045) 1px, transparent 1px);
+    background-size: 44px 44px, 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 28%, #000 30%, transparent 75%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 28%, #000 30%, transparent 75%);
+  }
+  .tool-tile:hover { transform: translateY(-3px); border-color: var(--ra-copper-25) !important; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  /* scroll reveal */
+  .reveal-item { opacity: 0; transform: translateY(30px); transition: opacity .7s var(--ease-emphatic), transform .7s var(--ease-emphatic); }
+  .reveal-on .reveal-item { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce){ .reveal-item { opacity:1 !important; transform:none !important; } }
+
+  /* services bento cards */
+  .svc-card { position: relative; overflow: hidden; transition: transform .35s var(--ease-standard), border-color .35s, box-shadow .35s; }
+  .svc-card:hover { transform: translateY(-4px); border-color: var(--ra-copper-25) !important; box-shadow: var(--glow-copper); }
+  .svc-accent { position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--ra-copper), var(--ra-lavender)); transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease-emphatic); z-index:2; }
+  .svc-card:hover .svc-accent { transform: scaleX(1); }
+  .svc-glow { position:absolute; width:260px; height:260px; right:-90px; top:-90px; background: radial-gradient(circle, var(--ra-copper-16), transparent 70%); opacity:0; transition: opacity .45s; pointer-events:none; }
+  .svc-card:hover .svc-glow { opacity:1; }
+  .svc-icon { transition: background .3s, color .3s, box-shadow .3s, border-color .3s; }
+  .svc-card:hover .svc-icon { background: var(--ra-copper) !important; color: var(--ra-base) !important; border-color: var(--ra-copper) !important; box-shadow: 0 0 26px var(--ra-copper-25); }
+  .svc-arrow { transition: transform .3s var(--ease-standard); }
+  .svc-card:hover .svc-arrow { transform: translateX(5px); }
+  .svc-num { position:absolute; top:12px; right:20px; font-family: var(--font-serif); font-style: italic; font-size:46px; line-height:1; color: var(--ra-cream-08); pointer-events:none; user-select:none; }
+
+  /* team */
+  .team-card { position: relative; overflow: hidden; border-radius: var(--radius-md); border:1px solid var(--ra-cream-08); background: var(--ra-surface); }
+  .team-card img { transition: transform .65s var(--ease-standard); }
+  .team-card:hover img { transform: scale(1.06); }
+
+  @media (max-width: 920px){
+    .svc-bento{ grid-template-columns: 1fr !important; }
+    .svc-bento > *{ grid-column: auto !important; }
+    .team-wrap{ grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/_ds_bundle.js"></script>
+<script type="text/babel" src="lib/tweaks-panel.jsx"></script>
+<script type="text/babel" src="lib/shared.jsx"></script>
+
+<script type="text/babel">
+const { Button, Badge, Card, Eyebrow, Stat } = window.RemotelyAvailableDesignSystem_66c958;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "heroLayout": "left",
+  "heroAccentTone": "lavender",
+  "showStatBar": true,
+  "toolsStyle": "tiles",
+  "ctaStyle": "flat"
+}/*EDITMODE-END*/;
+
+/* ---- hero headline with toggleable accent treatment ---- */
+function HeroTitle({ tone }) {
+  // tone: 'split' (copper+lavender), 'copper', 'lavender'
+  const ai = tone === 'lavender' ? { color: 'var(--ra-lavender)' } : { color: 'var(--ra-copper)' };
+  const systems = tone === 'split'
+    ? { fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--ra-lavender)' }
+    : tone === 'lavender' ? { color: 'var(--ra-lavender)' } : { color: 'var(--ra-copper)' };
+  return (
+    <>We Build <span style={ai}>AI</span> <span style={systems}>Systems</span><br/>That Actually Work</>
+  );
+}
+
+const HERO_TITLE_STYLE = {
+  font: 'var(--text-display)', fontSize: 'clamp(2.6rem, 6vw, 4.6rem)',
+  letterSpacing: '-0.025em', lineHeight: 1.04, color: 'var(--ra-cream)', textWrap: 'balance',
+};
+
+/* ---- light nav: transparent over the hero video, frosted white on scroll ---- */
+function LightNav({ active }) {
+  const [scrolled, setScrolled] = React.useState(false);
+  React.useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 8);
+    on(); window.addEventListener('scroll', on, { passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, []);
+  return (
+    <header style={{
+      position: 'sticky', top: 0, zIndex: 50,
+      borderBottom: scrolled ? '1px solid var(--ra-cream-12)' : '1px solid transparent',
+      background: scrolled ? 'rgba(251,249,244,0.82)' : 'transparent',
+      backdropFilter: scrolled ? 'saturate(140%) blur(14px)' : 'none',
+      WebkitBackdropFilter: scrolled ? 'saturate(140%) blur(14px)' : 'none',
+      transition: 'background var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard)',
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '18px 32px', display: 'flex', alignItems: 'center', gap: 24 }}>
+        <Wordmark />
+        <nav style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 'auto' }}>
+          {NAV_LINKS.map((l) => {
+            const on = l.label === active;
+            return (
+              <a key={l.label} href={l.href} style={{
+                fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500,
+                color: on ? 'var(--ra-cream)' : 'var(--ra-cream-55)',
+                padding: '8px 14px', borderRadius: 'var(--radius-pill)',
+                background: on ? 'var(--ra-cream-08)' : 'transparent',
+                transition: 'color var(--dur-fast), background var(--dur-fast)',
+              }}
+              onMouseEnter={(e) => { if (!on) e.currentTarget.style.color = 'var(--ra-cream)'; }}
+              onMouseLeave={(e) => { if (!on) e.currentTarget.style.color = 'var(--ra-cream-55)'; }}
+              >{l.label}</a>
+            );
+          })}
+        </nav>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 8 }}>
+          <Button size="sm" trailing={<Icon name="arrow" size={15} />}>Contact Us</Button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+const HERO_STATS = [
+  { value: '500+', label: 'Workflows automated' },
+  { value: '40+', label: 'Hours saved / week' },
+  { value: '95%', label: 'Client retention' },
+];
+
+function HeroBody({ t }) {
+  const centered = t.heroLayout === 'centered';
+  return (
+    <div style={{ textAlign: centered ? 'center' : 'left', maxWidth: centered ? 780 : 680, margin: centered ? '0 auto' : 0 }}>
+      <span style={{ display: 'inline-block', marginBottom: 24 }}>
+        <Badge tone="copper" variant="soft" dot>AI Automation Agency</Badge>
+      </span>
+      <h1 style={{ ...HERO_TITLE_STYLE, fontSize: 'clamp(2.6rem, 5.6vw, 4.6rem)' }}><HeroTitle tone={t.heroAccentTone} /></h1>
+      <p style={{ marginTop: 24, maxWidth: 540, marginLeft: centered ? 'auto' : 0, marginRight: centered ? 'auto' : 0, fontSize: 18, lineHeight: 1.6, color: 'var(--ra-cream-70)' }}>
+        Automations, voice agents, chatbots, and intelligent websites — engineered to save your team <strong style={{ color: 'var(--ra-cream)', fontWeight: 600 }}>40+ hours a week</strong> and drive real business results.
+      </p>
+      <div style={{ display: 'flex', gap: 14, marginTop: 34, flexWrap: 'wrap', justifyContent: centered ? 'center' : 'flex-start' }}>
+        <Button size="lg" leading={<Icon name="arrow" size={16} />}>Talk to Us</Button>
+        <Button size="lg" variant="outline" onClick={() => location.href='Services.html'}>See Our Services</Button>
+      </div>
+      <p style={{ marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 12.5, letterSpacing: '0.04em', color: 'var(--ra-cream-40)' }}>No commitment. 30-minute call. Real strategy.</p>
+      <div className="hero-stats" style={{ display: 'flex', gap: 44, marginTop: 48, justifyContent: centered ? 'center' : 'flex-start', flexWrap: 'wrap' }}>
+        {HERO_STATS.map((s) => (
+          <div key={s.label} style={{ textAlign: centered ? 'center' : 'left' }}>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 40, lineHeight: 1, color: 'var(--ra-copper)', letterSpacing: '-0.02em' }}>{s.value}</div>
+            <div style={{ marginTop: 9, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ra-cream-55)' }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Hero({ t }) {
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden', marginTop: -82 }}>
+      <video className="hero-video" autoPlay muted loop playsInline preload="auto">
+        <source src="uploads/Background.mp4" type="video/mp4" />
+      </video>
+      <div className="hero-scrim" />
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <Section pad="var(--space-10)" style={{ paddingTop: 200, paddingBottom: 'var(--space-10)', minHeight: '92vh', display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '100%' }}>
+            <HeroBody t={t} />
+          </div>
+        </Section>
+      </div>
+    </div>
+  );
+}
+
+/* ---- stat bar ---- */
+function StatBar() {
+  const stats = [
+    { value: '500+', label: 'Workflows Automated' },
+    { value: '40+', label: 'Hours Saved / Client Weekly' },
+    { value: '95%', label: 'Client Retention Rate' },
+    { value: '<48hr', label: 'Average Response Time' },
+  ];
+  return (
+    <div style={{ borderTop: '1px solid var(--ra-cream-08)', borderBottom: '1px solid var(--ra-cream-08)', background: 'var(--ra-ink)' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '44px 32px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
+        {stats.map((s) => <Stat key={s.label} value={s.value} label={s.label} align="center" />)}
+      </div>
+    </div>
+  );
+}
+
+/* ---- tools grid ---- */
+const TOOLS = ['ReplIt','Grok AI','DeepSeek','Cursor AI','Veo 3','ChatGPT','Gemini','Claude','Midjourney','Copilot','ElevenLabs','Lovable','Meta AI','Adobe Firefly','Perplexity','n8n'];
+function ToolsGrid() {
+  return (
+    <Section>
+      <SectionHead kicker="Our Expertise" title="Tools & Platforms We Master"
+        lead="We leverage the most powerful AI tools to build solutions that deliver real results for your business." />
+      <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 14 }}>
+        {TOOLS.map((name) => (
+          <div key={name} className="tool-tile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '20px 8px', borderRadius: 14, background: 'var(--ra-surface)', border: '1px solid var(--ra-cream-08)', transition: 'transform var(--dur-base) var(--ease-standard), border-color var(--dur-base)' }}>
+            <span style={{ width: 44, height: 44, borderRadius: 11, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--ra-ink)', border: '1px solid var(--ra-cream-08)', fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 20, color: 'var(--ra-copper)' }}>{name[0]}</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.04em', color: 'var(--ra-cream-55)', textAlign: 'center' }}>{name}</span>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+/* ---- services preview ---- */
+/* ---- scroll-reveal hook ---- */
+function useReveal(threshold = 0.18) {
+  const ref = React.useRef(null);
+  const [shown, setShown] = React.useState(false);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || !('IntersectionObserver' in window)) { setShown(true); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { setShown(true); io.disconnect(); } });
+    }, { threshold });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return [ref, shown];
+}
+function useCountUp(target, run, dur = 1500) {
+  const [n, setN] = React.useState(0);
+  React.useEffect(() => {
+    if (!run) return;
+    let raf; const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / dur);
+      setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [run]);
+  return n;
+}
+
+/* ---- services preview (animated bento) ---- */
+const SERVICES = [
+  { icon: 'bolt', name: 'AI Automations', desc: 'Eliminate repetitive tasks and reclaim your team’s time — reliable, monitored workflows wired into the tools you already use.', span: 4, feature: true, tag: 'Most deployed' },
+  { icon: 'globe', name: 'AI Websites', desc: 'Websites that think, adapt, and convert.', span: 2 },
+  { icon: 'mic', name: 'AI Voice Agents', desc: 'Human-quality voice that answers and books, 24/7.', span: 2 },
+  { icon: 'chat', name: 'AI Chatbots', desc: 'Support bots trained on your knowledge base that resolve instantly, escalate intelligently, and never sleep.', span: 4, feature: true, tag: 'Always on' },
+  { icon: 'layers', name: 'AI Content Systems', desc: 'On-brand content pipelines that never sleep.', span: 3 },
+  { icon: 'cart', name: 'Shopify Automation', desc: 'Hands-off operations for high-volume stores.', span: 3 },
+];
+function ServiceCard({ s, i }) {
+  const feature = s.feature;
+  return (
+    <div className="svc-card reveal-item" style={{
+      gridColumn: `span ${s.span}`, transitionDelay: `${i * 90}ms`,
+      background: 'var(--ra-surface)', border: '1px solid var(--ra-cream-08)', borderRadius: 'var(--radius-md)',
+      padding: feature ? 'var(--space-6)' : 'var(--space-5)',
+      display: 'flex', flexDirection: feature ? 'row' : 'column', gap: feature ? 26 : 18, alignItems: feature ? 'flex-start' : 'stretch',
+    }}>
+      <span className="svc-accent" />
+      <span className="svc-glow" />
+      <span className="svc-num">{String(i + 1).padStart(2, '0')}</span>
+      <span className="svc-icon" style={{ width: feature ? 56 : 46, height: feature ? 56 : 46, flex: 'none', borderRadius: 13, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--ra-copper-08)', border: '1px solid var(--ra-copper-25)', color: 'var(--ra-copper)' }}><Icon name={s.icon} size={feature ? 24 : 20} /></span>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <h3 style={{ font: 'var(--text-h3)', fontSize: feature ? 22 : 19 }}>{s.name}</h3>
+          {s.tag ? <Badge tone="lavender" variant="soft">{s.tag}</Badge> : null}
+        </div>
+        <p style={{ marginTop: 8, color: 'var(--ra-cream-55)', fontSize: feature ? 15.5 : 14.5, lineHeight: 1.6, maxWidth: feature ? 440 : 'none' }}>{s.desc}</p>
+        <a href="Services.html" style={{ marginTop: feature ? 18 : 'auto', paddingTop: feature ? 0 : 14, display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ra-copper)', letterSpacing: '0.04em' }}>Learn more <span className="svc-arrow" style={{ display: 'inline-flex' }}><Icon name="arrow" size={13} /></span></a>
+      </div>
+    </div>
+  );
+}
+function ServicesPreview() {
+  const [ref, shown] = useReveal();
+  return (
+    <Section>
+      <SectionHead kicker="What We Do" title={<>AI Solutions Built for <AccentTitle>Real Impact</AccentTitle></>}
+        lead="From workflow automations to voice agents, we build AI systems that solve specific business problems — not generic demos." />
+      <div ref={ref} className={'svc-bento ' + (shown ? 'reveal-on' : '')} style={{ marginTop: 48, display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 18 }}>
+        {SERVICES.map((s, i) => <ServiceCard key={s.name} s={s} i={i} />)}
+      </div>
+    </Section>
+  );
+}
+
+/* ---- team ---- */
+const TEAM = [
+  { img: 'images/team-1.png', pos: 'center 22%' },
+  { img: 'images/team-2.png', pos: 'center 32%' },
+  { img: 'images/team-3.jpg', pos: 'center 18%' },
+];
+function Team() {
+  const [ref, shown] = useReveal(0.25);
+  const years = useCountUp(104, shown);
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--ra-ink)', borderTop: '1px solid var(--ra-cream-08)', borderBottom: '1px solid var(--ra-cream-08)' }}>
+      <Glow color="lavender" style={{ top: -170, right: -120 }} size={440} />
+      <Section style={{ position: 'relative' }}>
+        <div className="team-wrap" style={{ display: 'grid', gridTemplateColumns: '0.82fr 1.18fr', gap: 56, alignItems: 'center' }}>
+          <div>
+            <span style={{ display: 'inline-block', marginBottom: 18 }}><Badge tone="copper" variant="soft" dot>Our Team</Badge></span>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(3.4rem, 8vw, 5.4rem)', color: 'var(--ra-copper)', lineHeight: 0.95, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>{years}</div>
+            <h2 style={{ font: 'var(--text-h2)', letterSpacing: 'var(--ls-tight)', textWrap: 'balance', marginTop: 6 }}>
+              years of experience, <AccentTitle>combined</AccentTitle>
+            </h2>
+            <p style={{ marginTop: 18, color: 'var(--ra-cream-55)', fontSize: 16.5, lineHeight: 1.7, maxWidth: 420 }}>
+              A senior team of automation engineers, strategists, and builders who’ve shipped AI systems across dozens of industries. The experience shows in everything we deliver.
+            </p>
+          </div>
+          <div ref={ref} className={'team-row ' + (shown ? 'reveal-on' : '')} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+            {TEAM.map((m, i) => (
+              <div key={i} className="team-card reveal-item" style={{ transitionDelay: `${i * 200}ms` }}>
+                <div style={{ aspectRatio: '3 / 4', overflow: 'hidden' }}>
+                  <img src={m.img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: m.pos, display: 'block' }} />
+                </div>
+                <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '34px 16px 16px', background: 'linear-gradient(transparent, rgba(20,20,20,0.94))' }}>
+                  <div style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 16, color: 'rgba(245,241,232,0.82)' }}>Name coming soon</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.1em', color: 'var(--ra-copper)', marginTop: 4 }}>// role TBA</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+/* ---- process timeline ---- */
+const STEPS = [
+  { n: '01', title: 'Discovery Call', desc: 'We learn about your business, your pain points, and your goals. Free, no-commitment, 30 minutes.' },
+  { n: '02', title: 'Strategy & Scope', desc: 'We map the solution, define deliverables, timeline, and pricing. You approve before anything starts.' },
+  { n: '03', title: 'Build & Integrate', desc: 'We build your AI systems and wire them into the tools you already use — tested end to end.' },
+  { n: '04', title: 'Launch & Optimize', desc: 'We deploy, train your team, and tune for performance. Ongoing support keeps it sharp.' },
+];
+function Process() {
+  return (
+    <Section>
+      <SectionHead kicker="How We Work" title="From Discovery to Delivery"
+        lead="A proven process that turns your business challenges into working AI systems — no fluff, no delays." />
+      <div style={{ marginTop: 56, maxWidth: 760, margin: '56px auto 0', position: 'relative' }}>
+        <div style={{ position: 'absolute', left: 23, top: 10, bottom: 10, width: 2, background: 'linear-gradient(var(--ra-copper-25), var(--ra-cream-08))' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+          {STEPS.map((s) => (
+            <div key={s.n} style={{ display: 'flex', gap: 24, position: 'relative' }}>
+              <span style={{ width: 48, height: 48, borderRadius: '50%', flex: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--ra-base)', border: '1px solid var(--ra-copper-25)', fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--ra-copper)', zIndex: 1 }}>{s.n}</span>
+              <div style={{ paddingTop: 4 }}>
+                <h3 style={{ font: 'var(--text-h3)', fontSize: 19 }}>{s.title}</h3>
+                <p style={{ marginTop: 8, color: 'var(--ra-cream-55)', fontSize: 15, lineHeight: 1.65, maxWidth: 520 }}>{s.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ---- testimonials ---- */
+const QUOTES = [
+  { quote: 'RemotelyAvailable automated our entire lead qualification process. What used to take 3 team members now runs on autopilot. We booked 40% more demos in the first month.', name: 'Sarah Chen', role: 'Head of Operations, ScaleUp SaaS', initials: 'SC' },
+  { quote: 'The AI voice agent they built handles 200+ calls a day without missing a beat. Our customers can’t tell it’s not a real person. It’s been a game-changer for our support team.', name: 'Marcus Rivera', role: 'CEO, HomeRise Services', initials: 'MR' },
+  { quote: 'We went from publishing one blog post a month to five per week — all on-brand, all reviewed by our team. The content pipeline they built is the best investment we’ve made this year.', name: 'Priya Patel', role: 'Marketing Director, Apex Digital', initials: 'PP' },
+];
+function Testimonials() {
+  return (
+    <Section>
+      <SectionHead kicker="Client Results" title={<>Trusted by Teams Who <AccentTitle>Ship</AccentTitle></>}
+        lead="Real results from real businesses. Here’s what our clients say about working with us." />
+      <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+        {QUOTES.map((q) => (
+          <Card key={q.name} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            <span style={{ color: 'var(--ra-copper)' }}><Icon name="quote" size={22} /></span>
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ra-cream-70)', flex: 1 }}>{q.quote}</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 4, borderTop: '1px solid var(--ra-cream-08)' }}>
+              <span style={{ width: 38, height: 38, borderRadius: '50%', flex: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--ra-lavender)', color: '#f5f1e8', fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700 }}>{q.initials}</span>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ra-cream)' }}>{q.name}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--ra-cream-40)' }}>{q.role}</div>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+/* ---- CTA band ---- */
+function CtaBand({ t }) {
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden', borderTop: '1px solid var(--ra-cream-08)', borderBottom: '1px solid var(--ra-cream-08)' }}>
+      {t.ctaStyle === 'glow' ? <Glow style={{ top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} size={620} /> : null}
+      <Section style={{ position: 'relative', textAlign: 'center' }}>
+        <h2 style={{ font: 'var(--text-h1)', fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.02em', maxWidth: 640, margin: '0 auto', textWrap: 'balance' }}>
+          Ready to Put <AccentTitle>AI to Work</AccentTitle> for Your Business?
+        </h2>
+        <p style={{ margin: '20px auto 0', maxWidth: 520, fontSize: 17, lineHeight: 1.6, color: 'var(--ra-cream-55)' }}>
+          Tell us about your business. We’ll map out the AI opportunities and show you exactly what’s possible — no fluff, no hard sell.
+        </p>
+        <div style={{ marginTop: 32 }}>
+          <Button size="lg" leading={<Icon name="arrow" size={16} />}>Talk to Us</Button>
+        </div>
+        <p style={{ marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ra-cream-40)' }}>No commitment. No hard sell. Just real strategy.</p>
+      </Section>
+    </div>
+  );
+}
+
+/* ---- FAQ ---- */
+const FAQS = [
+  { q: 'What kind of businesses do you work with?', a: 'We work with growth-stage companies, agencies, e-commerce brands, and service businesses — anyone with repetitive work that AI can take off their plate. If you have a process, we can probably automate it.' },
+  { q: 'How long does a typical project take?', a: 'Most automation builds ship in 2–4 weeks. Larger systems like custom voice agents or full content pipelines run 4–8 weeks. We scope timeline precisely before you commit.' },
+  { q: 'Do you offer ongoing support after launch?', a: 'Yes. Every build includes a support window, and we offer monthly retainers for optimization, monitoring, and new automations as your needs grow.' },
+  { q: 'How much does it cost?', a: 'Projects are fixed-scope and fixed-price, quoted after the discovery call. Most engagements start in the low five figures and pay for themselves in reclaimed hours within the first quarter.' },
+  { q: 'What if I’m not sure which service I need?', a: 'That’s what the free discovery call is for. We’ll look at your operations and recommend the highest-leverage place to start — even if that’s not the biggest project.' },
+  { q: 'Is my data safe?', a: 'Absolutely. We follow least-privilege access, encrypt data in transit and at rest, and can work entirely within your own cloud and tooling. You own everything we build.' },
+];
+function FaqItem({ q, a }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="faq-item" style={{ borderBottom: '1px solid var(--ra-cream-08)' }}>
+      <button onClick={() => setOpen(!open)} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '22px 4px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
+        <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--ra-cream)' }}>{q}</span>
+        <span style={{ flex: 'none', color: 'var(--ra-copper)', transition: 'transform var(--dur-base)', transform: open ? 'rotate(45deg)' : 'none' }}><Icon name="plus" size={18} /></span>
+      </button>
+      <div style={{ maxHeight: open ? 240 : 0, overflow: 'hidden', transition: 'max-height var(--dur-slow) var(--ease-standard)' }}>
+        <p style={{ padding: '0 4px 24px', color: 'var(--ra-cream-55)', fontSize: 15, lineHeight: 1.7, maxWidth: 780 }}>{a}</p>
+      </div>
+    </div>
+  );
+}
+function Faq() {
+  return (
+    <Section style={{ maxWidth: 860 }} maxWidth={860}>
+      <SectionHead kicker="FAQ" title="Frequently Asked Questions"
+        lead="Everything you need to know about working with us. Can’t find your answer? Book a call — we’re happy to help." />
+      <div style={{ marginTop: 40 }}>
+        {FAQS.map((f) => <FaqItem key={f.q} {...f} />)}
+      </div>
+    </Section>
+  );
+}
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  return (
+    <>
+      <LightNav active="Home" />
+      <main>
+        <Hero t={t} />
+        {t.showStatBar ? <StatBar /> : null}
+        <ToolsGrid />
+        <ServicesPreview />
+        <Process />
+        <Team />
+        <Testimonials />
+        <CtaBand t={t} />
+        <Faq />
+      </main>
+      <Footer />
+
+      <TweaksPanel>
+        <TweakSection label="Hero" />
+        <TweakRadio label="Layout" value={t.heroLayout} options={['left', 'centered']} onChange={(v) => setTweak('heroLayout', v)} />
+        <TweakSelect label="Headline accent" value={t.heroAccentTone}
+          options={[{value:'split',label:'Copper + italic lavender'},{value:'copper',label:'All copper'},{value:'lavender',label:'All lavender'}]}
+          onChange={(v) => setTweak('heroAccentTone', v)} />
+        <TweakToggle label="Show stat bar" value={t.showStatBar} onChange={(v) => setTweak('showStatBar', v)} />
+        <TweakSection label="Closing CTA" />
+        <TweakRadio label="Treatment" value={t.ctaStyle} options={['glow', 'flat']} onChange={(v) => setTweak('ctaStyle', v)} />
+      </TweaksPanel>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#1a1a1a"/><circle cx="50" cy="42" r="22" fill="none" stroke="#e38c35" stroke-width="3"/><circle cx="50" cy="42" r="6" fill="#e38c35"/><text x="50" y="80" font-family="Georgia" font-style="italic" font-size="13" fill="#6e77cb" text-anchor="middle">RA</text></svg>
+</template>
+</body>
+</html>

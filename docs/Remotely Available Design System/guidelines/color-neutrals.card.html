@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x170" name="Neutrals — Base, Surface & Cream" subtitle="Near-black backgrounds and cream text" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px; background: var(--ra-base); }
+  .row { display: flex; gap: 14px; }
+  .sw { flex: 1; border-radius: var(--radius-md); padding: 14px; min-height: 110px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; }
+  .role { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; margin-top: 2px; }
+  .dark .name, .dark .role { color: var(--ra-cream); } .dark .role { opacity: 0.55; }
+  .light .name, .light .role { color: var(--ra-base); } .light .role { opacity: 0.55; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw dark" style="background: var(--ra-ink); border: 1px solid var(--border-subtle)"><div class="name">#141414</div><div class="role">Ink / well</div></div>
+    <div class="sw dark" style="background: var(--ra-base); border: 1px solid var(--border-subtle)"><div class="name">#1a1a1a</div><div class="role">Base / page</div></div>
+    <div class="sw dark" style="background: var(--ra-surface); border: 1px solid var(--border-subtle)"><div class="name">#252525</div><div class="role">Surface / card</div></div>
+    <div class="sw light" style="background: var(--ra-cream)"><div class="name">#f5f1e8</div><div class="role">Cream / text</div></div>
+  </div>
+</body>
+</html>

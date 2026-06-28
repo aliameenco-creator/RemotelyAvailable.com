@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 880" width="1280" height="880">
+  <defs>
+    
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#272727"></stop>
+      <stop offset="1" stop-color="#1f1f1f"></stop>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#e38c35" stroke-width="1" stroke-opacity="0.045"></path>
+    </pattern>
+    <radialGradient id="copperGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e38c35" stop-opacity="0.16"></stop>
+      <stop offset="1" stop-color="#e38c35" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+
+  
+  <rect width="1280" height="880" fill="url(#base)"></rect>
+  <rect width="1280" height="880" fill="url(#grid)"></rect>
+  <rect x="780" y="-260" width="760" height="760" fill="url(#copperGlow)"></rect>
+
+  
+  <text x="64" y="84" font-family="&#39;Space Mono&#39;, monospace" font-size="14" letter-spacing="3" fill="#e38c35">// AGENTICALI BRAND SYSTEM</text>
+  <text x="64" y="142" font-family="Georgia, serif" font-size="48" fill="#f5f1e8">Typography &amp; <tspan font-style="italic" fill="#6e77cb">Palette</tspan></text>
+
+  
+  <line x1="64" y1="172" x2="1216" y2="172" stroke="#f5f1e8" stroke-opacity="0.1"></line>
+
+  
+  <text x="64" y="212" font-family="&#39;Space Mono&#39;, monospace" font-size="13" letter-spacing="3" fill="#e38c35">TYPEFACES</text>
+
+  
+  <text x="64" y="252" font-family="&#39;Space Mono&#39;, monospace" font-size="12" letter-spacing="2" fill="rgba(245,241,232,0.5)">01 · SERIF — TITLES &amp; ITALIC ACCENTS</text>
+  <text x="64" y="300" font-family="Georgia, serif" font-size="50" fill="#f5f1e8">Georgia</text>
+  <text x="360" y="290" font-family="Georgia, serif" font-size="26" fill="rgba(245,241,232,0.55)">AaBbCc 0123</text>
+  <text x="360" y="320" font-family="Georgia, serif" font-size="26" font-style="italic" fill="#6e77cb">left behind</text>
+
+  
+  <text x="64" y="382" font-family="&#39;Space Mono&#39;, monospace" font-size="12" letter-spacing="2" fill="rgba(245,241,232,0.5)">02 · SANS — BODY &amp; NAMES</text>
+  <text x="64" y="432" font-family="&#39;Plus Jakarta Sans&#39;, sans-serif" font-size="46" font-weight="800" fill="#f5f1e8">Plus Jakarta Sans</text>
+  <text x="660" y="424" font-family="&#39;Plus Jakarta Sans&#39;, sans-serif" font-size="24" font-weight="400" fill="rgba(245,241,232,0.55)">AaBbCc 0123</text>
+
+  
+  <text x="64" y="514" font-family="&#39;Space Mono&#39;, monospace" font-size="12" letter-spacing="2" fill="rgba(245,241,232,0.5)">03 · MONO — LABELS &amp; TECHNICAL</text>
+  <text x="64" y="562" font-family="&#39;Space Mono&#39;, monospace" font-size="44" font-weight="700" fill="#f5f1e8">Space Mono</text>
+  <text x="560" y="554" font-family="&#39;Space Mono&#39;, monospace" font-size="24" fill="rgba(245,241,232,0.55)">AaBbCc 0123</text>
+
+  
+  <line x1="64" y1="608" x2="1216" y2="608" stroke="#f5f1e8" stroke-opacity="0.1"></line>
+
+  
+  <text x="64" y="648" font-family="&#39;Space Mono&#39;, monospace" font-size="13" letter-spacing="3" fill="#e38c35">COLOR PALETTE</text>
+
+  
+  <rect x="64" y="672" width="200" height="120" rx="14" fill="#1a1a1a" stroke="#e38c35" stroke-opacity="0.25"></rect>
+  <text x="64" y="828" font-family="&#39;Space Mono&#39;, monospace" font-size="18" font-weight="700" fill="#f5f1e8">#1a1a1a</text>
+  <text x="64" y="852" font-family="&#39;Plus Jakarta Sans&#39;, sans-serif" font-size="13" fill="rgba(245,241,232,0.55)">BASE / PAGE</text>
+
+  
+  <rect x="302" y="672" width="200" height="120" rx="14" fill="#252525" stroke="#f5f1e8" stroke-opacity="0.12"></rect>
+  <text x="302" y="828" font-family="&#39;Space Mono&#39;, monospace" font-size="18" font-weight="700" fill="#f5f1e8">#252525</text>
+  <text x="302" y="852" font-family="&#39;Plus Jakarta Sans&#39;, sans-serif" font-size="13" fill="rgba(245,241,232,0.55)">SURFACE / SLIDE</text>
+
+  
+  <rect x="540" y="672" width="200" height="120" rx="14" fill="#e38c35"></rect>
+  <text x="540" y="828" font-family="&#39;Space Mono&#39;, monospace" font-size="18" font-weight="700" fill="#e38c35">#e38c35</text>
+  <text x="540" y="852" font-family="&#39;Plus Jakarta Sans&#39;, sans-serif" font-size="13" fill="rgba(245,241,232,0.55)">COPPER / PRIMARY</text>
+
+  
+  <rect x="778" y="672" width="200" height="120" rx="14" fill="#6e77cb"></rect>
+  <text x="778" y="828" font-family="&#39;Space Mono&#39;, monospace" font-size="18" font-weight="700" fill="#6e77cb">#6e77cb</text>
+  <text x="778" y="852" font-family="&#39;Plus Jakarta Sans&#39;, sans-serif" font-size="13" fill="rgba(245,241,232,0.55)">LAVENDER / SECONDARY</text>
+
+  
+  <rect x="1016" y="672" width="200" height="120" rx="14" fill="#f5f1e8"></rect>
+  <text x="1016" y="828" font-family="&#39;Space Mono&#39;, monospace" font-size="18" font-weight="700" fill="#f5f1e8">#f5f1e8</text>
+  <text x="1016" y="852" font-family="&#39;Plus Jakarta Sans&#39;, sans-serif" font-size="13" fill="rgba(245,241,232,0.55)">CREAM / TEXT</text>
+</svg>

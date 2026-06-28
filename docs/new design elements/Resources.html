@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources & Video Guides — Remotely Available</title>
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/colors.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/typography.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/base.css">
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: var(--ra-base); }
+  button { white-space: nowrap; }
+  .vid-card:hover .vid-thumb { border-color: var(--ra-copper-25); }
+  .vid-card:hover .vid-play { transform: scale(1.08); background: var(--ra-copper); color: var(--ra-base); }
+  @media (max-width: 900px){ .vid-grid{ grid-template-columns: repeat(2,1fr) !important; } .feat{ grid-template-columns: 1fr !important; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/_ds_bundle.js"></script>
+<script type="text/babel" src="lib/shared.jsx"></script>
+
+<script type="text/babel">
+const { Button, Badge, Card, Eyebrow, Stat, Input } = window.RemotelyAvailableDesignSystem_66c958;
+
+const CATEGORIES = ['All', 'Getting Started', 'AI Playbooks', 'Automation Tutorials', 'Voice & Chat', 'Growth'];
+
+const VIDEOS = [
+  { cat: 'AI Playbooks', dur: '14:22', title: 'The 40-hour audit: finding automatable work in any business', tone: 'copper' },
+  { cat: 'Getting Started', dur: '8:05', title: 'What AI can (and can’t) do for a small team in 2026', tone: 'lavender' },
+  { cat: 'Automation Tutorials', dur: '21:40', title: 'Build your first lead-routing automation, start to finish', tone: 'copper' },
+  { cat: 'Voice & Chat', dur: '17:12', title: 'Designing an AI voice agent customers actually trust', tone: 'lavender' },
+  { cat: 'Growth', dur: '11:58', title: 'The content pipeline that 5×’d our output without losing voice', tone: 'copper' },
+  { cat: 'AI Playbooks', dur: '19:30', title: 'Choosing your first three automations (and what to skip)', tone: 'lavender' },
+  { cat: 'Automation Tutorials', dur: '13:47', title: 'Connecting your CRM, inbox, and calendar without code', tone: 'copper' },
+  { cat: 'Getting Started', dur: '6:40', title: 'AI vocabulary for owners: agents, RAG, fine-tuning, plainly', tone: 'lavender' },
+];
+
+function Thumb({ tone, dur, big }) {
+  return (
+    <div className="vid-thumb" style={{
+      position: 'relative', aspectRatio: big ? '16 / 9' : '16 / 10', borderRadius: 14, overflow: 'hidden',
+      border: '1px solid var(--ra-cream-08)', transition: 'border-color var(--dur-base)',
+      background: tone === 'lavender'
+        ? 'radial-gradient(120% 100% at 20% 0%, rgba(110,119,203,0.32), transparent 60%), var(--ra-surface)'
+        : 'radial-gradient(120% 100% at 20% 0%, rgba(227,140,53,0.30), transparent 60%), var(--ra-surface)',
+    }}>
+      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(var(--ra-copper-045) 1px, transparent 1px), linear-gradient(90deg, var(--ra-copper-045) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <div className="vid-play" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: big ? 72 : 52, height: big ? 72 : 52, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(20,20,20,0.7)', border: '1px solid var(--ra-cream-25)', color: 'var(--ra-cream)', backdropFilter: 'blur(4px)', transition: 'transform var(--dur-base) var(--ease-standard), background var(--dur-base)' }}>
+        <Icon name="play" size={big ? 26 : 18} />
+      </div>
+      <span style={{ position: 'absolute', bottom: 12, right: 12, fontFamily: 'var(--font-mono)', fontSize: 11, padding: '3px 8px', borderRadius: 6, background: 'rgba(20,20,20,0.78)', color: 'var(--ra-cream)' }}>{dur}</span>
+    </div>
+  );
+}
+
+function VideoCard({ v }) {
+  return (
+    <div className="vid-card" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <Thumb tone={v.tone} dur={v.dur} />
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+          <Badge tone={v.tone} variant="soft">{v.cat}</Badge>
+        </div>
+        <h3 style={{ font: 'var(--text-h3)', fontSize: 16.5, lineHeight: 1.35, color: 'var(--ra-cream)' }}>{v.title}</h3>
+      </div>
+    </div>
+  );
+}
+
+const PLAYBOOKS = [
+  { title: 'The AI Readiness Checklist', meta: 'PDF · 12 pages', icon: 'doc' },
+  { title: 'Automation ROI Calculator', meta: 'Spreadsheet', icon: 'chart' },
+  { title: 'Voice Agent Script Templates', meta: 'PDF · 8 templates', icon: 'mic' },
+  { title: 'Vendor Evaluation Scorecard', meta: 'PDF · 1 page', icon: 'check' },
+];
+
+function App() {
+  const [audience, setAudience] = React.useState('ceos'); // 'ceos' | 'owners'
+  const [cat, setCat] = React.useState('All');
+  const audienceLabel = audience === 'ceos' ? 'For CEOs' : 'For Business Owners';
+  const audienceWord = audience === 'ceos' ? 'CEOs' : 'business owners';
+
+  const toggle = (
+    <button onClick={() => setAudience(audience === 'ceos' ? 'owners' : 'ceos')}
+      title="Switch audience"
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 'var(--radius-pill)', cursor: 'pointer',
+        background: 'var(--ra-lavender)', color: 'var(--ra-cream)', border: '1px solid transparent',
+        fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 13, transition: 'background var(--dur-fast)' }}
+      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--ra-lavender-bright)'}
+      onMouseLeave={(e) => e.currentTarget.style.background = 'var(--ra-lavender)'}>
+      <Icon name="users" size={15} /> {audienceLabel}
+    </button>
+  );
+
+  const shown = cat === 'All' ? VIDEOS : VIDEOS.filter((v) => v.cat === cat);
+
+  return (
+    <>
+      <Nav active="Resources" extra={toggle} />
+      <main>
+        {/* hero */}
+        <div style={{ position: 'relative', overflow: 'hidden' }}>
+          <Glow style={{ top: -240, left: '50%', transform: 'translateX(-50%)' }} size={640} />
+          <Section pad="var(--space-8)" style={{ position: 'relative', paddingTop: 64, textAlign: 'center' }}>
+            <span style={{ display: 'inline-flex', gap: 8, marginBottom: 20 }}>
+              <Badge tone="success" variant="soft" dot>Free · No signup</Badge>
+            </span>
+            <h1 style={{ font: 'var(--text-display)', fontSize: 'clamp(2.3rem, 5vw, 3.9rem)', letterSpacing: '-0.025em', lineHeight: 1.06, maxWidth: 820, margin: '0 auto', textWrap: 'balance' }}>
+              AI video guides for <AccentTitle>{audienceWord}</AccentTitle>
+            </h1>
+            <p style={{ margin: '22px auto 0', maxWidth: 560, fontSize: 18, lineHeight: 1.6, color: 'var(--ra-cream-55)' }}>
+              Short, practical walkthroughs on putting AI to work in your business — free for anyone, no email required. Use the toggle up top to switch perspective.
+            </p>
+            <div style={{ maxWidth: 460, margin: '30px auto 0' }}>
+              <Input placeholder="Search guides, playbooks, topics…" leading={<Icon name="search" size={17} />} />
+            </div>
+          </Section>
+        </div>
+
+        {/* featured */}
+        <Section style={{ paddingTop: 0 }}>
+          <div className="feat" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 28, alignItems: 'center' }}>
+            <div className="vid-card"><Thumb tone="copper" dur="23:10" big /></div>
+            <div>
+              <Badge tone="copper" variant="soft">Featured · {audienceLabel}</Badge>
+              <h2 style={{ font: 'var(--text-h2)', fontSize: 30, letterSpacing: '-0.02em', marginTop: 16, lineHeight: 1.15 }}>
+                The 90-day AI roadmap: from first automation to a system that runs itself
+              </h2>
+              <p style={{ marginTop: 14, color: 'var(--ra-cream-55)', fontSize: 16, lineHeight: 1.65, maxWidth: 460 }}>
+                A full walkthrough of how we’d sequence AI inside a {audienceWord === 'CEOs' ? 'leadership' : 'small'}-team business — what to automate first, what to wait on, and how to measure it.
+              </p>
+              <div style={{ marginTop: 24, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                <Button leading={<Icon name="play" size={15} />}>Watch now</Button>
+                <Button variant="ghost">Add to list</Button>
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        {/* category filter + grid */}
+        <Section style={{ paddingTop: 0 }}>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 34, borderTop: '1px solid var(--ra-cream-08)', paddingTop: 32 }}>
+            {CATEGORIES.map((c) => {
+              const on = c === cat;
+              return (
+                <button key={c} onClick={() => setCat(c)} style={{
+                  padding: '8px 16px', borderRadius: 'var(--radius-pill)', cursor: 'pointer',
+                  fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.04em',
+                  background: on ? 'var(--ra-copper)' : 'transparent', color: on ? 'var(--ra-base)' : 'var(--ra-cream-55)',
+                  border: on ? '1px solid transparent' : '1px solid var(--ra-cream-12)', transition: 'all var(--dur-fast)' }}>
+                  {c}
+                </button>
+              );
+            })}
+          </div>
+          <div className="vid-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
+            {shown.map((v, i) => <VideoCard key={i} v={v} />)}
+          </div>
+        </Section>
+
+        {/* downloadable playbooks */}
+        <div style={{ background: 'var(--ra-ink)', borderTop: '1px solid var(--ra-cream-08)' }}>
+          <Section>
+            <SectionHead kicker="Take it with you" title={<>Free <AccentTitle>playbooks</AccentTitle> & templates</>} align="left" />
+            <div style={{ marginTop: 32, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }}>
+              {PLAYBOOKS.map((p) => (
+                <Card key={p.title} interactive style={{ display: 'flex', flexDirection: 'column', gap: 14, cursor: 'pointer' }}>
+                  <span style={{ width: 44, height: 44, borderRadius: 11, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--ra-copper-08)', border: '1px solid var(--ra-copper-25)', color: 'var(--ra-copper)' }}><Icon name={p.icon} size={19} /></span>
+                  <div>
+                    <h3 style={{ font: 'var(--text-h3)', fontSize: 16 }}>{p.title}</h3>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ra-cream-40)', marginTop: 6 }}>{p.meta}</div>
+                  </div>
+                  <span style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ra-copper)' }}>Download <Icon name="arrow" size={13} /></span>
+                </Card>
+              ))}
+            </div>
+          </Section>
+        </div>
+
+        {/* newsletter CTA */}
+        <div style={{ position: 'relative', overflow: 'hidden', borderTop: '1px solid var(--ra-cream-08)' }}>
+          <Glow style={{ top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} size={520} />
+          <Section style={{ position: 'relative', textAlign: 'center', maxWidth: 640 }} maxWidth={640}>
+            <h2 style={{ font: 'var(--text-h1)', fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}>
+              New guides, <AccentTitle>every week</AccentTitle>
+            </h2>
+            <p style={{ margin: '16px auto 0', maxWidth: 460, color: 'var(--ra-cream-55)', fontSize: 16, lineHeight: 1.6 }}>
+              Optional — drop your email to get new videos and playbooks. Everything here stays free without it.
+            </p>
+            <div style={{ display: 'flex', gap: 12, maxWidth: 440, margin: '26px auto 0', flexWrap: 'wrap' }}>
+              <div style={{ flex: 1, minWidth: 200 }}><Input placeholder="you@company.com" /></div>
+              <Button size="lg">Subscribe</Button>
+            </div>
+          </Section>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#1a1a1a"/><rect x="24" y="32" width="52" height="36" rx="6" fill="none" stroke="#e38c35" stroke-width="3"/><path d="M45 44l14 6-14 6z" fill="#6e77cb"/></svg>
+</template>
+</body>
+</html>

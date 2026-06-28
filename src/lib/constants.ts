@@ -2,8 +2,8 @@ export const siteConfig = {
   name: "RemotelyAvailable",
   url: "https://remotelyavailable.com",
   description:
-    "We build AI automations, voice agents, chatbots, and intelligent websites that save businesses 40+ hours per week. Book a free strategy call.",
-  tagline: "AI Systems That Actually Work",
+    "A digital agency that delivers results — web development, social media, design, SEO, and business automation. We handle the work so you get your time back. Book a free strategy call.",
+  tagline: "We give you your time back",
   email: "hello@remotelyavailable.com",
   calendlyUrl: "https://calendly.com/creative-remotelyavailable/30min",
 } as const;
@@ -11,17 +11,17 @@ export const siteConfig = {
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Resources", href: "/resources" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const serviceNavLinks = [
-  { label: "AI Automations", href: "/services/ai-automations" },
-  { label: "AI Websites", href: "/services/ai-websites" },
-  { label: "AI Voice Agents", href: "/services/ai-voice-agents" },
-  { label: "AI Chatbots", href: "/services/ai-chatbots" },
-  { label: "AI Consulting", href: "/services/ai-consulting" },
-  { label: "AI Content Systems", href: "/services/ai-content-systems" },
+  { label: "Web Development", href: "/services/web-development" },
+  { label: "Social Media", href: "/services/social-media-management" },
+  { label: "AI Automation", href: "/services/ai-automations" },
+  { label: "SEO & Content", href: "/services/seo-content" },
+  { label: "Design", href: "/services/design" },
   { label: "Shopify Automation", href: "/services/shopify-automation", isNew: true },
 ] as const;
 
@@ -33,7 +33,7 @@ export const socialLinks = {
 
 export const chatConfig = {
   welcomeMessage:
-    "Hi! I'm the RemotelyAvailable AI assistant. I'd love to learn about your business and how we can help with AI automation. What's your name?",
+    "Hi! I'm the RemotelyAvailable assistant. Tell me a bit about your business and what you're trying to get done — websites, social, design, SEO, or automation. What's your name?",
   botName: "RA Assistant",
   placeholder: "Type a message...",
 } as const;
@@ -41,7 +41,7 @@ export const chatConfig = {
 export const leadPopupConfig = {
   pageThreshold: 3,
   delayMs: 2000,
-  heading: "Get a Free AI Automation Blueprint",
+  heading: "Get a Free Growth Plan",
   subtext:
-    "We'll send you a personalized plan showing how AI can save your business 40+ hours a week.",
+    "Tell us your biggest bottleneck and we'll send back a no-obligation plan to fix it — across web, content, design, or automation.",
 } as const;

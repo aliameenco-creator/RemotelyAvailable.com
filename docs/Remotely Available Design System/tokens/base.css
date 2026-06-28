@@ -1,0 +1,57 @@
+/* Remotely Available — Base elements & brand surface utilities */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-primary);
+  font: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings default to the serif display voice */
+h1, h2, h3 { color: var(--text-primary); margin: 0; }
+h1 { font: var(--text-h1); letter-spacing: var(--ls-tight); }
+h2 { font: var(--text-h2); letter-spacing: var(--ls-tight); }
+h3 { font: var(--text-h3); }
+
+p { margin: 0; }
+a { color: var(--accent-primary); text-decoration: none; }
+
+/* Italic serif accent — the signature "left behind" lavender treatment */
+em, .ra-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-italic-accent);
+}
+
+/* ---- Brand surface backgrounds ---- */
+
+/* The signature page: vertical base gradient + faint copper grid */
+.ra-surface-grid {
+  background-color: var(--ra-base);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(180deg, var(--ra-base-grad-top), var(--ra-base-grad-bottom));
+  background-size: var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size), 100% 100%;
+}
+
+/* Copper radial glow — drop into a positioned container */
+.ra-glow-copper {
+  background: radial-gradient(circle at center, var(--ra-copper-16), transparent 70%);
+}
+.ra-glow-lavender {
+  background: radial-gradient(circle at center, rgba(110,119,203,0.16), transparent 70%);
+}
+
+/* Mono eyebrow / kicker label utility */
+.ra-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--eyebrow);
+}

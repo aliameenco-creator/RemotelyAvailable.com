@@ -25,11 +25,12 @@ export function SectionHeading({
       )}
     >
       {badge && (
-        <span className="mb-4 inline-block rounded-full border border-primary-600/30 bg-primary-600/10 px-4 py-1.5 text-sm font-medium text-primary-400">
+        <span className="ra-eyebrow mb-4 block">
+          {"// "}
           {badge}
         </span>
       )}
-      <h2 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
+      <h2 className="font-display text-3xl tracking-[-0.02em] text-text-primary sm:text-4xl lg:text-5xl">
         {title}
       </h2>
       {description && (

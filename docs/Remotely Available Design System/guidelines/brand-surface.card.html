@@ -1,0 +1,26 @@
+<!-- @dsCard group="Brand" viewport="700x230" name="Signature surface" subtitle="Vertical base gradient · faint copper grid · copper glow" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; }
+  .stage { position: relative; height: 230px; overflow: hidden; }
+  .glow { position: absolute; width: 520px; height: 520px; top: -240px; right: -120px; }
+  .content { position: absolute; inset: 0; padding: 30px; display: flex; flex-direction: column; justify-content: center; }
+  .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ra-copper); }
+  .title { font-family: var(--font-serif); font-size: 40px; color: var(--ra-cream); margin-top: 10px; letter-spacing: -0.02em; }
+  .title em { font-style: italic; color: var(--ra-lavender); }
+</style>
+</head>
+<body>
+  <div class="stage ra-surface-grid">
+    <div class="glow ra-glow-copper"></div>
+    <div class="content">
+      <div class="eyebrow">// Remotely Available</div>
+      <div class="title">The room where work <em>gets done</em></div>
+    </div>
+  </div>
+</body>
+</html>

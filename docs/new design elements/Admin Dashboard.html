@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Remotely Available</title>
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/colors.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/typography.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/tokens/base.css">
+<style>
+  html, body { height: 100%; }
+  body { background: var(--ra-base); overflow: hidden; }
+  button { white-space: nowrap; }
+  .adm-scroll::-webkit-scrollbar { width: 10px; }
+  .adm-scroll::-webkit-scrollbar-thumb { background: var(--ra-surface-2); border-radius: 8px; border: 3px solid var(--ra-base); }
+  .adm-row:hover { background: var(--ra-surface) !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/remotely-available-design-system-66c958b9-ed5b-4b83-b4e2-877a21285eff/_ds_bundle.js"></script>
+<script type="text/babel" src="lib/shared.jsx"></script>
+
+<script type="text/babel">
+const { Button, Badge, Card, Eyebrow, Stat, Input } = window.RemotelyAvailableDesignSystem_66c958;
+
+const NAV = [
+  { id: 'overview', label: 'Overview', icon: 'grid' },
+  { id: 'projects', label: 'Projects', icon: 'folder' },
+  { id: 'cases', label: 'Case Studies', icon: 'doc' },
+  { id: 'services', label: 'Services', icon: 'layers' },
+  { id: 'videos', label: 'Videos', icon: 'video' },
+  { id: 'blog', label: 'Blog Posts', icon: 'chat' },
+];
+
+const STATUS = {
+  Live: 'success', Published: 'success', Active: 'success',
+  'In progress': 'copper', Review: 'warning', Scheduled: 'lavender',
+  Draft: 'neutral', Hidden: 'neutral',
+};
+function St({ s }) { return <Badge tone={STATUS[s] || 'neutral'} variant="soft" dot>{s}</Badge>; }
+
+const DATA = {
+  projects: {
+    cols: ['Project', 'Client', 'Service', 'Status', 'Updated'],
+    rows: [
+      ['Voice agent rollout', 'Meridian Freight', 'Voice Agents', 'Live', '2h ago'],
+      ['Lead-routing automation', 'ScaleUp SaaS', 'Automations', 'In progress', 'Today'],
+      ['Support bot v2', 'HomeRise Services', 'Chatbots', 'Review', 'Yesterday'],
+      ['Content pipeline', 'Apex Digital', 'Content Systems', 'Live', '3d ago'],
+      ['Store ops automation', 'Nimbus Goods', 'Shopify', 'In progress', '4d ago'],
+      ['Site rebuild', 'Cedar & Co.', 'AI Websites', 'Scheduled', '5d ago'],
+    ],
+  },
+  cases: {
+    cols: ['Title', 'Client', 'Status', 'Views', 'Updated'],
+    rows: [
+      ['Recovered $1.2M in missed loads', 'Meridian Freight', 'Published', '4,210', '2h ago'],
+      ['40% more demos on autopilot', 'ScaleUp SaaS', 'Published', '3,180', '1w ago'],
+      ['200+ calls a day, zero missed', 'HomeRise Services', 'Published', '2,640', '2w ago'],
+      ['1 to 5 posts a week, on-brand', 'Apex Digital', 'Draft', '—', '3d ago'],
+    ],
+  },
+  services: {
+    cols: ['Service', 'Tier shown', 'Status', 'Inquiries (30d)', 'Updated'],
+    rows: [
+      ['AI Automations', 'All', 'Active', '38', '1w ago'],
+      ['AI Voice Agents', 'System+', 'Active', '27', '1w ago'],
+      ['AI Websites', 'All', 'Active', '19', '2w ago'],
+      ['AI Chatbots', 'All', 'Active', '22', '2w ago'],
+      ['AI Content Systems', 'System+', 'Active', '14', '1mo ago'],
+      ['Shopify Automation', 'Sprint+', 'Hidden', '6', '1mo ago'],
+    ],
+  },
+  videos: {
+    cols: ['Title', 'Category', 'Duration', 'Status', 'Views'],
+    rows: [
+      ['The 90-day AI roadmap', 'AI Playbooks', '23:10', 'Published', '12,400'],
+      ['The 40-hour audit', 'AI Playbooks', '14:22', 'Published', '8,910'],
+      ['Build your first automation', 'Tutorials', '21:40', 'Published', '6,330'],
+      ['Designing a voice agent', 'Voice & Chat', '17:12', 'Scheduled', '—'],
+      ['AI vocabulary for owners', 'Getting Started', '6:40', 'Draft', '—'],
+    ],
+  },
+  blog: {
+    cols: ['Title', 'Author', 'Status', 'Published'],
+    rows: [
+      ['Why most AI pilots never ship', 'Dana K.', 'Published', 'Jun 12, 2026'],
+      ['The economics of an AI voice desk', 'Marcus R.', 'Published', 'Jun 5, 2026'],
+      ['Automations we tell clients to skip', 'Priya P.', 'Review', '—'],
+      ['A field guide to RAG for owners', 'Sarah C.', 'Draft', '—'],
+    ],
+  },
+};
+
+function Table({ section }) {
+  const d = DATA[section];
+  return (
+    <Card style={{ padding: 0, overflow: 'hidden' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: `2fr repeat(${d.cols.length - 1}, 1fr) 40px`, padding: '14px 20px', borderBottom: '1px solid var(--ra-cream-08)', background: 'var(--ra-ink)' }}>
+        {d.cols.map((c) => <span key={c} className="ra-eyebrow" style={{ fontSize: 11 }}>{c}</span>)}
+        <span />
+      </div>
+      {d.rows.map((r, i) => (
+        <div key={i} className="adm-row" style={{ display: 'grid', gridTemplateColumns: `2fr repeat(${d.cols.length - 1}, 1fr) 40px`, alignItems: 'center', padding: '16px 20px', borderBottom: i < d.rows.length - 1 ? '1px solid var(--ra-cream-08)' : 'none', transition: 'background var(--dur-fast)', cursor: 'pointer' }}>
+          {r.map((cell, j) => (
+            <span key={j} style={{ fontSize: 14, color: j === 0 ? 'var(--ra-cream)' : 'var(--ra-cream-55)', fontWeight: j === 0 ? 600 : 400, fontFamily: (typeof cell === 'string' && /^[\d,]+$|^—$/.test(cell)) ? 'var(--font-mono)' : 'var(--font-sans)' }}>
+              {STATUS[cell] ? <St s={cell} /> : cell}
+            </span>
+          ))}
+          <span style={{ color: 'var(--ra-cream-40)', display: 'inline-flex', justifyContent: 'flex-end' }}><Icon name="settings" size={15} /></span>
+        </div>
+      ))}
+    </Card>
+  );
+}
+
+const OVERVIEW_STATS = [
+  { value: '6', label: 'Active projects', delta: '2 in review', tone: 'success' },
+  { value: '23', label: 'New leads / 7d', delta: '+18% vs last wk', tone: 'success' },
+  { value: '41', label: 'Published assets', delta: '3 scheduled', tone: 'lavender' },
+  { value: '512', label: 'Client hrs saved / wk', delta: 'across all clients', tone: 'lavender' },
+];
+const ACTIVITY = [
+  { who: 'Voice agent', what: 'went live for Meridian Freight', when: '2h ago', icon: 'mic', tone: 'var(--ra-success)' },
+  { who: 'New lead', what: 'Cedar & Co. requested a teardown', when: '4h ago', icon: 'users', tone: 'var(--ra-copper)' },
+  { who: 'Case study', what: '“Recovered $1.2M” published', when: 'Today', icon: 'doc', tone: 'var(--ra-lavender)' },
+  { who: 'Video', what: '“90-day AI roadmap” crossed 12k views', when: 'Yesterday', icon: 'video', tone: 'var(--ra-copper)' },
+  { who: 'Automation', what: 'lead-routing build moved to QA', when: '2d ago', icon: 'bolt', tone: 'var(--ra-success)' },
+];
+
+function Overview() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+        {OVERVIEW_STATS.map((s) => (
+          <Card key={s.label}><Stat value={s.value} label={s.label} delta={s.delta} deltaTone={s.tone} /></Card>
+        ))}
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 22, alignItems: 'start' }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+            <h3 style={{ font: 'var(--text-h3)', fontSize: 17 }}>Active projects</h3>
+            <a href="#" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ra-copper)' }}>View all</a>
+          </div>
+          <Table section="projects" />
+        </div>
+        <div>
+          <h3 style={{ font: 'var(--text-h3)', fontSize: 17, marginBottom: 14 }}>Recent activity</h3>
+          <Card style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            {ACTIVITY.map((a, i) => (
+              <div key={i} style={{ display: 'flex', gap: 13, padding: '12px 4px', borderBottom: i < ACTIVITY.length - 1 ? '1px solid var(--ra-cream-08)' : 'none' }}>
+                <span style={{ width: 34, height: 34, borderRadius: 9, flex: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--ra-ink)', border: '1px solid var(--ra-cream-08)', color: a.tone }}><Icon name={a.icon} size={16} /></span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13.5, color: 'var(--ra-cream-70)', lineHeight: 1.45 }}><strong style={{ color: 'var(--ra-cream)', fontWeight: 600 }}>{a.who}</strong> {a.what}</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ra-cream-40)', marginTop: 3 }}>{a.when}</div>
+                </div>
+              </div>
+            ))}
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const NEW_LABEL = { projects: 'New project', cases: 'New case study', services: 'Add service', videos: 'Upload video', blog: 'New post', overview: 'Quick add' };
+
+function App() {
+  const [active, setActive] = React.useState('overview');
+  const current = NAV.find((n) => n.id === active);
+  return (
+    <div style={{ display: 'flex', height: '100vh' }}>
+      {/* sidebar */}
+      <aside style={{ width: 248, flex: 'none', background: 'var(--ra-ink)', borderRight: '1px solid var(--ra-cream-08)', display: 'flex', flexDirection: 'column', padding: '22px 16px' }}>
+        <div style={{ padding: '0 8px 8px' }}><Wordmark size={16} /></div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ra-cream-40)', padding: '20px 8px 10px' }}>// manage</div>
+        <nav style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {NAV.map((n) => {
+            const on = n.id === active;
+            return (
+              <button key={n.id} onClick={() => setActive(n.id)} style={{
+                display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
+                border: '1px solid ' + (on ? 'var(--ra-copper-25)' : 'transparent'),
+                background: on ? 'var(--ra-copper-08)' : 'transparent',
+                color: on ? 'var(--ra-cream)' : 'var(--ra-cream-55)',
+                fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, textAlign: 'left', transition: 'all var(--dur-fast)' }}>
+                <span style={{ color: on ? 'var(--ra-copper)' : 'var(--ra-cream-40)', display: 'inline-flex' }}><Icon name={n.icon} size={17} /></span>
+                {n.label}
+              </button>
+            );
+          })}
+        </nav>
+        <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: 11, padding: '12px 8px', borderTop: '1px solid var(--ra-cream-08)' }}>
+          <span style={{ width: 36, height: 36, borderRadius: '50%', flex: 'none', background: 'var(--ra-lavender)', color: 'var(--ra-cream)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 13 }}>RA</span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 13, color: 'var(--ra-cream)', fontWeight: 600 }}>Admin</div>
+            <div style={{ fontSize: 11.5, color: 'var(--ra-cream-40)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>team@remotelyavailable.com</div>
+          </div>
+        </div>
+      </aside>
+
+      {/* main */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <header style={{ display: 'flex', alignItems: 'center', gap: 18, padding: '18px 32px', borderBottom: '1px solid var(--ra-cream-08)', flex: 'none' }}>
+          <div>
+            <div className="ra-eyebrow" style={{ fontSize: 10.5, marginBottom: 3 }}>{active === 'overview' ? 'Dashboard' : 'Manage'}</div>
+            <h1 style={{ font: 'var(--text-h3)', fontSize: 21, fontFamily: 'var(--font-serif)', fontWeight: 400 }}>{current.label}</h1>
+          </div>
+          <div style={{ marginLeft: 'auto', width: 280 }}>
+            <Input placeholder="Search…" leading={<Icon name="search" size={16} />} />
+          </div>
+          <Button leading={<Icon name="plus" size={15} />}>{NEW_LABEL[active]}</Button>
+          <a href="Landing Page.html" title="View site" style={{ width: 40, height: 40, borderRadius: 10, border: '1px solid var(--ra-cream-12)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ra-cream-55)', flex: 'none' }}><Icon name="external" size={16} /></a>
+        </header>
+        <div className="adm-scroll" style={{ flex: 1, overflowY: 'auto', padding: '28px 32px' }}>
+          {active === 'overview' ? <Overview /> : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ra-cream-40)' }}>{DATA[active].rows.length} items</span>
+                <span style={{ marginLeft: 'auto' }} />
+                <Button variant="ghost" size="sm" leading={<Icon name="search" size={14} />}>Filter</Button>
+              </div>
+              <Table section={active} />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#1a1a1a"/><rect x="24" y="28" width="14" height="44" rx="3" fill="#6e77cb"/><rect x="44" y="28" width="32" height="14" rx="3" fill="#e38c35"/><rect x="44" y="48" width="32" height="24" rx="3" fill="none" stroke="#e38c35" stroke-width="3"/></svg>
+</template>
+</body>
+</html>

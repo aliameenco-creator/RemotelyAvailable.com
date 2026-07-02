@@ -40,7 +40,7 @@ export function Button({
   icon,
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius-pill)] cursor-pointer",
+    "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-semibold rounded-[var(--radius-pill)] cursor-pointer",
     "transition-[background,border-color,transform] duration-[120ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
     "active:scale-[0.97]",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500",

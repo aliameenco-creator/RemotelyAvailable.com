@@ -52,7 +52,7 @@ export function Navbar() {
         className={cn(
           "mx-auto transition-all duration-500 ease-in-out",
           isScrolled
-            ? "max-w-3xl mt-3 px-2"
+            ? "w-fit max-w-[calc(100vw-1.5rem)] mt-3 px-2"
             : "max-w-7xl mt-0 px-4 sm:px-6 lg:px-8"
         )}
       >
@@ -71,19 +71,19 @@ export function Navbar() {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden items-center gap-0.5 md:flex">
+          <div className="hidden shrink-0 items-center gap-0.5 md:flex">
             {navLinks.map((link) =>
               link.label === "Services" ? (
                 <div
                   key={link.href}
-                  className="relative"
+                  className="relative shrink-0"
                   onMouseEnter={handleDropdownEnter}
                   onMouseLeave={handleDropdownLeave}
                 >
                   <Link
                     href={link.href}
                     className={cn(
-                      "inline-flex items-center gap-1 px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors duration-200",
+                      "inline-flex shrink-0 items-center gap-1 whitespace-nowrap px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors duration-200",
                       isServicePage
                         ? "text-text-primary bg-white/[0.08]"
                         : "text-text-secondary hover:text-text-primary hover:bg-white/[0.04]"
@@ -144,7 +144,7 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors duration-200",
+                    "shrink-0 whitespace-nowrap px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors duration-200",
                     pathname === link.href
                       ? "text-text-primary bg-white/[0.08]"
                       : "text-text-secondary hover:text-text-primary hover:bg-white/[0.04]"
@@ -159,7 +159,7 @@ export function Navbar() {
           {/* Desktop CTA */}
           <div
             className={cn(
-              "hidden md:flex items-center",
+              "hidden shrink-0 md:flex items-center",
               isScrolled ? "pr-1" : "pr-0"
             )}
           >

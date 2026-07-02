@@ -4,7 +4,7 @@ export function Wordmark({ size = 19 }: { size?: number }) {
   const markSize = Math.round(size * 1.5);
 
   return (
-    <Link href="/" className="inline-flex items-center gap-2 no-underline">
+    <Link href="/" className="inline-flex shrink-0 items-center gap-2 no-underline">
       <svg
         width={markSize}
         height={markSize}
@@ -40,6 +40,7 @@ export function Wordmark({ size = 19 }: { size?: number }) {
           fontSize: size,
           color: "var(--ra-cream)",
           letterSpacing: "-0.01em",
+          whiteSpace: "nowrap",
         }}
       >
         Remotely Available

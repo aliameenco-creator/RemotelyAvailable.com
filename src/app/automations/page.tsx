@@ -30,6 +30,7 @@ export default function AutomationsPage() {
       position: i + 1,
       name: automation.name,
       description: automation.description,
+      url: `${siteConfig.url}/automations/${automation.slug}`,
     })),
   };
 

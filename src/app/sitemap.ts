@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { services } from "@/data/services";
 import { caseStudies } from "@/data/caseStudies";
 import { systems } from "@/data/systems";
+import { ukCities, locationServices } from "@/data/ukLocations";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://remotelyavailable.com";
@@ -19,6 +20,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
+
+  const cityHubPages = ukCities.map((city) => ({
+    url: `${baseUrl}/locations/${city.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const cityServicePages = ukCities.flatMap((city) =>
+    locationServices.map((service) => ({
+      url: `${baseUrl}/locations/${city.slug}/${service.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }))
+  );
 
   const systemPages = systems.map((system) => ({
     url: `${baseUrl}/ai-automation-systems/${system.slug}`,
@@ -67,6 +84,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     ...systemPages,
+    {
+      url: `${baseUrl}/locations`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...cityHubPages,
+    ...cityServicePages,
     {
       url: `${baseUrl}/about`,
       lastModified: new Date(),

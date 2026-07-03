@@ -21,6 +21,7 @@ const footerSections = [
       { label: "About", href: "/about" },
       { label: "Automations", href: "/automations" },
       { label: "Projects", href: "/projects" },
+      { label: "UK Locations", href: "/locations" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -37,7 +38,7 @@ export function Footer() {
               <Wordmark size={19} />
               <p className="mt-4 max-w-sm text-text-secondary leading-relaxed">
                 We build AI systems that save businesses 40+ hours a week.
-                Automations, voice agents, chatbots, and intelligent websites —
+                Automations, voice agents, chatbots, and intelligent websites,
                 engineered for real results.
               </p>
               <div className="mt-6 flex items-center gap-4">

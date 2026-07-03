@@ -119,7 +119,7 @@ const HERO_TITLE_STYLE: React.CSSProperties = {
 };
 
 /* Animated workflow canvas: inputs flow through the AI node to outcomes,
-   with pulses travelling along the wires (SVG SMIL â€” no JS, no hydration). */
+   with pulses travelling along the wires (SVG SMIL, no JS, no hydration). */
 
 const WIRES = [
   { d: "M170 78 C 215 78, 155 228, 200 228", delay: "0s" },
@@ -210,7 +210,7 @@ function HeroVisual() {
           // live workflow
         </span>
         <span style={{ marginLeft: "auto", fontFamily: mono, fontSize: 11, color: "var(--ra-success)" }}>
-          â— active
+          ● active
         </span>
       </div>
 
@@ -249,7 +249,7 @@ function HeroVisual() {
           x={10}
           y={48}
           label="New enquiry"
-          meta="webhook Â· just now"
+          meta="webhook · just now"
           tone="var(--ra-copper)"
           icon={
             <svg width={18} height={18} viewBox="0 0 24 24" {...iconProps}>
@@ -299,7 +299,7 @@ function HeroVisual() {
             AI Agent
           </text>
           <text x={75} y={87} textAnchor="middle" fill="var(--ra-cream-40)" fontSize={9.5} fontFamily="var(--font-mono)">
-            deciding next stepâ€¦
+            deciding next step...
           </text>
         </g>
 
@@ -337,7 +337,7 @@ function HeroVisual() {
           x={380}
           y={362}
           label="Call booked"
-          meta="Tue 10:30 Â· calendar"
+          meta="Tue 10:30 · calendar"
           tone="var(--ra-copper)"
           done
           icon={
@@ -945,7 +945,7 @@ export function Process() {
           }}
         >
           <span style={{ fontFamily: mono, fontSize: 12.5, color: "var(--ra-cream-55)", letterSpacing: "0.04em" }}>
-            Step 01 costs nothing —
+            Step 01 costs nothing.
           </span>
           <Button
             href="/contact"
@@ -1061,7 +1061,9 @@ export function Team() {
               </div>
               <div style={{ padding: "16px 18px 18px", borderTop: "1px solid var(--ra-cream-08)", display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
                 <div>
-                  <div style={{ fontFamily: serif, fontSize: 22, color: "var(--ra-cream)" }}>Ali Ameen</div>
+                  <a href="/team/ali-ameen" style={{ fontFamily: serif, fontSize: 22, color: "var(--ra-cream)", textDecoration: "none" }}>
+                    Ali Ameen
+                  </a>
                   <div style={{ fontFamily: mono, fontSize: 11, letterSpacing: "0.09em", color: "var(--ra-copper)", marginTop: 4 }}>
                     // AI Specialist · Business Strategist
                   </div>
@@ -1140,8 +1142,8 @@ export function Team() {
 /* ====================== TESTIMONIALS ====================== */
 const QUOTES = [
   { quote: "RemotelyAvailable automated our entire lead qualification process. What used to take 3 team members now runs on autopilot. We booked 40% more demos in the first month.", name: "Sarah Chen", role: "Head of Operations, ScaleUp SaaS", initials: "SC" },
-  { quote: "The AI voice agent they built handles 200+ calls a day without missing a beat. Our customers canâ€™t tell itâ€™s not a real person. Itâ€™s been a game-changer for our support team.", name: "Marcus Rivera", role: "CEO, HomeRise Services", initials: "MR" },
-  { quote: "We went from publishing one blog post a month to five per week, all on-brand, all reviewed by our team. The content pipeline they built is the best investment weâ€™ve made this year.", name: "Priya Patel", role: "Marketing Director, Apex Digital", initials: "PP" },
+  { quote: "The AI voice agent they built handles 200+ calls a day without missing a beat. Our customers can't tell it's not a real person. It's been a game-changer for our support team.", name: "Marcus Rivera", role: "CEO, HomeRise Services", initials: "MR" },
+  { quote: "We went from publishing one blog post a month to five per week, all on-brand, all reviewed by our team. The content pipeline they built is the best investment we've made this year.", name: "Priya Patel", role: "Marketing Director, Apex Digital", initials: "PP" },
 ];
 export function Testimonials() {
   return (
@@ -1149,7 +1151,7 @@ export function Testimonials() {
       <SectionHead
         kicker="Client Results"
         title={<>Trusted by Teams Who <AccentTitle>Ship</AccentTitle></>}
-        lead="Real results from real businesses. Hereâ€™s what our clients say about working with us."
+        lead="Real results from real businesses. Here's what our clients say about working with us."
       />
       <div className="three-col" style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 18 }}>
         {QUOTES.map((q) => (
@@ -1228,10 +1230,10 @@ export function CtaBand() {
 /* ====================== FAQ ====================== */
 const FAQS = [
   { q: "What kind of businesses do you work with?", a: "We work with growth-stage companies, agencies, e-commerce brands, and service businesses, anyone with repetitive work that AI can take off their plate. If you have a process, we can probably automate it." },
-  { q: "How long does a typical project take?", a: "Most automation builds ship in 2â€“4 weeks. Larger systems like custom voice agents or full content pipelines run 4â€“8 weeks. We scope timeline precisely before you commit." },
+  { q: "How long does a typical project take?", a: "Most automation builds ship in 2-4 weeks. Larger systems like custom voice agents or full content pipelines run 4-8 weeks. We scope timeline precisely before you commit." },
   { q: "Do you offer ongoing support after launch?", a: "Yes. Every build includes a support window, and we offer monthly retainers for optimization, monitoring, and new automations as your needs grow." },
   { q: "How much does it cost?", a: "Projects are fixed-scope and fixed-price, quoted after the discovery call. Most engagements start in the low five figures and pay for themselves in reclaimed hours within the first quarter." },
-  { q: "What if Iâ€™m not sure which service I need?", a: "Thatâ€™s what the free discovery call is for. Weâ€™ll look at your operations and recommend the highest-leverage place to start, even if thatâ€™s not the biggest project." },
+  { q: "What if I'm not sure which service I need?", a: "That's what the free discovery call is for. We'll look at your operations and recommend the highest-leverage place to start, even if that's not the biggest project." },
   { q: "Is my data safe?", a: "Absolutely. We follow least-privilege access, encrypt data in transit and at rest, and can work entirely within your own cloud and tooling. You own everything we build." },
 ];
 function FaqItem({ q, a }: { q: string; a: string }) {
@@ -1270,7 +1272,7 @@ export function Faq() {
       <SectionHead
         kicker="FAQ"
         title="Frequently Asked Questions"
-        lead="Everything you need to know about working with us. Canâ€™t find your answer? Book a call, weâ€™re happy to help."
+        lead="Everything you need to know about working with us. Can't find your answer? Book a call, we're happy to help."
       />
       <div style={{ marginTop: 40 }}>
         {FAQS.map((f) => (

@@ -3,6 +3,7 @@ import { services } from "@/data/services";
 import { caseStudies } from "@/data/caseStudies";
 import { systems } from "@/data/systems";
 import { ukCities, locationServices } from "@/data/ukLocations";
+import { teamMembers } from "@/data/team";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://remotelyavailable.com";
@@ -104,6 +105,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    ...teamMembers.map((member) => ({
+      url: `${baseUrl}/team/${member.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
     {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),

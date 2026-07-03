@@ -29,7 +29,7 @@ const GOALS = [
     label: "Too much manual admin",
     sub: "emails, invoices, follow-ups",
     serviceSlug: "ai-automations",
-    why: "Automation pays back fastest here — most clients reclaim 20-40 hours a week within the first month.",
+    why: "Automation pays back fastest here. Most clients reclaim 20-40 hours a week within the first month.",
   },
   {
     id: "leads",
@@ -45,7 +45,7 @@ const GOALS = [
     label: "Website doesn't convert",
     sub: "dated, slow, or DIY",
     serviceSlug: "web-development",
-    why: "Your site is the first thing every prospect checks — fixing it lifts every other channel at once.",
+    why: "Your site is the first thing every prospect checks, so fixing it lifts every other channel at once.",
   },
   {
     id: "social",
@@ -61,7 +61,7 @@ const GOALS = [
     label: "Brand looks unprofessional",
     sub: "logo, design, materials",
     serviceSlug: "design",
-    why: "Consistent design earns trust before you say a word — and makes everything else convert better.",
+    why: "Consistent design earns trust before you say a word, and it makes everything else convert better.",
   },
   {
     id: "shopify",
@@ -69,7 +69,7 @@ const GOALS = [
     label: "Shopify store eats my time",
     sub: "orders, support, ops",
     serviceSlug: "shopify-automation",
-    why: "Store operations are the most automatable work there is — orders, tracking, and support can run themselves.",
+    why: "Store operations are the most automatable work there is: orders, tracking, and support can run themselves.",
   },
 ] as const;
 
@@ -93,7 +93,7 @@ export function ServiceFinder() {
         <SectionHeading
           badge="Start Here"
           title="What Should You Fix First?"
-          description="Pick your biggest headache — we'll point you at the highest-ROI starting point."
+          description="Pick your biggest headache and we'll point you at the highest-ROI starting point."
         />
 
         <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3">

@@ -64,7 +64,7 @@ export function RoiCalculator() {
         <SectionHeading
           badge="ROI Calculator"
           title="See What Automation Could Save You"
-          description="Drag the sliders. The maths is conservative — we assume only 60% of repetitive work gets automated."
+          description="Drag the sliders. The maths is conservative: we assume only 60% of repetitive work gets automated."
         />
 
         <div className="border-beam mx-auto grid max-w-4xl gap-8 rounded-[var(--radius-card)] border border-white/[0.1] bg-bg-card p-8 sm:p-10 lg:grid-cols-2 lg:gap-12">

@@ -67,7 +67,7 @@ export function CaseStudySpotlight() {
                 </span>
                 {study.quote.after}&rdquo;
                 <footer className="mt-2 text-xs not-italic text-text-muted">
-                  — {study.quote.author}, {study.quote.role}
+                  {study.quote.author}, {study.quote.role}
                 </footer>
               </blockquote>
               <Link

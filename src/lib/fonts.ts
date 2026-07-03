@@ -1,6 +1,6 @@
 import { Plus_Jakarta_Sans, Space_Mono } from "next/font/google";
 
-// Body + UI — Plus Jakarta Sans. Display titles use Georgia (system serif).
+// Body + UI, Plus Jakarta Sans. Display titles use Georgia (system serif).
 export const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
@@ -8,7 +8,7 @@ export const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-// Eyebrows, labels, technical/data — Space Mono.
+// Eyebrows, labels, technical/data, Space Mono.
 export const spaceMono = Space_Mono({
   subsets: ["latin"],
   variable: "--font-space-mono",

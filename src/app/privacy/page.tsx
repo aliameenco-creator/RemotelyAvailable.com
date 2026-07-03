@@ -89,12 +89,12 @@ export default function PrivacyPage() {
               </p>
               <ul className="mt-3 list-disc pl-6 space-y-2">
                 <li>
-                  <span className="text-text-primary font-medium">Service providers</span> — trusted
+                  <span className="text-text-primary font-medium">Service providers</span>, trusted
                   third-party tools we use to operate our business (e.g., EmailOctopus for email,
                   Calendly for scheduling, Vercel for hosting)
                 </li>
                 <li>
-                  <span className="text-text-primary font-medium">Legal requirements</span> — if
+                  <span className="text-text-primary font-medium">Legal requirements</span>, if
                   required by law, regulation, or legal process
                 </li>
               </ul>

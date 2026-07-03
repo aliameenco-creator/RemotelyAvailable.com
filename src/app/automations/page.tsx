@@ -11,11 +11,11 @@ import { siteConfig } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "AI Automations Portfolio | Built Systems for Creators & Agencies",
   description:
-    "A portfolio of AI automations built for creators, agencies, and businesses — content, lead generation, sales workflows, YouTube, and business operations systems.",
+    "A portfolio of AI automations built for creators, agencies, and businesses: content, lead generation, sales workflows, YouTube, and business operations systems.",
   openGraph: {
     title: "AI Automations Portfolio | RemotelyAvailable",
     description:
-      "AI automations I've built for creators, agencies, and businesses — from lead generation to full sales workflows.",
+      "AI automations I've built for creators, agencies, and businesses, from lead generation to full sales workflows.",
     url: `${siteConfig.url}/automations`,
   },
 };
@@ -56,7 +56,7 @@ export default function AutomationsPage() {
             as="h1"
             badge="Automations"
             title="AI automations I've built"
-            description="AI automations I've built for creators, agencies, and businesses — content, lead generation, sales workflows, YouTube, and business operations, all in one place."
+            description="AI automations I've built for creators, agencies, and businesses: content, lead generation, sales workflows, YouTube, and business operations, all in one place."
             align="left"
           />
         </Container>

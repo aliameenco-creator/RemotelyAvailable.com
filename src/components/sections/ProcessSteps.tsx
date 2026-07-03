@@ -13,7 +13,7 @@ export function ProcessSteps() {
           <SectionHeading
             badge="How We Work"
             title="From Discovery to Delivery"
-            description="A proven process that turns your business challenges into working AI systems — no fluff, no delays."
+            description="A proven process that turns your business challenges into working AI systems, no fluff, no delays."
           />
         </ScrollReveal>
 

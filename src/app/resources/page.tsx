@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Resources & Video Guides | Free AI Playbooks",
   description:
-    "Free, practical video guides and playbooks on putting AI and automation to work in your business — no signup required.",
+    "Free, practical video guides and playbooks on putting AI and automation to work in your business, no signup required.",
   openGraph: {
     title: "Resources & Video Guides | RemotelyAvailable",
     description:

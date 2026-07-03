@@ -35,7 +35,7 @@ export default function ShopifyAutomationPage() {
     "@type": "Service",
     name: "Shopify Email Automation",
     description:
-      "Automated Klaviyo email systems for Shopify stores — abandoned cart recovery, welcome series, post-purchase flows, browse abandonment, and win-back campaigns.",
+      "Automated Klaviyo email systems for Shopify stores: abandoned cart recovery, welcome series, post-purchase flows, browse abandonment, and win-back campaigns.",
     provider: {
       "@type": "Organization",
       name: "Remotely Available",

@@ -34,7 +34,7 @@ const values = [
     icon: Shield,
     title: "Security First",
     description:
-      "Your data is sacred. We follow industry best practices, sign NDAs, and build with security baked in — not bolted on.",
+      "Your data is sacred. We follow industry best practices, sign NDAs, and build with security baked in, not bolted on.",
   },
   {
     icon: Handshake,
@@ -97,13 +97,13 @@ export default function AboutPage() {
               <p className="mt-6 text-lg text-text-secondary leading-relaxed">
                 We started RemotelyAvailable because we saw a gap: businesses
                 drowning in manual processes while powerful AI tools sat unused.
-                Not because the tools are bad — because nobody bridges the gap
+                Not because the tools are bad, because nobody bridges the gap
                 between what AI can do and what businesses actually need.
               </p>
               <p className="mt-4 text-lg text-text-secondary leading-relaxed">
                 That&apos;s what we do. We take the world&apos;s best AI
                 technology and engineer it into systems that solve your specific
-                problems — automations that actually run, voice agents that
+                problems, automations that actually run, voice agents that
                 actually pick up the phone, chatbots that actually know your
                 business.
               </p>
@@ -120,7 +120,7 @@ export default function AboutPage() {
               <SectionHeading
                 badge="Our Mission"
                 title="Make AI Actually Useful for Real Businesses"
-                description="The AI industry is full of demos that wow and tools that collect dust. We build systems that work on Monday morning — and every morning after that."
+                description="The AI industry is full of demos that wow and tools that collect dust. We build systems that work on Monday morning, and every morning after that."
               />
             </div>
           </ScrollReveal>

@@ -54,7 +54,7 @@ export function Hero() {
             className="mx-auto mt-6 max-w-2xl text-lg text-text-secondary leading-relaxed sm:text-xl animate-fade-in-up"
             style={{ animationDelay: "0.2s", animationFillMode: "both" }}
           >
-            Websites, social media, design, SEO, and automation — done for you, so
+            Websites, social media, design, SEO, and automation, done for you, so
             your team spends its time{" "}
             <span className="text-text-primary font-medium">where it actually counts</span>.
             We use AI where it makes a real difference.

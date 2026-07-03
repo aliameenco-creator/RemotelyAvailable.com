@@ -53,7 +53,7 @@ export function ContactForm() {
   });
 
   async function onSubmit(data: ContactFormData) {
-    // Timing check — bots submit instantly
+    // Timing check, bots submit instantly
     if (Date.now() - loadTime < 3000) return;
 
     setStatus("loading");

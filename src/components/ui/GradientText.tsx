@@ -6,7 +6,7 @@ interface GradientTextProps {
 }
 
 // The Remotely Available signature: a Georgia italic accent word in lavender
-// inside an otherwise plain serif title — e.g. "Results, not retainers."
+// inside an otherwise plain serif title, e.g. "Results, not retainers."
 export function GradientText({ children, className }: GradientTextProps) {
   return (
     <span

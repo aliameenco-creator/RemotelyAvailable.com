@@ -194,7 +194,7 @@ export function Hero() {
                 That Actually Work
               </h1>
               <p style={{ marginTop: 24, maxWidth: 480, fontSize: 17, lineHeight: 1.6, color: "var(--ra-cream-55)" }}>
-                Automations, voice agents, chatbots, and intelligent websites — engineered to save your team{" "}
+                Automations, voice agents, chatbots, and intelligent websites, engineered to save your team{" "}
                 <strong style={{ color: "var(--ra-cream)", fontWeight: 600 }}>40+ hours a week</strong> and drive real
                 business results.
               </p>
@@ -311,7 +311,7 @@ interface Svc {
   tag?: string;
 }
 const SERVICES: Svc[] = [
-  { icon: "bolt", name: "AI Automations", desc: "Eliminate repetitive tasks and reclaim your team’s time — reliable, monitored workflows wired into the tools you already use.", span: 4, feature: true, tag: "Most deployed" },
+  { icon: "bolt", name: "AI Automations", desc: "Eliminate repetitive tasks and reclaim your team’s time, reliable, monitored workflows wired into the tools you already use.", span: 4, feature: true, tag: "Most deployed" },
   { icon: "globe", name: "AI Websites", desc: "Websites that think, adapt, and convert.", span: 2 },
   { icon: "mic", name: "AI Voice Agents", desc: "Human-quality voice that answers and books, 24/7.", span: 2 },
   { icon: "chat", name: "AI Chatbots", desc: "Support bots trained on your knowledge base that resolve instantly, escalate intelligently, and never sleep.", span: 4, feature: true, tag: "Always on" },
@@ -412,7 +412,7 @@ export function ServicesPreview() {
       <SectionHead
         kicker="What We Do"
         title={<>AI Solutions Built for <AccentTitle>Real Impact</AccentTitle></>}
-        lead="From workflow automations to voice agents, we build AI systems that solve specific business problems — not generic demos."
+        lead="From workflow automations to voice agents, we build AI systems that solve specific business problems, not generic demos."
       />
       <div
         ref={ref}
@@ -431,7 +431,7 @@ export function ServicesPreview() {
 const STEPS = [
   { n: "01", title: "Discovery Call", desc: "We learn about your business, your pain points, and your goals. Free, no-commitment, 30 minutes." },
   { n: "02", title: "Strategy & Scope", desc: "We map the solution, define deliverables, timeline, and pricing. You approve before anything starts." },
-  { n: "03", title: "Build & Integrate", desc: "We build your AI systems and wire them into the tools you already use — tested end to end." },
+  { n: "03", title: "Build & Integrate", desc: "We build your AI systems and wire them into the tools you already use, tested end to end." },
   { n: "04", title: "Launch & Optimize", desc: "We deploy, train your team, and tune for performance. Ongoing support keeps it sharp." },
 ];
 export function Process() {
@@ -440,7 +440,7 @@ export function Process() {
       <SectionHead
         kicker="How We Work"
         title="From Discovery to Delivery"
-        lead="A proven process that turns your business challenges into working AI systems — no fluff, no delays."
+        lead="A proven process that turns your business challenges into working AI systems, no fluff, no delays."
       />
       <div style={{ maxWidth: 760, margin: "56px auto 0", position: "relative" }}>
         <div style={{ position: "absolute", left: 23, top: 10, bottom: 10, width: 2, background: "linear-gradient(var(--ra-copper-25), var(--ra-cream-08))" }} />
@@ -546,7 +546,7 @@ export function Team() {
 const QUOTES = [
   { quote: "RemotelyAvailable automated our entire lead qualification process. What used to take 3 team members now runs on autopilot. We booked 40% more demos in the first month.", name: "Sarah Chen", role: "Head of Operations, ScaleUp SaaS", initials: "SC" },
   { quote: "The AI voice agent they built handles 200+ calls a day without missing a beat. Our customers can’t tell it’s not a real person. It’s been a game-changer for our support team.", name: "Marcus Rivera", role: "CEO, HomeRise Services", initials: "MR" },
-  { quote: "We went from publishing one blog post a month to five per week — all on-brand, all reviewed by our team. The content pipeline they built is the best investment we’ve made this year.", name: "Priya Patel", role: "Marketing Director, Apex Digital", initials: "PP" },
+  { quote: "We went from publishing one blog post a month to five per week, all on-brand, all reviewed by our team. The content pipeline they built is the best investment we’ve made this year.", name: "Priya Patel", role: "Marketing Director, Apex Digital", initials: "PP" },
 ];
 export function Testimonials() {
   return (
@@ -615,7 +615,7 @@ export function CtaBand() {
           Ready to Put <AccentTitle>AI to Work</AccentTitle> for Your Business?
         </h2>
         <p style={{ margin: "20px auto 0", maxWidth: 520, fontSize: 17, lineHeight: 1.6, color: "var(--ra-cream-55)" }}>
-          Tell us about your business. We&rsquo;ll map out the AI opportunities and show you exactly what&rsquo;s possible — no fluff, no hard sell.
+          Tell us about your business. We&rsquo;ll map out the AI opportunities and show you exactly what&rsquo;s possible, no fluff, no hard sell.
         </p>
         <div style={{ marginTop: 32, display: "flex", justifyContent: "center" }}>
           <Button href="/contact" size="lg" icon={<LineIcon name="arrow" size={16} />}>
@@ -632,11 +632,11 @@ export function CtaBand() {
 
 /* ====================== FAQ ====================== */
 const FAQS = [
-  { q: "What kind of businesses do you work with?", a: "We work with growth-stage companies, agencies, e-commerce brands, and service businesses — anyone with repetitive work that AI can take off their plate. If you have a process, we can probably automate it." },
+  { q: "What kind of businesses do you work with?", a: "We work with growth-stage companies, agencies, e-commerce brands, and service businesses, anyone with repetitive work that AI can take off their plate. If you have a process, we can probably automate it." },
   { q: "How long does a typical project take?", a: "Most automation builds ship in 2–4 weeks. Larger systems like custom voice agents or full content pipelines run 4–8 weeks. We scope timeline precisely before you commit." },
   { q: "Do you offer ongoing support after launch?", a: "Yes. Every build includes a support window, and we offer monthly retainers for optimization, monitoring, and new automations as your needs grow." },
   { q: "How much does it cost?", a: "Projects are fixed-scope and fixed-price, quoted after the discovery call. Most engagements start in the low five figures and pay for themselves in reclaimed hours within the first quarter." },
-  { q: "What if I’m not sure which service I need?", a: "That’s what the free discovery call is for. We’ll look at your operations and recommend the highest-leverage place to start — even if that’s not the biggest project." },
+  { q: "What if I’m not sure which service I need?", a: "That’s what the free discovery call is for. We’ll look at your operations and recommend the highest-leverage place to start, even if that’s not the biggest project." },
   { q: "Is my data safe?", a: "Absolutely. We follow least-privilege access, encrypt data in transit and at rest, and can work entirely within your own cloud and tooling. You own everything we build." },
 ];
 function FaqItem({ q, a }: { q: string; a: string }) {
@@ -675,7 +675,7 @@ export function Faq() {
       <SectionHead
         kicker="FAQ"
         title="Frequently Asked Questions"
-        lead="Everything you need to know about working with us. Can’t find your answer? Book a call — we’re happy to help."
+        lead="Everything you need to know about working with us. Can’t find your answer? Book a call, we’re happy to help."
       />
       <div style={{ marginTop: 40 }}>
         {FAQS.map((f) => (

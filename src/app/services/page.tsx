@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Services | RemotelyAvailable",
     description:
-      "Web development, social media, design, SEO and content, and business automation — done for you, built for results.",
+      "Web development, social media, design, SEO and content, and business automation, done for you, built for results.",
     url: `${siteConfig.url}/services`,
   },
 };
@@ -60,7 +60,7 @@ export default function ServicesPage() {
           <SectionHeading
             badge="Our Services"
             title="Everything Your Business Needs to Grow"
-            description="Web, social, design, SEO, and automation — handled by one team. We focus on the result you're after and use AI where it genuinely moves the needle."
+            description="Web, social, design, SEO, and automation, handled by one team. We focus on the result you're after and use AI where it genuinely moves the needle."
             align="left"
           />
         </Container>

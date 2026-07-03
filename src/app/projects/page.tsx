@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Projects & Case Studies | RemotelyAvailable",
     description:
-      "Real outcomes from real engagements — recovered revenue, calls answered, demos booked.",
+      "Real outcomes from real engagements: recovered revenue, calls answered, demos booked.",
     url: `${siteConfig.url}/projects`,
   },
 };
@@ -57,7 +57,7 @@ export default function ProjectsPage() {
           <SectionHeading
             badge="Our Work"
             title="Results we've delivered"
-            description="No vanity metrics — just the outcomes that matter: revenue recovered, calls answered, hours given back. Here's a look at how we did it."
+            description="No vanity metrics, just the outcomes that matter: revenue recovered, calls answered, hours given back. Here's a look at how we did it."
             align="left"
           />
         </Container>

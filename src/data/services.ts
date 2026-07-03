@@ -33,7 +33,7 @@ export const services: Service[] = [
     slug: "web-development",
     title: "Websites that turn visitors into customers",
     shortTitle: "Web Development",
-    tagline: "Fast, modern sites built to convert — not just look good.",
+    tagline: "Fast, modern sites built to convert, not just look good.",
     description:
       "We design and build high-performance websites and web apps that load fast, rank well, and turn visitors into leads. Clean code, mobile-first, and built to grow with your business.",
     icon: "code",
@@ -41,7 +41,7 @@ export const services: Service[] = [
       {
         title: "Conversion-Focused Design",
         description:
-          "Every page is built around a goal — get the call, capture the lead, make the sale. Not just a pretty brochure.",
+          "Every page is built around a goal: get the call, capture the lead, make the sale. Not just a pretty brochure.",
       },
       {
         title: "Lightning-Fast Performance",
@@ -76,7 +76,7 @@ export const services: Service[] = [
         step: 3,
         title: "Launch & Handover",
         description:
-          "We deploy, connect analytics, and hand you a site you (or we) can update easily — no developer lock-in.",
+          "We deploy, connect analytics, and hand you a site you (or we) can update easily, no developer lock-in.",
       },
       {
         step: 4,
@@ -95,7 +95,7 @@ export const services: Service[] = [
       {
         question: "Will I be able to update content myself?",
         answer:
-          "Yes. We can set you up with an easy editor or CMS so your team can update text and images without touching code — and we'll show you how.",
+          "Yes. We can set you up with an easy editor or CMS so your team can update text and images without touching code, and we'll show you how.",
       },
       {
         question: "How long does a website take?",
@@ -123,13 +123,13 @@ export const services: Service[] = [
     shortTitle: "Social Media",
     tagline: "Consistent content and engagement that actually grows your audience.",
     description:
-      "We plan, create, and post content across your channels, engage your community, and track what works — so your brand stays visible and growing without you living inside the apps.",
+      "We plan, create, and post content across your channels, engage your community, and track what works, so your brand stays visible and growing without you living inside the apps.",
     icon: "megaphone",
     features: [
       {
         title: "Content Strategy & Calendar",
         description:
-          "A clear monthly plan mapped to your goals — what to post, where, and when — so you're never scrambling for ideas.",
+          "A clear monthly plan mapped to your goals (what to post, where, and when) so you're never scrambling for ideas.",
       },
       {
         title: "Post Creation & Scheduling",
@@ -144,7 +144,7 @@ export const services: Service[] = [
       {
         title: "Reporting You Can Read",
         description:
-          "Simple monthly reports on what grew, what landed, and what we're doing next — no vanity-metric noise.",
+          "Simple monthly reports on what grew, what landed, and what we're doing next, no vanity-metric noise.",
       },
     ],
     process: [
@@ -164,7 +164,7 @@ export const services: Service[] = [
         step: 3,
         title: "Create & Publish",
         description:
-          "We design, write, schedule, and post — then manage the engagement that follows.",
+          "We design, write, schedule, and post, then manage the engagement that follows.",
       },
       {
         step: 4,
@@ -183,18 +183,18 @@ export const services: Service[] = [
       {
         question: "Do you create the content or just schedule it?",
         answer:
-          "We create it — graphics, captions, and short-form video — all on-brand. You approve the calendar before anything publishes.",
+          "We create it: graphics, captions, and short-form video, all on-brand. You approve the calendar before anything publishes.",
       },
       {
         question: "Can you use AI to speed up content?",
         answer:
-          "Where it helps, yes — for drafting and repurposing — but everything is reviewed by a human and matched to your brand voice before it goes out.",
+          "Where it helps, yes (for drafting and repurposing), but everything is reviewed by a human and matched to your brand voice before it goes out.",
       },
     ],
     seo: {
       title: "Social Media Management Services",
       description:
-        "Done-for-you social media management — content strategy, post creation, scheduling, and community management that grows your audience.",
+        "Done-for-you social media management: content strategy, post creation, scheduling, and community management that grows your audience.",
       keywords: [
         "social media management",
         "social media agency",
@@ -209,7 +209,7 @@ export const services: Service[] = [
     slug: "ai-automations",
     title: "Put your busywork on autopilot",
     shortTitle: "AI Automation",
-    tagline: "The repetitive work that eats your week — handled.",
+    tagline: "The repetitive work that eats your week, handled.",
     description:
       "We connect your tools and add AI where it counts, so the manual work runs itself: leads followed up, calls answered, data moved between systems, and customers replied to around the clock. You keep the results; we handle the wiring.",
     icon: "workflow",
@@ -217,7 +217,7 @@ export const services: Service[] = [
       {
         title: "Workflow Automation",
         description:
-          "Connect 500+ apps — CRM, email, calendar, payments — into automations that eliminate copy-paste and manual handoffs.",
+          "Connect 500+ apps (CRM, email, calendar, payments) into automations that eliminate copy-paste and manual handoffs.",
       },
       {
         title: "AI Chatbots & Assistants",
@@ -232,7 +232,7 @@ export const services: Service[] = [
       {
         title: "Automated Follow-Up & Content",
         description:
-          "Reply, nurture, and publish on autopilot — from lead follow-up sequences to scheduled content, with humans in the loop.",
+          "Reply, nurture, and publish on autopilot, from lead follow-up sequences to scheduled content, with humans in the loop.",
       },
       {
         title: "Automation Audit & Roadmap",
@@ -271,12 +271,12 @@ export const services: Service[] = [
       {
         question: "What can you automate?",
         answer:
-          "If it has an API, we can usually automate it — CRMs, email, calendars, spreadsheets, payments, support tools, and more. Common wins: lead routing, follow-up, data entry, invoicing, scheduling, and customer replies.",
+          "If it has an API, we can usually automate it: CRMs, email, calendars, spreadsheets, payments, support tools, and more. Common wins: lead routing, follow-up, data entry, invoicing, scheduling, and customer replies.",
       },
       {
         question: "Is this just 'AI hype'?",
         answer:
-          "No. We only use AI where it genuinely beats a simpler approach. A lot of the highest-ROI automation is plain reliable plumbing between your tools — AI is added for the parts that need to read, decide, or converse.",
+          "No. We only use AI where it genuinely beats a simpler approach. A lot of the highest-ROI automation is plain reliable plumbing between your tools. AI is added for the parts that need to read, decide, or converse.",
       },
       {
         question: "How long does it take to build?",
@@ -292,7 +292,7 @@ export const services: Service[] = [
     seo: {
       title: "Business Process Automation & AI Systems | Automate Repetitive Work",
       description:
-        "Custom business process automation with AI where it counts — workflow automation, chatbots, and voice agents. Automate lead follow-up, data entry, and customer replies.",
+        "Custom business process automation with AI where it counts: workflow automation, chatbots, and voice agents. Automate lead follow-up, data entry, and customer replies.",
       keywords: [
         "business process automation",
         "workflow automation agency",
@@ -311,13 +311,13 @@ export const services: Service[] = [
     shortTitle: "SEO & Content",
     tagline: "Rank higher, publish consistently, turn search traffic into leads.",
     description:
-      "We optimize your site to rank for the terms your customers actually search, and produce the content that earns those rankings — blogs, landing pages, and on-page SEO that compounds over time instead of disappearing like ads.",
+      "We optimize your site to rank for the terms your customers actually search, and produce the content that earns those rankings: blogs, landing pages, and on-page SEO that compounds over time instead of disappearing like ads.",
     icon: "search",
     features: [
       {
         title: "Keyword & Competitor Research",
         description:
-          "We find the buyer-intent terms your customers type — and the gaps your competitors are leaving open.",
+          "We find the buyer-intent terms your customers type, and the gaps your competitors are leaving open.",
       },
       {
         title: "On-Page & Technical SEO",
@@ -327,7 +327,7 @@ export const services: Service[] = [
       {
         title: "Content That Earns Rankings",
         description:
-          "Blogs and landing pages written for real people and search engines — answering the questions that lead to sales.",
+          "Blogs and landing pages written for real people and search engines, answering the questions that lead to sales.",
       },
       {
         title: "Tracking & Reporting",
@@ -376,7 +376,7 @@ export const services: Service[] = [
       {
         question: "Can you fix an existing site or only new content?",
         answer:
-          "Both. We start with technical and on-page fixes on what you already have — often the fastest wins — then build new content on top.",
+          "Both. We start with technical and on-page fixes on what you already have, often the fastest wins, then build new content on top.",
       },
     ],
     seo: {
@@ -405,7 +405,7 @@ export const services: Service[] = [
       {
         title: "Brand Identity & Logo",
         description:
-          "A complete identity — logo, colors, fonts, and usage guidelines — so your brand looks consistent everywhere.",
+          "A complete identity (logo, colors, fonts, and usage guidelines) so your brand looks consistent everywhere.",
       },
       {
         title: "Marketing & Ad Creative",
@@ -434,7 +434,7 @@ export const services: Service[] = [
         step: 2,
         title: "Concepts",
         description:
-          "We present initial design concepts for your feedback — real options, not one take-it-or-leave-it.",
+          "We present initial design concepts for your feedback: real options, not one take-it-or-leave-it.",
       },
       {
         step: 3,
@@ -454,7 +454,7 @@ export const services: Service[] = [
       {
         question: "Do I get all the source files?",
         answer:
-          "Yes. You own everything — final files in every format you need, plus the editable source files and a brand guide.",
+          "Yes. You own everything: final files in every format you need, plus the editable source files and a brand guide.",
       },
       {
         question: "How many revisions are included?",
@@ -464,13 +464,13 @@ export const services: Service[] = [
       {
         question: "Can you match my existing brand?",
         answer:
-          "Absolutely. We can work within your existing brand guidelines or evolve them — whichever fits your goals.",
+          "Absolutely. We can work within your existing brand guidelines or evolve them, whichever fits your goals.",
       },
     ],
     seo: {
       title: "Graphic Design & Branding Services",
       description:
-        "Professional graphic design and branding — logos, brand identity, marketing creative, and social graphics that make your business look established and trustworthy.",
+        "Professional graphic design and branding: logos, brand identity, marketing creative, and social graphics that make your business look established and trustworthy.",
       keywords: [
         "graphic design services",
         "brand design",

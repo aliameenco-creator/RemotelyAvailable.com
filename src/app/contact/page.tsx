@@ -85,7 +85,7 @@ export default function ContactPage() {
               </h1>
               <p className="mt-4 text-lg text-text-secondary leading-relaxed">
                 Tell us about your business and the challenges you&apos;re
-                facing. We&apos;ll get back to you with a tailored approach —
+                facing. We&apos;ll get back to you with a tailored approach,
                 no generic proposals, no hard sell.
               </p>
             </div>

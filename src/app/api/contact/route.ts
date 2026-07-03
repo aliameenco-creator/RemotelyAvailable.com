@@ -105,7 +105,7 @@ export async function POST(request: Request) {
 
     const data = result.data;
 
-    // Honeypot check — if filled, silently accept (fool bots)
+    // Honeypot check, if filled, silently accept (fool bots)
     if (data._hp) {
       return NextResponse.json({ success: true });
     }
@@ -150,7 +150,7 @@ export async function POST(request: Request) {
         from: `"RemotelyAvailable" <${process.env.SMTP_USER}>`,
         to: notifyEmail,
         replyTo: data.email,
-        subject: `New Inquiry from ${data.name} — ${serviceLabels[data.service] || data.service}`,
+        subject: `New Inquiry from ${data.name}, ${serviceLabels[data.service] || data.service}`,
         text: [
           `New contact form submission`,
           ``,
@@ -185,7 +185,7 @@ export async function POST(request: Request) {
         `,
       });
     } else if (!webhookUrl) {
-      // Development fallback — log to console
+      // Development fallback, log to console
       console.log("═══ NEW CONTACT FORM SUBMISSION ═══");
       console.log("Name:", data.name);
       console.log("Email:", data.email);

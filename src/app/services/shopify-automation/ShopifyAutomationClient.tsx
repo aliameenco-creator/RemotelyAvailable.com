@@ -377,12 +377,12 @@ export default function ShopifyAutomationClient() {
       {/* ============ SECTION 1: HERO ============ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-20">
         <div className="absolute inset-0 bg-gradient-to-b from-primary-900/20 via-bg-base to-bg-base" />
-        {/* Gradient orbs — hidden on mobile for performance (blur is GPU-heavy) */}
+        {/* Gradient orbs, hidden on mobile for performance (blur is GPU-heavy) */}
         <div className="pointer-events-none absolute -top-20 -left-20 hidden h-96 w-96 rounded-full bg-primary-600/15 blur-[100px] sm:block animate-orb-1" aria-hidden="true" />
         <div className="pointer-events-none absolute -bottom-20 -right-20 hidden h-96 w-96 rounded-full bg-accent-600/15 blur-[100px] sm:block animate-orb-2" aria-hidden="true" />
 
         <Container className="relative z-10">
-          {/* Hero content uses CSS animations — no JS needed, renders instantly */}
+          {/* Hero content uses CSS animations, no JS needed, renders instantly */}
           <div className="mx-auto max-w-4xl text-center animate-fade-in-up">
             <span className="mb-6 inline-block rounded-full border border-primary-600/30 bg-primary-600/10 px-4 py-1.5 text-sm font-medium text-primary-400">
               Shopify Email Automation
@@ -408,7 +408,7 @@ export default function ShopifyAutomationClient() {
           {/* Video Placeholder */}
           <div className="mx-auto mt-10 max-w-3xl animate-fade-in-up" style={{ animationDelay: "0.2s", animationFillMode: "both" }}>
             <div className="relative aspect-video overflow-hidden rounded-[var(--radius-card)] border border-white/10 bg-bg-card shadow-2xl shadow-primary-600/10">
-              {/* REPLACE VIDEO URL HERE — swap this placeholder with a YouTube/Vimeo embed */}
+              {/* REPLACE VIDEO URL HERE, swap this placeholder with a YouTube/Vimeo embed */}
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-bg-surface to-bg-card">
                 <button className="group flex h-20 w-20 items-center justify-center rounded-full bg-primary-600 shadow-lg shadow-primary-600/30 transition-all duration-300 hover:scale-110 hover:shadow-primary-500/40">
                   <Play
@@ -771,7 +771,7 @@ export default function ShopifyAutomationClient() {
       {/* ============ SECTION 9: FINAL CTA ============ */}
       <section className="relative overflow-hidden py-24">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/40 via-bg-base to-accent-900/40" />
-        {/* Gradient orbs — hidden on mobile */}
+        {/* Gradient orbs, hidden on mobile */}
         <div className="pointer-events-none absolute top-0 left-1/4 hidden h-96 w-96 rounded-full bg-primary-600/15 blur-[100px] opacity-30 sm:block animate-orb-1" aria-hidden="true" />
         <div className="pointer-events-none absolute bottom-0 right-1/4 hidden h-72 w-72 rounded-full bg-accent-600/15 blur-[100px] opacity-30 sm:block animate-orb-2" aria-hidden="true" />
 

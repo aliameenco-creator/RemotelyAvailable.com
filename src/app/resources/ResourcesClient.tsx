@@ -136,7 +136,7 @@ export function ResourcesClient() {
             AI video guides for <AccentTitle>business owners</AccentTitle>
           </h1>
           <p style={{ margin: "22px auto 0", maxWidth: 560, fontSize: 18, lineHeight: 1.6, color: "var(--ra-cream-55)" }}>
-            Short, practical walkthroughs on putting AI to work in your business — free for anyone, no email required.
+            Short, practical walkthroughs on putting AI to work in your business, free for anyone, no email required.
           </p>
         </Section>
       </div>
@@ -278,7 +278,7 @@ export function ResourcesClient() {
             New guides, <AccentTitle>every week</AccentTitle>
           </h2>
           <p style={{ margin: "16px auto 0", maxWidth: 460, color: "var(--ra-cream-55)", fontSize: 16, lineHeight: 1.6 }}>
-            Optional — drop your email to get new videos and playbooks. Everything here stays free without it.
+            Optional, drop your email to get new videos and playbooks. Everything here stays free without it.
           </p>
           <div style={{ display: "flex", gap: 12, maxWidth: 440, margin: "26px auto 0", flexWrap: "wrap" }}>
             <input

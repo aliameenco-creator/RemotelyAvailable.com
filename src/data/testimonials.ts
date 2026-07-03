@@ -22,7 +22,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "We went from publishing one blog post a month to five per week — all on-brand, all reviewed by our team. The content pipeline they built is the best investment we've made this year.",
+      "We went from publishing one blog post a month to five per week, all on-brand, all reviewed by our team. The content pipeline they built is the best investment we've made this year.",
     name: "Priya Patel",
     title: "Marketing Director",
     company: "Apex Digital",

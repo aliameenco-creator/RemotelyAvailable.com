@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   title: {
-    default: `${siteConfig.name} — Digital Agency | Web, Social, Design, SEO & Automation`,
+    default: `${siteConfig.name}, Digital Agency | Web, Social, Design, SEO & Automation`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — We give you your time back`,
+    title: `${siteConfig.name}, We give you your time back`,
     description: siteConfig.description,
     images: [
       {
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — We give you your time back`,
+    title: `${siteConfig.name}, We give you your time back`,
     description: siteConfig.description,
     images: ["/og-default.jpg"],
   },

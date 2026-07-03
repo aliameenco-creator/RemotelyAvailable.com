@@ -32,7 +32,7 @@ export function CTABanner() {
             </h2>
             <p className="mt-4 text-lg text-text-secondary">
               Tell us about your business. We&apos;ll map out the AI
-              opportunities and show you exactly what&apos;s possible — no
+              opportunities and show you exactly what&apos;s possible, no
               fluff, no hard sell.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

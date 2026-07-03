@@ -20,7 +20,7 @@ export function FAQ({
   faqs,
   badge = "FAQ",
   title = "Frequently Asked Questions",
-  description = "Everything you need to know about working with us. Can't find your answer? Book a call — we're happy to help.",
+  description = "Everything you need to know about working with us. Can't find your answer? Book a call, we're happy to help.",
 }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 

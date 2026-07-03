@@ -17,7 +17,7 @@ export function ServicesGrid() {
           <SectionHeading
             badge="What We Do"
             title="Everything your business needs to grow"
-            description="From websites and social media to design, SEO, and automation — we handle the work that moves your business forward, and use AI where it genuinely helps."
+            description="From websites and social media to design, SEO, and automation, we handle the work that moves your business forward, and use AI where it genuinely helps."
           />
         </ScrollReveal>
 

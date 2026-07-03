@@ -26,7 +26,7 @@ export function AutomationHeroImage({ name, imageUrl }: AutomationHeroImageProps
     <div
       className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.1] bg-bg-card"
       role="img"
-      aria-label={`${name} preview placeholder — no screenshot added yet`}
+      aria-label={`${name} preview placeholder, no screenshot added yet`}
     >
       <div className="ra-surface-grid absolute inset-0 opacity-60" />
       <div className="absolute inset-0 bg-gradient-to-tr from-primary-600/10 to-transparent" />

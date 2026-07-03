@@ -53,10 +53,10 @@ export const automations: Automation[] = [
     name: "LinkedIn Buster",
     category: "Content Automation",
     description:
-      "Generates high-quality, multi-image LinkedIn carousels in seconds from a single input — built for creators and agencies who need to publish consistently.",
+      "Generates high-quality, multi-image LinkedIn carousels in seconds from a single input, built for creators and agencies who need to publish consistently.",
     purpose:
       "Creators and agencies lose hours manually designing every LinkedIn carousel. This collapses that into a single automated step so content shipping never becomes the bottleneck.",
-    highlight: "11-second generation — scales to hundreds of posts",
+    highlight: "11-second generation, scales to hundreds of posts",
     techStack: ["Claude API", "ReportLab", "n8n"],
     status: "built",
     useCase: "Creators and agencies running LinkedIn content.",
@@ -79,7 +79,7 @@ export const automations: Automation[] = [
     name: "Proposal Pro",
     category: "Sales & Workflow",
     description:
-      "AI-generated client proposals with a shareable e-sign link, automatic notifications, and signature capture — the full proposal flow end to end.",
+      "AI-generated client proposals with a shareable e-sign link, automatic notifications, and signature capture, the full proposal flow end to end.",
     purpose:
       "Manually writing, sending, and chasing signatures on proposals slows down deal velocity. This makes the entire flow instant and trackable, from brief to signature.",
     highlight: "From brief to signed proposal in one flow",
@@ -105,7 +105,7 @@ export const automations: Automation[] = [
     name: "YouTube Video Intro Automation",
     category: "YouTube",
     description:
-      "Auto-generates a fully branded video intro in minutes from a channel's existing brand guidelines — no manual editing required.",
+      "Auto-generates a fully branded video intro in minutes from a channel's existing brand guidelines, no manual editing required.",
     purpose:
       "Manually editing a new intro for every video breaks channel consistency and burns hours. This keeps branding consistent without touching an editor.",
     highlight: "Branded intro rendered in minutes, zero editing",
@@ -118,7 +118,7 @@ export const automations: Automation[] = [
     name: "Helm (ClickUp Alternative)",
     category: "Business Operations",
     description:
-      "An all-in-one company operations platform with role-based access for CEO, HR, and team members — covering team management, HR workflows, and daily operations in a single dashboard.",
+      "An all-in-one company operations platform with role-based access for CEO, HR, and team members, covering team management, HR workflows, and daily operations in a single dashboard.",
     purpose:
       "Small teams juggle three or four disconnected tools just to manage people and operations. This consolidates it into one role-aware dashboard.",
     highlight: "One dashboard replacing 3-4 separate tools",
@@ -157,7 +157,7 @@ export const automations: Automation[] = [
     name: "Upwork Proposal Automation",
     category: "Sales & Workflow",
     description:
-      "Auto-generates Upwork proposals tailored to exact services offered — copy-and-send ready text for every job post.",
+      "Auto-generates Upwork proposals tailored to exact services offered, copy-and-send ready text for every job post.",
     purpose:
       "Writing a tailored proposal for every job post takes time better spent on client work. This generates copy-and-send proposals instantly.",
     highlight: "Copy-and-send proposals in seconds",

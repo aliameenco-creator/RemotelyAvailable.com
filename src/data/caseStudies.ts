@@ -74,7 +74,7 @@ export const caseStudies: CaseStudy[] = [
         kicker: "// The Challenge",
         title: "The phone kept ringing after hours",
         paragraphs: [
-          "Meridian Freight ran a lean dispatch desk. After 6pm and on weekends, inbound load requests went to voicemail — and in freight, the first broker to quote usually wins the load.",
+          "Meridian Freight ran a lean dispatch desk. After 6pm and on weekends, inbound load requests went to voicemail, and in freight, the first broker to quote usually wins the load.",
           "Leadership estimated they were losing several six-figure loads a quarter, but no one could quantify it because missed calls were never logged. Hiring a 24/7 desk was cost-prohibitive.",
         ],
       },
@@ -83,12 +83,12 @@ export const caseStudies: CaseStudy[] = [
         title: "An always-on agent, wired into their stack",
         paragraphs: [
           "We started with a free teardown of two weeks of call logs. The pattern was clear: most after-hours calls were simple, quotable loads that a well-trained agent could handle end to end.",
-          "Rather than a generic chatbot, we built a voice agent trained on Meridian's lanes, pricing rules, and tone — then wired it directly into their TMS so a captured load became a live quote in minutes.",
+          "Rather than a generic chatbot, we built a voice agent trained on Meridian's lanes, pricing rules, and tone, then wired it directly into their TMS so a captured load became a live quote in minutes.",
         ],
       },
     ],
     built: [
-      { icon: "mic", title: "After-hours voice agent", desc: "Answers every inbound call, captures load details, and quotes instantly — in English and Spanish." },
+      { icon: "mic", title: "After-hours voice agent", desc: "Answers every inbound call, captures load details, and quotes instantly, in English and Spanish." },
       { icon: "bolt", title: "Dispatch automation", desc: "Pushes qualified loads straight into their TMS and pings the on-call dispatcher with full context." },
       { icon: "chat", title: "Carrier follow-up", desc: "Automated SMS + email sequences confirm pickups and chase missing paperwork." },
       { icon: "chart", title: "Live ops dashboard", desc: "Real-time view of calls, quotes, and recovered revenue for the leadership team." },
@@ -190,7 +190,7 @@ export const caseStudies: CaseStudy[] = [
         kicker: "// The Challenge",
         title: "More demand than the front desk could take",
         paragraphs: [
-          "HomeRise's growth outpaced its phone lines. Customers calling to book or reschedule hit hold music — and many simply hung up and called a competitor.",
+          "HomeRise's growth outpaced its phone lines. Customers calling to book or reschedule hit hold music, and many simply hung up and called a competitor.",
           "Every missed call was a missed job, but staffing a bigger call center wasn't viable at their margins.",
         ],
       },
@@ -198,7 +198,7 @@ export const caseStudies: CaseStudy[] = [
         kicker: "// The Approach",
         title: "A voice team that never sleeps",
         paragraphs: [
-          "We deployed a multi-line AI voice agent that books, reschedules, and answers the top 30 questions — and hands off cleanly to staff for anything complex.",
+          "We deployed a multi-line AI voice agent that books, reschedules, and answers the top 30 questions, and hands off cleanly to staff for anything complex.",
           "It's wired into their scheduling software, so a call becomes a confirmed appointment with no human in the loop.",
         ],
       },

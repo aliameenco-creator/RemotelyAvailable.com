@@ -23,7 +23,7 @@ export const featuredVideo = {
   dur: "23:10",
   title: "The 90-day AI roadmap: from first automation to a system that runs itself",
   description:
-    "A full walkthrough of how we'd sequence AI inside a small-team business — what to automate first, what to wait on, and how to measure it.",
+    "A full walkthrough of how we'd sequence AI inside a small-team business: what to automate first, what to wait on, and how to measure it.",
   tone: "copper" as const,
 };
 

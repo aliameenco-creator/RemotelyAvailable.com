@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 
-/* Section scaffold — centered max-width container with vertical padding. */
+/* Section scaffold, centered max-width container with vertical padding. */
 export function Section({
   children,
   style,
@@ -90,7 +90,7 @@ export function SectionHead({
   );
 }
 
-/* Title accent — Georgia italic lavender (brand signature). */
+/* Title accent, Georgia italic lavender (brand signature). */
 export function AccentTitle({
   children,
   style,

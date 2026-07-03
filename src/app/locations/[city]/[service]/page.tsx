@@ -8,6 +8,14 @@ import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CTABanner } from "@/components/sections/CTABanner";
 import { FAQ } from "@/components/sections/FAQ";
+import { ProofSection } from "@/components/sections/ProofSection";
+import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
+import { UkCityMap } from "@/components/locations/UkCityMap";
+import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
+import {
+  ServiceVignette,
+  SERVICE_SLUG_VIGNETTES,
+} from "@/components/services/ServiceVignette";
 import {
   ukCities,
   getCity,
@@ -125,8 +133,12 @@ export default async function CityServicePage({ params }: CityServicePageProps) 
       />
 
       {/* Hero */}
-      <section className="pt-28 pb-16 sm:pt-32">
-        <Container>
+      <section className="relative overflow-hidden pt-28 pb-16 sm:pt-32">
+        <div
+          className="hero-grid pointer-events-none absolute inset-0 -top-20"
+          aria-hidden="true"
+        />
+        <Container className="relative z-10">
           <nav className="mb-8 text-sm text-text-muted">
             <Link href="/" className="hover:text-text-secondary transition-colors">
               Home
@@ -149,6 +161,7 @@ export default async function CityServicePage({ params }: CityServicePageProps) 
             <span className="text-text-secondary">{service.name}</span>
           </nav>
 
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="max-w-3xl">
             <p className="mb-3 inline-flex items-center gap-2 text-sm font-medium text-primary-400">
               <MapPin size={14} aria-hidden="true" />
@@ -161,7 +174,13 @@ export default async function CityServicePage({ params }: CityServicePageProps) 
               {service.intro(city)}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button href="/contact" size="lg" icon={<ArrowRight size={18} />}>
+              <Button
+                href="/contact"
+                size="lg"
+                icon={<ArrowRight size={18} />}
+                analyticsEvent="cta_click"
+                analyticsLabel={`location-hero:${city.slug}-${service.slug}`}
+              >
                 Get a Free Strategy Call
               </Button>
               <Button href={service.parentHref} variant="secondary" size="lg">
@@ -169,19 +188,39 @@ export default async function CityServicePage({ params }: CityServicePageProps) 
               </Button>
             </div>
           </div>
+          {SERVICE_SLUG_VIGNETTES[service.slug] && (
+            <div className="floaty hidden max-w-md rounded-[var(--radius-card)] border border-[var(--border-copper)] bg-bg-card p-5 shadow-[var(--glow-copper)] lg:block">
+              <div className="mb-3 flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] text-text-muted">
+                <span className="h-2 w-2 rounded-full bg-primary-400" />
+                {"// "}
+                {service.name.toLowerCase()} in action
+              </div>
+              <ServiceVignette variant={SERVICE_SLUG_VIGNETTES[service.slug]} />
+            </div>
+          )}
+          </div>
         </Container>
       </section>
 
       {/* Local context */}
       <section className="py-16 bg-bg-card">
         <Container>
-          <div className="mx-auto max-w-3xl">
-            <h2 className="font-display text-2xl font-bold text-text-primary">
-              Why {service.name} Matters for {city.name} Businesses
-            </h2>
-            <p className="mt-4 leading-relaxed text-text-secondary">
-              {service.localParagraph(city)}
-            </p>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto]">
+            <div className="max-w-3xl">
+              <h2 className="font-display text-2xl font-bold text-text-primary">
+                Why {service.name} Matters for {city.name} Businesses
+              </h2>
+              <p className="mt-4 leading-relaxed text-text-secondary">
+                {service.localParagraph(city)}
+              </p>
+            </div>
+            <div className="hidden justify-center lg:flex">
+              <UkCityMap
+                citySlug={city.slug}
+                cityName={city.name}
+                className="max-w-[220px]"
+              />
+            </div>
           </div>
         </Container>
       </section>
@@ -217,6 +256,13 @@ export default async function CityServicePage({ params }: CityServicePageProps) 
         </Container>
       </section>
 
+      {/* Proof */}
+      <ProofSection
+        serviceSlug={service.slug}
+        seed={`${city.slug}-${service.slug}`}
+        className="pb-20"
+      />
+
       {/* Process */}
       <section className="py-20 bg-bg-card">
         <Container>
@@ -225,27 +271,16 @@ export default async function CityServicePage({ params }: CityServicePageProps) 
             title={`Getting Started From ${city.name}`}
             description="A structured, transparent process, everything handled remotely, on your schedule."
           />
-          <div className="mx-auto max-w-3xl space-y-6">
-            {processSteps.map((step) => (
-              <div key={step.step} className="flex gap-6 items-start">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-primary-600 bg-bg-base">
-                  <span className="text-sm font-bold text-primary-400">
-                    {step.step}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="font-display text-lg font-bold text-text-primary">
-                    {step.title}
-                  </h3>
-                  <p className="mt-1 text-text-secondary leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ProcessTimeline steps={processSteps} />
         </Container>
       </section>
+
+      {/* Inline lead capture */}
+      <InlineLeadForm
+        heading={`Free ${service.name.toLowerCase()} audit for ${city.name} businesses`}
+        subtext={`Tell us where to send it and we'll review your current setup and map out exactly what ${service.name.toLowerCase()} could do for your business. No obligation.`}
+        source={`location-page:${city.slug}-${service.slug}`}
+      />
 
       {/* FAQ */}
       <FAQ

@@ -9,6 +9,11 @@ import {
   CtaBand,
   Faq,
 } from "@/components/landing/LandingSections";
+import { WorkflowDiagram } from "@/components/landing/WorkflowDiagram";
+import { RoiCalculator } from "@/components/landing/RoiCalculator";
+import { ActivityTicker } from "@/components/landing/ActivityTicker";
+import { CaseStudySpotlight } from "@/components/landing/CaseStudySpotlight";
+import { ServiceFinder } from "@/components/sections/ServiceFinder";
 import { siteConfig } from "@/lib/constants";
 
 export default function HomePage() {
@@ -32,11 +37,16 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
+      <ActivityTicker />
       <StatBar />
+      <WorkflowDiagram />
       <ToolsGrid />
       <ServicesPreview />
+      <ServiceFinder />
       <Process />
+      <RoiCalculator />
       <Team />
+      <CaseStudySpotlight />
       <Testimonials />
       <CtaBand />
       <Faq />

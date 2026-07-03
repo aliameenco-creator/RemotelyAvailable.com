@@ -11,11 +11,14 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   className?: string;
   icon?: React.ReactNode;
+  /** Emitted to the dataLayer on click via the delegated AnalyticsListener. */
+  analyticsEvent?: string;
+  analyticsLabel?: string;
 }
 
 const variants = {
   primary:
-    "bg-primary-600 text-[#1a1a1a] hover:bg-primary-400 active:bg-primary-700",
+    "btn-shine bg-primary-600 text-[#1a1a1a] hover:bg-primary-400 active:bg-primary-700",
   secondary:
     "bg-transparent text-text-primary border border-[var(--border-strong)] hover:border-primary-600 hover:bg-[var(--ra-cream-08)]",
   ghost:
@@ -38,7 +41,13 @@ export function Button({
   type = "button",
   className,
   icon,
+  analyticsEvent,
+  analyticsLabel,
 }: ButtonProps) {
+  const analyticsAttrs = {
+    "data-analytics-event": analyticsEvent,
+    "data-analytics-label": analyticsLabel,
+  };
   const classes = cn(
     "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-semibold rounded-[var(--radius-pill)] cursor-pointer",
     "transition-[background,border-color,transform] duration-[120ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
@@ -52,7 +61,7 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} {...analyticsAttrs}>
         {icon}
         {children}
       </Link>
@@ -65,6 +74,7 @@ export function Button({
       onClick={onClick}
       disabled={disabled}
       className={classes}
+      {...analyticsAttrs}
     >
       {icon}
       {children}

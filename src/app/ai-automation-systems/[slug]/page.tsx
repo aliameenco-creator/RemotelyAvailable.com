@@ -15,7 +15,9 @@ import {
   Users,
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
+import { CTABanner } from "@/components/sections/CTABanner";
 import { FAQ } from "@/components/sections/FAQ";
+import { ProofSection } from "@/components/sections/ProofSection";
 import { getSystem, systems } from "@/data/systems";
 
 interface SystemDetailPageProps {
@@ -317,7 +319,7 @@ export default async function SystemDetailPage({
               {system.pricingTiers.map((tier) => (
                 <article
                   key={tier.name}
-                  className="flex flex-col rounded-xl border border-white/[0.1] bg-bg-card p-6"
+                  className="border-beam flex flex-col rounded-xl border border-white/[0.1] bg-bg-card p-6"
                 >
                   <h3 className="font-display text-xl font-bold text-text-primary">
                     {tier.name}
@@ -406,12 +408,14 @@ export default async function SystemDetailPage({
         )}
         </Container>
       </section>
+      <ProofSection serviceSlug="ai-automations" seed={`system-${system.slug}`} />
       <FAQ
         faqs={system.faqs}
         badge="System FAQ"
         title={`${system.title} FAQs`}
         description="Answers to the common questions about this automation system, setup, and what is included."
       />
+      <CTABanner />
     </>
   );
 }

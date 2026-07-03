@@ -1,12 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Button } from "@/components/ui/Button";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
+import { ServiceFinder } from "@/components/sections/ServiceFinder";
 import { ScrollReveal } from "@/components/effects/ScrollReveal";
 import { services } from "@/data/services";
+import {
+  ServiceVignette,
+  SERVICE_SLUG_VIGNETTES,
+} from "@/components/services/ServiceVignette";
 
 export function ServicesListClient() {
   return (
@@ -47,6 +51,15 @@ export function ServicesListClient() {
                         </div>
                       </div>
 
+                      {/* Vignette */}
+                      {SERVICE_SLUG_VIGNETTES[service.slug] && (
+                        <div className="hidden w-56 shrink-0 self-center lg:block">
+                          <ServiceVignette
+                            variant={SERVICE_SLUG_VIGNETTES[service.slug]}
+                          />
+                        </div>
+                      )}
+
                       {/* Arrow */}
                       <div className="flex items-center text-primary-400 transition-transform group-hover:translate-x-1">
                         <ArrowUpRight size={24} />
@@ -60,27 +73,8 @@ export function ServicesListClient() {
         </Container>
       </section>
 
-      {/* Not Sure Section */}
-      <section className="pb-16">
-        <Container>
-          <ScrollReveal>
-            <div className="glass rounded-2xl p-8 md:p-12 text-center">
-              <h2 className="font-display text-2xl font-bold text-text-primary sm:text-3xl">
-                Not Sure Which Service You Need?
-              </h2>
-              <p className="mt-3 text-text-secondary max-w-lg mx-auto">
-                Talk to us. We&apos;ll listen to your challenges and
-                recommend the highest-ROI starting point for your business.
-              </p>
-              <div className="mt-6">
-                <Button href="/contact" icon={<ArrowRight size={18} />}>
-                  Talk to Us
-                </Button>
-              </div>
-            </div>
-          </ScrollReveal>
-        </Container>
-      </section>
+      {/* Not sure? Interactive finder */}
+      <ServiceFinder />
     </>
   );
 }

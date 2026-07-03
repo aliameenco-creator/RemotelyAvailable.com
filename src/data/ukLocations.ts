@@ -1,4 +1,5 @@
 import { services } from "@/data/services";
+import { pickVariant } from "@/lib/pickVariant";
 
 /**
  * UK programmatic SEO location data.
@@ -665,15 +666,6 @@ export function getNearbyCities(city: UkCity, count = 6): UkCity[] {
     (c) => c.slug !== city.slug && !sameRegion.includes(c)
   );
   return [...sameRegion, ...topUp].slice(0, count);
-}
-
-/** Deterministic variant picker so each page's copy is stable across builds. */
-function pickVariant<T>(variants: T[], seed: string): T {
-  let hash = 0;
-  for (let i = 0; i < seed.length; i++) {
-    hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
-  }
-  return variants[hash % variants.length];
 }
 
 // ---------------------------------------------------------------------------

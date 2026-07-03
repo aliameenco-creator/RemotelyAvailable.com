@@ -58,7 +58,7 @@ export function Navbar() {
       >
         <nav
           className={cn(
-            "flex items-center justify-between transition-all duration-500 ease-in-out",
+            "flex items-center justify-between gap-6 transition-all duration-500 ease-in-out",
             "border rounded-full",
             isScrolled
               ? "bg-bg-card/80 backdrop-blur-xl border-white/[0.08] px-4 py-2 shadow-lg shadow-black/20"
@@ -66,7 +66,12 @@ export function Navbar() {
           )}
         >
           {/* Logo */}
-          <div className={cn("flex items-center transition-all duration-300", isScrolled ? "pl-2" : "pl-0")}>
+          <div
+            className={cn(
+              "flex shrink-0 items-center transition-all duration-300",
+              isScrolled ? "pl-2 pr-2" : "pl-0"
+            )}
+          >
             <Wordmark size={isScrolled ? 16 : 18} />
           </div>
 

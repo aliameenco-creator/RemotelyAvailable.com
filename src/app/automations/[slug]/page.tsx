@@ -5,6 +5,8 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Sparkles, Target } from "lucide-re
 import { Container } from "@/components/layout/Container";
 import { Pill } from "@/components/ui/Pill";
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { CTABanner } from "@/components/sections/CTABanner";
 import { AutomationHeroImage } from "@/components/automations/AutomationHeroImage";
 import {
   automations,
@@ -53,6 +55,7 @@ export default async function AutomationDetailPage({
   const { previous, next } = getAdjacentAutomations(slug);
 
   return (
+    <>
     <section className="pt-28 pb-24 sm:pt-32">
       <Container>
         <nav className="mb-8 text-sm text-text-muted">
@@ -153,6 +156,56 @@ export default async function AutomationDetailPage({
           </article>
         </div>
 
+        <div className="mt-12 rounded-xl border border-primary-600/20 bg-gradient-to-br from-primary-600/10 to-accent-600/10 p-8 text-center sm:p-10">
+          <h2 className="font-display text-2xl font-bold text-text-primary sm:text-3xl">
+            Want something like this in your business?
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-text-secondary">
+            We build automations like {automation.name} for businesses every
+            week. Tell us what&apos;s eating your team&apos;s time and
+            we&apos;ll map out how to automate it.
+          </p>
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button
+              href="/contact"
+              size="lg"
+              analyticsEvent="cta_click"
+              analyticsLabel={`automation-${automation.slug}`}
+            >
+              Book a Free Automation Call
+            </Button>
+            <Button href="/services/ai-automations" variant="secondary" size="lg">
+              Explore AI Automation Services
+            </Button>
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="font-display text-lg font-bold text-text-primary">
+            Keep exploring
+          </h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link
+              href="/ai-automation-systems"
+              className="rounded-full border border-[var(--border-subtle)] px-4 py-2 text-sm text-text-secondary transition-colors hover:bg-white/[0.04] hover:text-text-primary"
+            >
+              Ready-made AI automation systems
+            </Link>
+            <Link
+              href="/projects"
+              className="rounded-full border border-[var(--border-subtle)] px-4 py-2 text-sm text-text-secondary transition-colors hover:bg-white/[0.04] hover:text-text-primary"
+            >
+              Client case studies
+            </Link>
+            <Link
+              href="/services/ai-automations"
+              className="rounded-full border border-[var(--border-subtle)] px-4 py-2 text-sm text-text-secondary transition-colors hover:bg-white/[0.04] hover:text-text-primary"
+            >
+              AI automation services
+            </Link>
+          </div>
+        </div>
+
         <div className="mt-14 flex flex-col gap-6 border-t border-[var(--ra-cream-08)] pt-10 sm:flex-row sm:items-center sm:justify-between">
           <Link
             href="/automations"
@@ -181,5 +234,7 @@ export default async function AutomationDetailPage({
         </div>
       </Container>
     </section>
+    <CTABanner />
+    </>
   );
 }

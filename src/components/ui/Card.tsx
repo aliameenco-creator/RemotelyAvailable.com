@@ -14,9 +14,9 @@ export function Card({ children, className, hover = true, glow = false, style }:
     <div
       style={style}
       className={cn(
-        "rounded-[var(--radius-card)] p-6 bg-bg-card border border-[var(--border-subtle)] shadow-[var(--shadow-md)]",
+        "group spot-card rounded-[var(--radius-card)] p-6 bg-bg-card border border-[var(--border-subtle)] shadow-[var(--shadow-md)]",
         hover &&
-          "transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:shadow-[var(--shadow-lg)] hover:border-[var(--border-copper)]",
+          "transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:rotate-[0.4deg] hover:scale-[1.01] hover:shadow-[var(--shadow-lg)] hover:border-[var(--border-copper)]",
         glow && "border-[var(--border-copper)] shadow-[var(--glow-copper)]",
         className
       )}

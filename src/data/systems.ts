@@ -1,4 +1,4 @@
-import type { FAQ } from "@/data/faq";
+﻿import type { FAQ } from "@/data/faq";
 
 export interface System {
   slug: string;
@@ -118,8 +118,8 @@ export const systems: System[] = [
     detailDescription:
       "Type an idea, apply your brand style, and generate a complete editable infographic carousel in less than 20 seconds.",
     price: 19,
-    libraryImage: "/images/systems/infographic-carousel-system.png",
-    detailImage: "/images/systems/infographic-carousel-system.png",
+    libraryImage: "/images/systems/infographic-carousel-system.jpg",
+    detailImage: "/images/systems/infographic-carousel-system.jpg",
     detailImageFit: "contain",
     demandLabel: "New",
     prompt:
@@ -176,8 +176,8 @@ export const systems: System[] = [
     detailDescription:
       "Turn niche and location targeting into an organized, outreach-ready pipeline of relevant businesses, decision-makers, verified contact details, and useful sales context.",
     price: 39,
-    libraryImage: "/images/systems/leadgen-automation-pro.png",
-    detailImage: "/images/systems/leadgen-automation-pro.png",
+    libraryImage: "/images/systems/leadgen-automation-pro.jpg",
+    detailImage: "/images/systems/leadgen-automation-pro.jpg",
     detailImageFit: "contain",
     demandLabel: "New",
     prompt:
@@ -305,8 +305,8 @@ export const systems: System[] = [
     detailDescription:
       "Create, brand, share, and get client proposals approved faster with AI-generated drafts, online signatures, PDF downloads, and proposal status tracking.",
     price: 19,
-    libraryImage: "/images/systems/proposal-pro.png",
-    detailImage: "/images/systems/proposal-pro.png",
+    libraryImage: "/images/systems/proposal-pro.jpg",
+    detailImage: "/images/systems/proposal-pro.jpg",
     detailImageFit: "contain",
     demandLabel: "New",
     prompt:
@@ -442,8 +442,8 @@ export const systems: System[] = [
     pricePrefix: "From ",
     libraryPriceSuffix: " setup",
     detailPriceSuffix: "one-time setup",
-    libraryImage: "/images/systems/intelligent-website-chatbots.png",
-    detailImage: "/images/systems/intelligent-website-chatbots.png",
+    libraryImage: "/images/systems/intelligent-website-chatbots.jpg",
+    detailImage: "/images/systems/intelligent-website-chatbots.jpg",
     detailImageFit: "contain",
     demandLabel: "New",
     prompt:
@@ -537,7 +537,7 @@ export const systems: System[] = [
     pricingTiers: [
       {
         name: "Basic Website Chatbot",
-        price: "£399",
+        price: "Â£399",
         description:
           "A professional chatbot for service businesses that need instant answers, lead capture, and visitor guidance.",
         includes: [
@@ -560,7 +560,7 @@ export const systems: System[] = [
       },
       {
         name: "Ecommerce Product Chatbot",
-        price: "£799",
+        price: "Â£799",
         description:
           "A product-aware chatbot for online stores with up to 50 products that want to guide customers before checkout.",
         includes: [
@@ -583,7 +583,7 @@ export const systems: System[] = [
       },
       {
         name: "Advanced Business Chatbot",
-        price: "From £1,499",
+        price: "From Â£1,499",
         description:
           "A more advanced assistant for businesses that need deeper qualification, routing, integrations, or custom logic.",
         includes: [
@@ -607,7 +607,7 @@ export const systems: System[] = [
     ],
     supportPlan: {
       name: "Optional Monthly Support",
-      price: "From £49/month",
+      price: "From Â£49/month",
       description:
         "Keep your chatbot updated, monitored, and improved as your website, services, pricing, or product information changes.",
       includes: [

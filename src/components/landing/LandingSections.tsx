@@ -1,10 +1,23 @@
-"use client";
+﻿"use client";
 
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
+import {
+  ArrowRight,
+  GraduationCap,
+  Hammer,
+  Map,
+  PhoneCall,
+  Rocket,
+  Youtube,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { LineIcon, type LineIconName } from "./LineIcon";
 import { Section, SectionHead, AccentTitle, Glow } from "./primitives";
+import {
+  ServiceVignette,
+  type VignetteVariant,
+} from "@/components/services/ServiceVignette";
 
 /* ---------- hooks ---------- */
 function useReveal(threshold = 0.18) {
@@ -53,6 +66,47 @@ function useCountUp(target: number, run: boolean, dur = 1500) {
 const mono = "var(--font-mono)";
 const serif = "var(--font-display)";
 
+/* ---------- rotating hero words ---------- */
+const ROTATING_WORDS = [
+  "growing agencies",
+  "e-commerce brands",
+  "clinics & practices",
+  "estate agents",
+  "local service businesses",
+];
+
+function RotatingWords() {
+  const [index, setIndex] = React.useState(0);
+  const [leaving, setLeaving] = React.useState(false);
+
+  React.useEffect(() => {
+    const id = setInterval(() => {
+      setLeaving(true);
+      const swap = setTimeout(() => {
+        setIndex((i) => (i + 1) % ROTATING_WORDS.length);
+        setLeaving(false);
+      }, 260);
+      return () => clearTimeout(swap);
+    }, 2600);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        color: "var(--ra-copper)",
+        transition: "transform 0.26s ease, opacity 0.26s ease",
+        transform: leaving ? "translateY(0.55em)" : "translateY(0)",
+        opacity: leaving ? 0 : 1,
+        willChange: "transform, opacity",
+      }}
+    >
+      {ROTATING_WORDS[index]}
+    </span>
+  );
+}
+
 /* ====================== HERO ====================== */
 const HERO_TITLE_STYLE: React.CSSProperties = {
   fontFamily: serif,
@@ -64,12 +118,73 @@ const HERO_TITLE_STYLE: React.CSSProperties = {
   margin: 0,
 };
 
+/* Animated workflow canvas: inputs flow through the AI node to outcomes,
+   with pulses travelling along the wires (SVG SMIL â€” no JS, no hydration). */
+
+const WIRES = [
+  { d: "M170 78 C 215 78, 155 228, 200 228", delay: "0s" },
+  { d: "M170 374 C 215 374, 155 228, 200 228", delay: "1.1s" },
+  { d: "M350 228 C 395 228, 335 64, 380 64", delay: "0.4s" },
+  { d: "M350 228 C 362 228, 368 228, 380 228", delay: "1.5s" },
+  { d: "M350 228 C 395 228, 335 392, 380 392", delay: "0.8s" },
+];
+
+function CanvasNode({
+  x,
+  y,
+  w = 160,
+  label,
+  meta,
+  icon,
+  tone = "var(--ra-cream-55)",
+  done,
+}: {
+  x: number;
+  y: number;
+  w?: number;
+  label: string;
+  meta: string;
+  icon: React.ReactNode;
+  tone?: string;
+  done?: boolean;
+}) {
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <rect
+        width={w}
+        height={60}
+        rx={13}
+        fill="var(--ra-ink)"
+        stroke="var(--ra-cream-08)"
+      />
+      <g transform="translate(13 13)" color={tone}>
+        <rect width={34} height={34} rx={9} fill="var(--ra-surface-2)" />
+        <g transform="translate(8 8)">{icon}</g>
+      </g>
+      <text x={58} y={27} fill="var(--ra-cream)" fontSize={13} fontWeight={600}>
+        {label}
+      </text>
+      <text x={58} y={44} fill="var(--ra-cream-40)" fontSize={10} fontFamily="var(--font-mono)">
+        {meta}
+      </text>
+      {done && (
+        <g transform={`translate(${w - 20} 12)`}>
+          <circle cx={4} cy={4} r={4} fill="var(--ra-success)" opacity={0.9} />
+        </g>
+      )}
+    </g>
+  );
+}
+
+const iconProps = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+} as const;
+
 function HeroVisual() {
-  const rows = [
-    { icon: "bolt" as LineIconName, label: "Automation", meta: "running", tone: "var(--ra-copper)" },
-    { icon: "mic" as LineIconName, label: "Voice agent", meta: "24 calls today", tone: "var(--ra-lavender)" },
-    { icon: "chat" as LineIconName, label: "Support bot", meta: "98% resolved", tone: "var(--ra-success)" },
-  ];
   return (
     <div
       className="floaty"
@@ -83,7 +198,7 @@ function HeroVisual() {
     >
       <div
         style={{
-          padding: "16px 18px",
+          padding: "14px 18px",
           borderBottom: "1px solid var(--ra-cream-08)",
           display: "flex",
           alignItems: "center",
@@ -95,71 +210,215 @@ function HeroVisual() {
           // live workflow
         </span>
         <span style={{ marginLeft: "auto", fontFamily: mono, fontSize: 11, color: "var(--ra-success)" }}>
-          ● active
+          â— active
         </span>
       </div>
-      <div style={{ padding: 18, display: "flex", flexDirection: "column", gap: 12 }}>
-        {rows.map((r) => (
-          <div
-            key={r.label}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              padding: "14px 16px",
-              borderRadius: 12,
-              background: "var(--ra-ink)",
-              border: "1px solid var(--ra-cream-08)",
-            }}
-          >
-            <span
-              style={{
-                width: 38,
-                height: 38,
-                borderRadius: 10,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "var(--ra-surface-2)",
-                color: r.tone,
-                flex: "none",
-              }}
-            >
-              <LineIcon name={r.icon} size={18} />
-            </span>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "var(--ra-cream)" }}>{r.label}</div>
-              <div style={{ fontFamily: mono, fontSize: 11, color: "var(--ra-cream-40)", marginTop: 2 }}>
-                {r.meta}
-              </div>
-            </div>
-            <LineIcon name="check" size={16} style={{ color: r.tone }} />
-          </div>
+
+      <svg
+        viewBox="0 0 550 456"
+        style={{ display: "block", width: "100%", height: "auto", padding: "6px 4px 0" }}
+        role="img"
+        aria-label="Live automation workflow: enquiries and calls flow through an AI agent into replies, CRM updates, and booked calls"
+      >
+        {/* wires + travelling pulses */}
+        {WIRES.map(({ d, delay }) => (
+          <g key={d}>
+            <path
+              d={d}
+              fill="none"
+              stroke="var(--ra-cream-08)"
+              strokeWidth={2}
+            />
+            <path
+              className="wf-flow"
+              d={d}
+              fill="none"
+              stroke="var(--ra-copper)"
+              strokeOpacity={0.45}
+              strokeWidth={2}
+              strokeDasharray="5 7"
+            />
+            <circle r={3.5} fill="var(--ra-copper)">
+              <animateMotion dur="2.4s" begin={delay} repeatCount="indefinite" path={d} />
+            </circle>
+          </g>
         ))}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "4px 4px 0",
-            fontFamily: mono,
-            fontSize: 11,
-            color: "var(--ra-cream-40)",
-          }}
-        >
-          <span>hours reclaimed</span>
-          <span style={{ color: "var(--ra-copper)" }}>+42 / wk</span>
-        </div>
+
+        {/* inputs */}
+        <CanvasNode
+          x={10}
+          y={48}
+          label="New enquiry"
+          meta="webhook Â· just now"
+          tone="var(--ra-copper)"
+          icon={
+            <svg width={18} height={18} viewBox="0 0 24 24" {...iconProps}>
+              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+          }
+        />
+        <CanvasNode
+          x={10}
+          y={344}
+          label="Missed call"
+          meta="voicemail captured"
+          tone="var(--ra-lavender)"
+          icon={
+            <svg width={18} height={18} viewBox="0 0 24 24" {...iconProps}>
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+          }
+        />
+
+        {/* AI core */}
+        <g transform="translate(200 180)">
+          <rect
+            width={150}
+            height={96}
+            rx={16}
+            fill="var(--ra-ink)"
+            stroke="var(--ra-copper)"
+            strokeOpacity={0.55}
+            strokeWidth={1.5}
+          />
+          <rect
+            className="hero-core-pulse"
+            width={150}
+            height={96}
+            rx={16}
+            fill="none"
+            stroke="var(--ra-copper)"
+            strokeOpacity={0.4}
+          />
+          <g transform="translate(57 16)" color="var(--ra-copper)">
+            <svg width={36} height={36} viewBox="0 0 24 24" {...iconProps}>
+              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+            </svg>
+          </g>
+          <text x={75} y={72} textAnchor="middle" fill="var(--ra-cream)" fontSize={14} fontWeight={700}>
+            AI Agent
+          </text>
+          <text x={75} y={87} textAnchor="middle" fill="var(--ra-cream-40)" fontSize={9.5} fontFamily="var(--font-mono)">
+            deciding next stepâ€¦
+          </text>
+        </g>
+
+        {/* outcomes */}
+        <CanvasNode
+          x={380}
+          y={34}
+          label="Reply sent"
+          meta="in 12 seconds"
+          tone="var(--ra-success)"
+          done
+          icon={
+            <svg width={18} height={18} viewBox="0 0 24 24" {...iconProps}>
+              <rect x={2} y={4} width={20} height={16} rx={2} />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+          }
+        />
+        <CanvasNode
+          x={380}
+          y={198}
+          label="CRM updated"
+          meta="lead scored 92/100"
+          tone="var(--ra-lavender)"
+          done
+          icon={
+            <svg width={18} height={18} viewBox="0 0 24 24" {...iconProps}>
+              <ellipse cx={12} cy={5} rx={9} ry={3} />
+              <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+              <path d="M3 12a9 3 0 0 0 18 0" />
+            </svg>
+          }
+        />
+        <CanvasNode
+          x={380}
+          y={362}
+          label="Call booked"
+          meta="Tue 10:30 Â· calendar"
+          tone="var(--ra-copper)"
+          done
+          icon={
+            <svg width={18} height={18} viewBox="0 0 24 24" {...iconProps}>
+              <rect x={3} y={4} width={18} height={18} rx={2} />
+              <path d="M16 2v4M8 2v4M3 10h18" />
+            </svg>
+          }
+        />
+      </svg>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "10px 18px 14px",
+          fontFamily: mono,
+          fontSize: 11,
+          color: "var(--ra-cream-40)",
+        }}
+      >
+        <span>hours reclaimed</span>
+        <span style={{ color: "var(--ra-copper)" }}>+42 / wk</span>
       </div>
     </div>
   );
 }
 
 export function Hero() {
+  const heroRef = React.useRef<HTMLDivElement>(null);
+  const rafRef = React.useRef(0);
+
+  // Cursor parallax: the visual card tilts toward the pointer and the copper
+  // glow drifts with it. rAF-throttled; inert on touch devices (no mousemove).
+  const onMouseMove = React.useCallback((e: React.MouseEvent) => {
+    const el = heroRef.current;
+    if (!el) return;
+    const { clientX, clientY } = e;
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect();
+      const px = (clientX - rect.left) / rect.width - 0.5;
+      const py = (clientY - rect.top) / rect.height - 0.5;
+      el.style.setProperty("--tilt-x", `${(-py * 4).toFixed(2)}deg`);
+      el.style.setProperty("--tilt-y", `${(px * 5).toFixed(2)}deg`);
+      el.style.setProperty("--drift-x", `${(px * 26).toFixed(1)}px`);
+      el.style.setProperty("--drift-y", `${(py * 18).toFixed(1)}px`);
+    });
+  }, []);
+
+  const onMouseLeave = React.useCallback(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    cancelAnimationFrame(rafRef.current);
+    el.style.setProperty("--tilt-x", "0deg");
+    el.style.setProperty("--tilt-y", "0deg");
+    el.style.setProperty("--drift-x", "0px");
+    el.style.setProperty("--drift-y", "0px");
+  }, []);
+
   return (
-    <div style={{ position: "relative", overflow: "hidden" }}>
+    <div
+      ref={heroRef}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{ position: "relative", overflow: "hidden" }}
+    >
       <div className="hero-grid" style={{ position: "absolute", inset: 0, top: -80 }} aria-hidden="true" />
-      <Glow style={{ top: -260, left: "50%", transform: "translateX(-50%)" }} size={760} />
-      <Glow color="lavender" style={{ top: 40, right: -160 }} size={420} />
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          transform: "translate(var(--drift-x, 0px), var(--drift-y, 0px))",
+          transition: "transform 0.4s ease-out",
+          pointerEvents: "none",
+        }}
+      >
+        <Glow style={{ top: -260, left: "50%", transform: "translateX(-50%)" }} size={760} />
+        <Glow color="lavender" style={{ top: 40, right: -160 }} size={420} />
+      </div>
       <div style={{ position: "relative" }}>
         <Section style={{ paddingTop: 120, paddingBottom: "var(--space-9, 96px)" }}>
           <div
@@ -193,6 +452,19 @@ export function Hero() {
                 <br />
                 That Actually Work
               </h1>
+              <p
+                style={{
+                  marginTop: 14,
+                  fontFamily: serif,
+                  fontSize: "clamp(1.15rem, 2vw, 1.5rem)",
+                  letterSpacing: "-0.01em",
+                  color: "var(--ra-cream-55)",
+                  height: "1.5em",
+                  overflow: "hidden",
+                }}
+              >
+                for <RotatingWords />
+              </p>
               <p style={{ marginTop: 24, maxWidth: 480, fontSize: 17, lineHeight: 1.6, color: "var(--ra-cream-55)" }}>
                 Automations, voice agents, chatbots, and intelligent websites, engineered to save your team{" "}
                 <strong style={{ color: "var(--ra-cream)", fontWeight: 600 }}>40+ hours a week</strong> and drive real
@@ -210,7 +482,23 @@ export function Hero() {
                 No commitment. 30-minute call. Real strategy.
               </p>
             </div>
-            <HeroVisual />
+            <div
+              style={{
+                perspective: 900,
+                transformStyle: "preserve-3d",
+              }}
+            >
+              <div
+                style={{
+                  transform:
+                    "rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))",
+                  transition: "transform 0.35s ease-out",
+                  willChange: "transform",
+                }}
+              >
+                <HeroVisual />
+              </div>
+            </div>
           </div>
         </Section>
       </div>
@@ -247,8 +535,80 @@ export function StatBar() {
   );
 }
 
-/* ====================== TOOLS GRID ====================== */
-const TOOLS = ["ReplIt", "Grok AI", "DeepSeek", "Cursor AI", "Veo 3", "ChatGPT", "Gemini", "Claude", "Midjourney", "Copilot", "ElevenLabs", "Lovable", "Meta AI", "Adobe Firefly", "Perplexity", "n8n"];
+/* ====================== TOOLS MARQUEE ====================== */
+const TOOLS_ROW_A = [
+  { name: "ChatGPT", file: "chatgpt.png" },
+  { name: "Gemini", file: "gemini.png" },
+  { name: "Grok AI", file: "grokai.png" },
+  { name: "DeepSeek", file: "deepseek.png" },
+  { name: "Cursor AI", file: "cursorai.png" },
+  { name: "ReplIt", file: "replit.png" },
+  { name: "Veo 3", file: "veo3.png" },
+];
+const TOOLS_ROW_B = [
+  { name: "Copilot", file: "copilot.png" },
+  { name: "ElevenLabs", file: "elevenlabs.png" },
+  { name: "Lovable", file: "lovable.png" },
+  { name: "Meta AI", file: "metaai.png" },
+  { name: "Adobe Firefly", file: "firefly.png" },
+  { name: "Perplexity", file: "perplexity.png" },
+  { name: "Leonardo AI", file: "leonardoai.png" },
+];
+
+function ToolTile({ name, file }: { name: string; file: string }) {
+  return (
+    <div
+      className="tool-tile"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        padding: "12px 22px",
+        borderRadius: 14,
+        background: "var(--ra-surface)",
+        border: "1px solid var(--ra-cream-08)",
+        whiteSpace: "nowrap",
+        flex: "none",
+      }}
+    >
+      <img
+        src={`/logos/${file}`}
+        alt={`${name} logo`}
+        loading="lazy"
+        style={{ width: 30, height: 30, objectFit: "contain", flex: "none" }}
+      />
+      <span style={{ fontFamily: mono, fontSize: 12, letterSpacing: "0.04em", color: "var(--ra-cream-55)" }}>
+        {name}
+      </span>
+    </div>
+  );
+}
+
+function ToolsRow({
+  tools,
+  direction,
+}: {
+  tools: { name: string; file: string }[];
+  direction: "left" | "right";
+}) {
+  return (
+    <div style={{ overflow: "hidden", position: "relative" }}>
+      <div
+        className={direction === "left" ? "animate-marquee-left" : "animate-marquee-right"}
+        style={{ display: "flex", gap: 14, width: "max-content" }}
+      >
+        {[0, 1, 2, 3].map((copy) => (
+          <div key={copy} style={{ display: "flex", gap: 14 }} aria-hidden={copy > 0}>
+            {tools.map((t) => (
+              <ToolTile key={t.name} {...t} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ToolsGrid() {
   return (
     <Section>
@@ -257,51 +617,36 @@ export function ToolsGrid() {
         title="Tools & Platforms We Master"
         lead="We leverage the most powerful AI tools to build solutions that deliver real results for your business."
       />
-      <div className="tools-grid" style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: 14 }}>
-        {TOOLS.map((name) => (
-          <div
-            key={name}
-            className="tool-tile"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 10,
-              padding: "20px 8px",
-              borderRadius: 14,
-              background: "var(--ra-surface)",
-              border: "1px solid var(--ra-cream-08)",
-            }}
-          >
-            <span
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 11,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "var(--ra-ink)",
-                border: "1px solid var(--ra-cream-08)",
-                fontFamily: serif,
-                fontStyle: "italic",
-                fontSize: 20,
-                color: "var(--ra-copper)",
-              }}
-            >
-              {name[0]}
-            </span>
-            <span style={{ fontFamily: mono, fontSize: 10.5, letterSpacing: "0.04em", color: "var(--ra-cream-55)", textAlign: "center" }}>
-              {name}
-            </span>
-          </div>
-        ))}
+      <div className="tools-marquee" style={{ marginTop: 48, display: "flex", flexDirection: "column", gap: 14, position: "relative" }}>
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 2,
+            pointerEvents: "none",
+            background:
+              "linear-gradient(90deg, var(--ra-base) 0%, transparent 8%, transparent 92%, var(--ra-base) 100%)",
+          }}
+        />
+        <ToolsRow tools={TOOLS_ROW_A} direction="left" />
+        <ToolsRow tools={TOOLS_ROW_B} direction="right" />
       </div>
     </Section>
   );
 }
 
 /* ====================== SERVICES PREVIEW (bento) ====================== */
+
+const SERVICE_VIGNETTE_VARIANTS: Record<string, VignetteVariant> = {
+  "AI Automations": "automation",
+  "AI Websites": "website",
+  "AI Voice Agents": "voice",
+  "AI Chatbots": "chatbot",
+  "AI Content Systems": "content",
+  "Shopify Automation": "shopify",
+};
+
 interface Svc {
   icon: LineIconName;
   name: string;
@@ -311,55 +656,78 @@ interface Svc {
   tag?: string;
 }
 const SERVICES: Svc[] = [
-  { icon: "bolt", name: "AI Automations", desc: "Eliminate repetitive tasks and reclaim your team’s time, reliable, monitored workflows wired into the tools you already use.", span: 4, feature: true, tag: "Most deployed" },
+  { icon: "bolt", name: "AI Automations", desc: "Reliable, monitored workflows wired into the tools you already use.", span: 2, tag: "Most deployed" },
   { icon: "globe", name: "AI Websites", desc: "Websites that think, adapt, and convert.", span: 2 },
   { icon: "mic", name: "AI Voice Agents", desc: "Human-quality voice that answers and books, 24/7.", span: 2 },
-  { icon: "chat", name: "AI Chatbots", desc: "Support bots trained on your knowledge base that resolve instantly, escalate intelligently, and never sleep.", span: 4, feature: true, tag: "Always on" },
-  { icon: "layers", name: "AI Content Systems", desc: "On-brand content pipelines that never sleep.", span: 3 },
-  { icon: "cart", name: "Shopify Automation", desc: "Hands-off operations for high-volume stores.", span: 3 },
+  { icon: "chat", name: "AI Chatbots", desc: "Bots trained on your knowledge base that resolve instantly and never sleep.", span: 2, tag: "Always on" },
+  { icon: "layers", name: "AI Content Systems", desc: "On-brand content pipelines that never sleep.", span: 2 },
+  { icon: "cart", name: "Shopify Automation", desc: "Hands-off operations for high-volume stores.", span: 2 },
 ];
 
+function ServiceEmblem({ icon }: { icon: LineIconName }) {
+  return (
+    <span
+      className="svc-icon"
+      style={{
+        position: "relative",
+        width: 52,
+        height: 52,
+        flex: "none",
+        borderRadius: 15,
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background:
+          "linear-gradient(135deg, var(--ra-copper-08), rgba(110,119,203,0.12))",
+        border: "1px solid var(--ra-copper-25)",
+        color: "var(--ra-copper)",
+      }}
+    >
+      <LineIcon name={icon} size={22} />
+      {/* orbiting spark */}
+      <span className="svc-orbit" aria-hidden="true">
+        <span
+          style={{
+            position: "absolute",
+            top: -2.5,
+            left: "50%",
+            marginLeft: -2.5,
+            width: 5,
+            height: 5,
+            borderRadius: "50%",
+            background: "var(--ra-copper)",
+            boxShadow: "0 0 8px var(--ra-copper)",
+          }}
+        />
+      </span>
+    </span>
+  );
+}
+
 function ServiceCard({ s, i }: { s: Svc; i: number }) {
-  const feature = s.feature;
+  const variant = SERVICE_VIGNETTE_VARIANTS[s.name];
   return (
     <div
-      className="svc-card reveal-item"
+      className="svc-card spot-card reveal-item"
       style={{
         gridColumn: `span ${s.span}`,
         transitionDelay: `${i * 90}ms`,
         background: "var(--ra-surface)",
         border: "1px solid var(--ra-cream-08)",
         borderRadius: "var(--radius-card)",
-        padding: feature ? "var(--space-6, 32px)" : "var(--space-5, 24px)",
+        padding: "var(--space-5, 24px)",
         display: "flex",
-        flexDirection: feature ? "row" : "column",
-        gap: feature ? 26 : 18,
-        alignItems: feature ? "flex-start" : "stretch",
+        flexDirection: "column",
+        gap: 16,
       }}
     >
       <span className="svc-accent" />
       <span className="svc-glow" />
       <span className="svc-num">{String(i + 1).padStart(2, "0")}</span>
-      <span
-        className="svc-icon"
-        style={{
-          width: feature ? 56 : 46,
-          height: feature ? 56 : 46,
-          flex: "none",
-          borderRadius: 13,
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "var(--ra-copper-08)",
-          border: "1px solid var(--ra-copper-25)",
-          color: "var(--ra-copper)",
-        }}
-      >
-        <LineIcon name={s.icon} size={feature ? 24 : 20} />
-      </span>
+      <ServiceEmblem icon={s.icon} />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-          <h3 style={{ fontFamily: serif, fontSize: feature ? 22 : 19, color: "var(--ra-cream)", margin: 0 }}>{s.name}</h3>
+          <h3 style={{ fontFamily: serif, fontSize: 19, color: "var(--ra-cream)", margin: 0 }}>{s.name}</h3>
           {s.tag ? (
             <span
               style={{
@@ -378,14 +746,27 @@ function ServiceCard({ s, i }: { s: Svc; i: number }) {
             </span>
           ) : null}
         </div>
-        <p style={{ marginTop: 8, color: "var(--ra-cream-55)", fontSize: feature ? 15.5 : 14.5, lineHeight: 1.6, maxWidth: feature ? 440 : "none" }}>
+        <p style={{ marginTop: 8, color: "var(--ra-cream-55)", fontSize: 14.5, lineHeight: 1.6, minHeight: 46 }}>
           {s.desc}
         </p>
+        {variant ? (
+          <div
+            style={{
+              marginTop: 14,
+              height: 108,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <ServiceVignette variant={variant} />
+          </div>
+        ) : null}
         <a
           href="/services"
           style={{
-            marginTop: feature ? 18 : "auto",
-            paddingTop: feature ? 0 : 14,
+            marginTop: "auto",
+            paddingTop: 16,
             display: "inline-flex",
             alignItems: "center",
             gap: 7,
@@ -434,7 +815,15 @@ const STEPS = [
   { n: "03", title: "Build & Integrate", desc: "We build your AI systems and wire them into the tools you already use, tested end to end." },
   { n: "04", title: "Launch & Optimize", desc: "We deploy, train your team, and tune for performance. Ongoing support keeps it sharp." },
 ];
+const STEP_META = [
+  { icon: PhoneCall, when: "day 1 · 30 min", tone: "var(--ra-copper)" },
+  { icon: Map, when: "within 48 hrs", tone: "var(--ra-lavender)" },
+  { icon: Hammer, when: "weeks 1-4", tone: "var(--ra-copper)" },
+  { icon: Rocket, when: "launch + ongoing", tone: "var(--ra-success)" },
+];
+
 export function Process() {
+  const [ref, shown] = useReveal();
   return (
     <Section>
       <SectionHead
@@ -442,36 +831,130 @@ export function Process() {
         title="From Discovery to Delivery"
         lead="A proven process that turns your business challenges into working AI systems, no fluff, no delays."
       />
-      <div style={{ maxWidth: 760, margin: "56px auto 0", position: "relative" }}>
-        <div style={{ position: "absolute", left: 23, top: 10, bottom: 10, width: 2, background: "linear-gradient(var(--ra-copper-25), var(--ra-cream-08))" }} />
-        <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-          {STEPS.map((s) => (
-            <div key={s.n} style={{ display: "flex", gap: 24, position: "relative" }}>
-              <span
-                style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: "50%",
-                  flex: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: "var(--ra-base)",
-                  border: "1px solid var(--ra-copper-25)",
-                  fontFamily: mono,
-                  fontSize: 14,
-                  color: "var(--ra-copper)",
-                  zIndex: 1,
-                }}
+      <div
+        ref={ref}
+        className={shown ? "reveal-on" : ""}
+        style={{ marginTop: 56, position: "relative" }}
+      >
+        {/* animated connector behind the medallions (desktop) */}
+        <svg
+          viewBox="0 0 1000 4"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          className="process-wire"
+          style={{
+            position: "absolute",
+            top: 51,
+            left: "11%",
+            right: "11%",
+            width: "78%",
+            height: 4,
+            zIndex: 0,
+          }}
+        >
+          <line
+            x1="0"
+            y1="2"
+            x2="1000"
+            y2="2"
+            stroke="var(--ra-copper)"
+            strokeOpacity={0.35}
+            strokeWidth={2}
+            strokeDasharray="6 8"
+            className="wf-flow"
+          />
+        </svg>
+
+        <div className="grid gap-5 lg:grid-cols-4" style={{ position: "relative", zIndex: 1 }}>
+          {STEPS.map((s, i) => {
+            const meta = STEP_META[i];
+            const Icon = meta.icon;
+            return (
+              <div
+                key={s.n}
+                className="reveal-item group rounded-xl border border-white/[0.08] bg-bg-card p-6 text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-primary-600/40 hover:shadow-[var(--glow-copper)]"
+                style={{ transitionDelay: `${i * 110}ms` }}
               >
-                {s.n}
-              </span>
-              <div style={{ paddingTop: 4 }}>
-                <h3 style={{ fontFamily: serif, fontSize: 19, color: "var(--ra-cream)", margin: 0 }}>{s.title}</h3>
-                <p style={{ marginTop: 8, color: "var(--ra-cream-55)", fontSize: 15, lineHeight: 1.65, maxWidth: 520 }}>{s.desc}</p>
+                <div style={{ position: "relative", display: "inline-flex" }}>
+                  <span
+                    className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"
+                    style={{
+                      width: 56,
+                      height: 56,
+                      borderRadius: "50%",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: "var(--ra-base)",
+                      border: "1.5px solid var(--ra-copper-25)",
+                      color: meta.tone,
+                    }}
+                  >
+                    <Icon size={22} aria-hidden="true" />
+                  </span>
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: -6,
+                      right: -10,
+                      padding: "2px 7px",
+                      borderRadius: "var(--radius-pill)",
+                      background: "var(--ra-copper)",
+                      color: "#1a1a1a",
+                      fontFamily: mono,
+                      fontSize: 10,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {s.n}
+                  </span>
+                </div>
+                <h3 style={{ fontFamily: serif, fontSize: 19, color: "var(--ra-cream)", margin: "16px 0 0" }}>
+                  {s.title}
+                </h3>
+                <p
+                  style={{
+                    margin: "6px 0 0",
+                    fontFamily: mono,
+                    fontSize: 10.5,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "var(--ra-copper)",
+                  }}
+                >
+                  {meta.when}
+                </p>
+                <p style={{ marginTop: 10, color: "var(--ra-cream-55)", fontSize: 14, lineHeight: 1.6 }}>
+                  {s.desc}
+                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
+        </div>
+
+        <div
+          className="reveal-item"
+          style={{
+            marginTop: 36,
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 18,
+            transitionDelay: "480ms",
+          }}
+        >
+          <span style={{ fontFamily: mono, fontSize: 12.5, color: "var(--ra-cream-55)", letterSpacing: "0.04em" }}>
+            Step 01 costs nothing —
+          </span>
+          <Button
+            href="/contact"
+            analyticsEvent="cta_click"
+            analyticsLabel="process-step-01"
+            icon={<ArrowRight size={16} />}
+          >
+            Book Your Free Call
+          </Button>
         </div>
       </div>
     </Section>
@@ -480,8 +963,9 @@ export function Process() {
 
 /* ====================== TEAM ====================== */
 const TEAM = [
-  { img: "/team/team-1.png", pos: "center 22%" },
-  { img: "/team/team-2.png", pos: "center 32%" },
+  // TEAM[0] is the founder (featured card)
+  { img: "/team/team-2.jpg", pos: "center 32%" },
+  { img: "/team/team-1.jpg", pos: "center 22%" },
   { img: "/team/team-3.jpg", pos: "center 18%" },
 ];
 export function Team() {
@@ -522,19 +1006,130 @@ export function Team() {
             <p style={{ marginTop: 18, color: "var(--ra-cream-55)", fontSize: 16.5, lineHeight: 1.7, maxWidth: 420 }}>
               A senior team of automation engineers, strategists, and builders who&rsquo;ve shipped AI systems across dozens of industries. The experience shows in everything we deliver.
             </p>
+            <a
+              href="/team"
+              style={{
+                marginTop: 20,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                fontFamily: mono,
+                fontSize: 13,
+                letterSpacing: "0.04em",
+                color: "var(--ra-copper)",
+              }}
+              data-analytics-event="cta_click"
+              data-analytics-label="home-meet-team"
+            >
+              Meet the full team <ArrowRight size={14} aria-hidden="true" />
+            </a>
           </div>
-          <div ref={ref} className={"team-photos " + (shown ? "reveal-on" : "")} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 18 }}>
-            {TEAM.map((m, i) => (
-              <div key={i} className="team-card reveal-item" style={{ transitionDelay: `${i * 200}ms` }}>
-                <div style={{ aspectRatio: "3 / 4", overflow: "hidden" }}>
-                  <img src={m.img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: m.pos, display: "block" }} />
+          <div ref={ref} className={"team-showcase " + (shown ? "reveal-on" : "")} style={{ display: "grid", gridTemplateColumns: "1.35fr 1fr", gap: 18 }}>
+            {/* Featured: founder profile */}
+            <div className="team-card reveal-item" style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ position: "relative", aspectRatio: "4 / 4.4", overflow: "hidden" }}>
+                <img
+                  src={TEAM[0].img}
+                  alt="Ali Ameen, founder of RemotelyAvailable"
+                  loading="lazy"
+                  decoding="async"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: TEAM[0].pos, display: "block" }}
+                />
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    left: 12,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    padding: "4px 11px",
+                    borderRadius: "var(--radius-pill)",
+                    background: "rgba(20,20,20,0.75)",
+                    border: "1px solid var(--ra-copper-25)",
+                    backdropFilter: "blur(6px)",
+                    fontFamily: mono,
+                    fontSize: 10,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "var(--ra-copper)",
+                  }}
+                >
+                  <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--ra-copper)" }} />
+                  Founder
+                </span>
+              </div>
+              <div style={{ padding: "16px 18px 18px", borderTop: "1px solid var(--ra-cream-08)", display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
+                <div>
+                  <div style={{ fontFamily: serif, fontSize: 22, color: "var(--ra-cream)" }}>Ali Ameen</div>
+                  <div style={{ fontFamily: mono, fontSize: 11, letterSpacing: "0.09em", color: "var(--ra-copper)", marginTop: 4 }}>
+                    // AI Specialist · Business Strategist
+                  </div>
                 </div>
-                <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "34px 16px 16px", background: "linear-gradient(transparent, rgba(20,20,20,0.94))" }}>
-                  <div style={{ fontFamily: serif, fontStyle: "italic", fontSize: 16, color: "var(--ra-cream-40)" }}>Name coming soon</div>
-                  <div style={{ fontFamily: mono, fontSize: 10.5, letterSpacing: "0.1em", color: "var(--ra-copper)", marginTop: 4 }}>// role TBA</div>
+                <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: "var(--ra-cream-55)" }}>
+                  The educator behind <strong style={{ color: "var(--ra-cream)", fontWeight: 600 }}>Agentic Ali</strong>, teaching
+                  50,000+ students how to put AI to work in real businesses.
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: "auto" }}>
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      padding: "6px 12px",
+                      borderRadius: "var(--radius-pill)",
+                      background: "var(--ra-copper-08)",
+                      border: "1px solid var(--ra-copper-25)",
+                      fontFamily: mono,
+                      fontSize: 11,
+                      color: "var(--ra-copper)",
+                    }}
+                  >
+                    <GraduationCap size={13} aria-hidden="true" />
+                    50k+ students taught
+                  </span>
+                  <a
+                    href="https://youtube.com/@agenticali"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-analytics-event="youtube_click"
+                    data-analytics-label="team-profile"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      padding: "6px 12px",
+                      borderRadius: "var(--radius-pill)",
+                      background: "rgba(255,0,0,0.12)",
+                      border: "1px solid rgba(255,80,80,0.35)",
+                      fontFamily: mono,
+                      fontSize: 11,
+                      color: "#ff8080",
+                      textDecoration: "none",
+                      transition: "transform 0.15s ease, background 0.2s ease",
+                    }}
+                  >
+                    <Youtube size={13} aria-hidden="true" />
+                    @agenticali
+                  </a>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Rest of the team */}
+            <div style={{ display: "grid", gridTemplateRows: "1fr 1fr", gap: 18 }}>
+              {TEAM.slice(1).map((m, i) => (
+                <div key={m.img} className="team-card reveal-item" style={{ transitionDelay: `${(i + 1) * 200}ms` }}>
+                  <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+                    <img src={m.img} alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: m.pos, display: "block" }} />
+                  </div>
+                  <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "34px 16px 14px", background: "linear-gradient(transparent, rgba(20,20,20,0.94))" }}>
+                    <div style={{ fontFamily: serif, fontStyle: "italic", fontSize: 15, color: "var(--ra-cream-40)" }}>Name coming soon</div>
+                    <div style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.1em", color: "var(--ra-copper)", marginTop: 3 }}>// role TBA</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </Section>
@@ -545,8 +1140,8 @@ export function Team() {
 /* ====================== TESTIMONIALS ====================== */
 const QUOTES = [
   { quote: "RemotelyAvailable automated our entire lead qualification process. What used to take 3 team members now runs on autopilot. We booked 40% more demos in the first month.", name: "Sarah Chen", role: "Head of Operations, ScaleUp SaaS", initials: "SC" },
-  { quote: "The AI voice agent they built handles 200+ calls a day without missing a beat. Our customers can’t tell it’s not a real person. It’s been a game-changer for our support team.", name: "Marcus Rivera", role: "CEO, HomeRise Services", initials: "MR" },
-  { quote: "We went from publishing one blog post a month to five per week, all on-brand, all reviewed by our team. The content pipeline they built is the best investment we’ve made this year.", name: "Priya Patel", role: "Marketing Director, Apex Digital", initials: "PP" },
+  { quote: "The AI voice agent they built handles 200+ calls a day without missing a beat. Our customers canâ€™t tell itâ€™s not a real person. Itâ€™s been a game-changer for our support team.", name: "Marcus Rivera", role: "CEO, HomeRise Services", initials: "MR" },
+  { quote: "We went from publishing one blog post a month to five per week, all on-brand, all reviewed by our team. The content pipeline they built is the best investment weâ€™ve made this year.", name: "Priya Patel", role: "Marketing Director, Apex Digital", initials: "PP" },
 ];
 export function Testimonials() {
   return (
@@ -554,7 +1149,7 @@ export function Testimonials() {
       <SectionHead
         kicker="Client Results"
         title={<>Trusted by Teams Who <AccentTitle>Ship</AccentTitle></>}
-        lead="Real results from real businesses. Here’s what our clients say about working with us."
+        lead="Real results from real businesses. Hereâ€™s what our clients say about working with us."
       />
       <div className="three-col" style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 18 }}>
         {QUOTES.map((q) => (
@@ -633,10 +1228,10 @@ export function CtaBand() {
 /* ====================== FAQ ====================== */
 const FAQS = [
   { q: "What kind of businesses do you work with?", a: "We work with growth-stage companies, agencies, e-commerce brands, and service businesses, anyone with repetitive work that AI can take off their plate. If you have a process, we can probably automate it." },
-  { q: "How long does a typical project take?", a: "Most automation builds ship in 2–4 weeks. Larger systems like custom voice agents or full content pipelines run 4–8 weeks. We scope timeline precisely before you commit." },
+  { q: "How long does a typical project take?", a: "Most automation builds ship in 2â€“4 weeks. Larger systems like custom voice agents or full content pipelines run 4â€“8 weeks. We scope timeline precisely before you commit." },
   { q: "Do you offer ongoing support after launch?", a: "Yes. Every build includes a support window, and we offer monthly retainers for optimization, monitoring, and new automations as your needs grow." },
   { q: "How much does it cost?", a: "Projects are fixed-scope and fixed-price, quoted after the discovery call. Most engagements start in the low five figures and pay for themselves in reclaimed hours within the first quarter." },
-  { q: "What if I’m not sure which service I need?", a: "That’s what the free discovery call is for. We’ll look at your operations and recommend the highest-leverage place to start, even if that’s not the biggest project." },
+  { q: "What if Iâ€™m not sure which service I need?", a: "Thatâ€™s what the free discovery call is for. Weâ€™ll look at your operations and recommend the highest-leverage place to start, even if thatâ€™s not the biggest project." },
   { q: "Is my data safe?", a: "Absolutely. We follow least-privilege access, encrypt data in transit and at rest, and can work entirely within your own cloud and tooling. You own everything we build." },
 ];
 function FaqItem({ q, a }: { q: string; a: string }) {
@@ -675,7 +1270,7 @@ export function Faq() {
       <SectionHead
         kicker="FAQ"
         title="Frequently Asked Questions"
-        lead="Everything you need to know about working with us. Can’t find your answer? Book a call, we’re happy to help."
+        lead="Everything you need to know about working with us. Canâ€™t find your answer? Book a call, weâ€™re happy to help."
       />
       <div style={{ marginTop: 40 }}>
         {FAQS.map((f) => (

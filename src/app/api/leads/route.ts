@@ -4,6 +4,8 @@ import { z } from "zod";
 const leadSchema = z.object({
   name: z.string().min(2).max(100),
   email: z.string().email().max(254),
+  source: z.string().max(120).optional(),
+  painPoint: z.string().max(60).optional(),
 });
 
 // Simple in-memory rate limiting
@@ -61,7 +63,8 @@ export async function POST(request: Request) {
           name: data.name,
           email: data.email,
           timestamp: new Date().toISOString(),
-          source: "website-lead-popup",
+          source: data.source ?? "website-lead-popup",
+          painPoint: data.painPoint,
         }),
       });
 

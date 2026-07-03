@@ -41,6 +41,9 @@ export const chatConfig = {
 export const leadPopupConfig = {
   pageThreshold: 3,
   delayMs: 2000,
+  scrollDepthPercent: 60,
+  exitIntent: true,
+  dismissCooldownDays: 14,
   heading: "Get a Free Growth Plan",
   subtext:
     "Tell us your biggest bottleneck and we'll send back a no-obligation plan to fix it, across web, content, design, or automation.",

@@ -26,6 +26,8 @@ export interface CaseStudy {
   client: string;
   industry: string;
   services: string;
+  /** Machine-readable service slugs for contextual proof placement. */
+  serviceTags: string[];
   timeline: string;
   /** Listing card */
   cardTitle: string;
@@ -57,6 +59,7 @@ export const caseStudies: CaseStudy[] = [
     client: "Meridian Freight Co.",
     industry: "Logistics & Freight",
     services: "AI Voice Agents · Automations",
+    serviceTags: ["ai-automations"],
     timeline: "6 weeks",
     cardTitle: "How Meridian Freight recovered $1.2M in missed loads with a 24/7 AI voice agent",
     cardStat: "+$1.2M recovered",
@@ -115,6 +118,7 @@ export const caseStudies: CaseStudy[] = [
     client: "ScaleUp SaaS",
     industry: "B2B Software",
     services: "Automations · Lead Routing",
+    serviceTags: ["ai-automations"],
     timeline: "4 weeks",
     cardTitle: "ScaleUp cut lead-qual time by 73% with an automation pipeline",
     cardStat: "+40% demos",
@@ -173,6 +177,7 @@ export const caseStudies: CaseStudy[] = [
     client: "HomeRise Services",
     industry: "Home Services",
     services: "AI Voice Agents · Chatbots",
+    serviceTags: ["ai-automations"],
     timeline: "5 weeks",
     cardTitle: "HomeRise fields 200+ calls a day with an AI voice team",
     cardStat: "98% resolved",
@@ -228,4 +233,11 @@ export const caseStudies: CaseStudy[] = [
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
   return caseStudies.find((c) => c.slug === slug);
+}
+
+/** Case studies relevant to a service; falls back to all when none match. */
+export function getCaseStudiesForService(serviceSlug?: string): CaseStudy[] {
+  if (!serviceSlug) return caseStudies;
+  const matches = caseStudies.filter((c) => c.serviceTags.includes(serviceSlug));
+  return matches.length > 0 ? matches : caseStudies;
 }

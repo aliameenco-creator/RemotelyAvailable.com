@@ -9,6 +9,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { CTABanner } from "@/components/sections/CTABanner";
 import { FAQ } from "@/components/sections/FAQ";
+import { ProofSection } from "@/components/sections/ProofSection";
+import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
+import { UkCityMap } from "@/components/locations/UkCityMap";
 import type { ServiceIconName } from "@/data/services";
 import {
   ukCities,
@@ -18,7 +21,6 @@ import {
   cityHubIntro,
   cityHubFaqs,
 } from "@/data/ukLocations";
-import { stats } from "@/data/navigation";
 import { siteConfig } from "@/lib/constants";
 
 interface CityHubPageProps {
@@ -123,8 +125,12 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
       />
 
       {/* Hero */}
-      <section className="pt-28 pb-16 sm:pt-32">
-        <Container>
+      <section className="relative overflow-hidden pt-28 pb-16 sm:pt-32">
+        <div
+          className="hero-grid pointer-events-none absolute inset-0 -top-20"
+          aria-hidden="true"
+        />
+        <Container className="relative z-10">
           <nav className="mb-8 text-sm text-text-muted">
             <Link href="/" className="hover:text-text-secondary transition-colors">
               Home
@@ -140,21 +146,32 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
             <span className="text-text-secondary">{city.name}</span>
           </nav>
 
-          <div className="max-w-3xl">
-            <p className="mb-3 inline-flex items-center gap-2 text-sm font-medium text-primary-400">
-              <MapPin size={14} aria-hidden="true" />
-              {city.name}, {city.region}
-            </p>
-            <h1 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
-              Digital Agency in {city.name}
-            </h1>
-            <p className="mt-4 text-lg text-text-secondary leading-relaxed">
-              {cityHubIntro(city)}
-            </p>
-            <div className="mt-8">
-              <Button href="/contact" size="lg" icon={<ArrowRight size={18} />}>
-                Get a Free Strategy Call
-              </Button>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto]">
+            <div className="max-w-3xl">
+              <p className="mb-3 inline-flex items-center gap-2 text-sm font-medium text-primary-400">
+                <MapPin size={14} aria-hidden="true" />
+                {city.name}, {city.region}
+              </p>
+              <h1 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
+                Digital Agency in {city.name}
+              </h1>
+              <p className="mt-4 text-lg text-text-secondary leading-relaxed">
+                {cityHubIntro(city)}
+              </p>
+              <div className="mt-8">
+                <Button
+                  href="/contact"
+                  size="lg"
+                  icon={<ArrowRight size={18} />}
+                  analyticsEvent="cta_click"
+                  analyticsLabel={`location-hub-hero:${city.slug}`}
+                >
+                  Get a Free Strategy Call
+                </Button>
+              </div>
+            </div>
+            <div className="hidden justify-center lg:flex">
+              <UkCityMap citySlug={city.slug} cityName={city.name} />
             </div>
           </div>
         </Container>
@@ -176,7 +193,7 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
                 className="group"
               >
                 <Card className="h-full p-7">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600/10 text-primary-400">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600/10 text-primary-400 transition-transform duration-200 ease-out group-hover:-rotate-6 group-hover:scale-110">
                     <ServiceIcon name={serviceIcons[service.slug]} size={24} />
                   </div>
                   <h3 className="font-display text-lg font-bold text-text-primary">
@@ -187,7 +204,11 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
                   </p>
                   <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary-400 transition-colors group-hover:text-primary-300">
                     Learn more
-                    <ArrowRight size={14} aria-hidden="true" />
+                    <ArrowRight
+                      size={14}
+                      aria-hidden="true"
+                      className="transition-transform duration-200 group-hover:translate-x-1"
+                    />
                   </span>
                 </Card>
               </Link>
@@ -196,29 +217,20 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
         </Container>
       </section>
 
-      {/* Why us / stats */}
-      <section className="py-20">
-        <Container>
-          <SectionHeading
-            badge="Why RemotelyAvailable"
-            title={`Built for ${city.name} Businesses`}
-            description={`We serve ${city.name}'s ${city.industries[0]}, ${city.industries[1]} and ${city.industries[2]} sectors, and everything in between.`}
-          />
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-xl border border-white/[0.08] bg-bg-card p-6 text-center"
-              >
-                <p className="font-display text-3xl font-bold text-primary-400">
-                  {stat.value}
-                </p>
-                <p className="mt-2 text-sm text-text-secondary">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
+      {/* Why us / proof */}
+      <ProofSection
+        seed={city.slug}
+        badge="Why RemotelyAvailable"
+        title={`Built for ${city.name} Businesses`}
+        description={`We serve ${city.name}'s ${city.industries[0]}, ${city.industries[1]} and ${city.industries[2]} sectors, and everything in between.`}
+      />
+
+      {/* Inline lead capture */}
+      <InlineLeadForm
+        heading={`Free growth audit for ${city.name} businesses`}
+        subtext={`Tell us where to send it and we'll map out the biggest opportunities for your business across web, content, design and automation. No obligation.`}
+        source={`location-hub:${city.slug}`}
+      />
 
       {/* City FAQ */}
       <FAQ

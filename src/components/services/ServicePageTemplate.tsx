@@ -9,6 +9,12 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { CTABanner } from "@/components/sections/CTABanner";
 import { FAQ } from "@/components/sections/FAQ";
+import { ProofSection } from "@/components/sections/ProofSection";
+import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
+import {
+  ServiceVignette,
+  SERVICE_SLUG_VIGNETTES,
+} from "@/components/services/ServiceVignette";
 import { ScrollReveal } from "@/components/effects/ScrollReveal";
 import { GradientOrb } from "@/components/effects/GradientOrb";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
@@ -19,6 +25,7 @@ interface ServicePageTemplateProps {
 }
 
 export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
+  const vignetteVariant = SERVICE_SLUG_VIGNETTES[service.slug];
   return (
     <>
       {/* Hero */}
@@ -31,6 +38,8 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
         />
         <Container className="relative z-10">
           <ScrollReveal>
+            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
             <nav className="mb-8 text-sm text-text-muted">
               <Link href="/" className="hover:text-text-secondary transition-colors">
                 Home
@@ -60,10 +69,28 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
                 {service.description}
               </p>
               <div className="mt-8">
-                <Button href="/contact" size="lg" icon={<ArrowRight size={18} />}>
+                <Button
+                  href="/contact"
+                  size="lg"
+                  icon={<ArrowRight size={18} />}
+                  analyticsEvent="cta_click"
+                  analyticsLabel={`service-hero:${service.slug}`}
+                >
                   Talk to Us
                 </Button>
               </div>
+            </div>
+            </div>
+            {vignetteVariant && (
+              <div className="floaty hidden max-w-md rounded-[var(--radius-card)] border border-[var(--border-copper)] bg-bg-card p-5 shadow-[var(--glow-copper)] lg:block">
+                <div className="mb-3 flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] text-text-muted">
+                  <span className="h-2 w-2 rounded-full bg-primary-400" />
+                  {"// "}
+                  {service.shortTitle.toLowerCase()} in action
+                </div>
+                <ServiceVignette variant={vignetteVariant} />
+              </div>
+            )}
             </div>
           </ScrollReveal>
         </Container>
@@ -138,29 +165,14 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             />
           </ScrollReveal>
 
-          <div className="mx-auto max-w-3xl space-y-6">
-            {service.process.map((step, i) => (
-              <ScrollReveal key={step.step} delay={i * 0.1}>
-                <div className="flex gap-6 items-start">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-primary-600 bg-bg-base">
-                    <span className="text-sm font-bold text-primary-400">
-                      {step.step}
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="font-display text-lg font-bold text-text-primary">
-                      {step.title}
-                    </h3>
-                    <p className="mt-1 text-text-secondary leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal>
+            <ProcessTimeline steps={service.process} />
+          </ScrollReveal>
         </Container>
       </section>
+
+      {/* Proof */}
+      <ProofSection serviceSlug={service.slug} seed={service.slug} className="py-24" />
 
       {/* Service FAQ */}
       <FAQ

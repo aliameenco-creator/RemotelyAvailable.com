@@ -1,18 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Sparkles, CheckCircle2 } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  FileText,
+  Mail,
+  Megaphone,
+  MoreHorizontal,
+  PhoneMissed,
+  Users,
+  X,
+} from "lucide-react";
 import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
-import { leadPopupConfig } from "@/lib/constants";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
+const PAIN_POINTS = [
+  { id: "emails", label: "Answering emails & enquiries", icon: Mail },
+  { id: "invoices", label: "Invoices & admin paperwork", icon: FileText },
+  { id: "missed-calls", label: "Missed calls & follow-ups", icon: PhoneMissed },
+  { id: "content", label: "Social & content creation", icon: Megaphone },
+  { id: "leads", label: "Chasing & qualifying leads", icon: Users },
+  { id: "other", label: "Something else entirely", icon: MoreHorizontal },
+] as const;
+
+type PainId = (typeof PAIN_POINTS)[number]["id"];
+
+const FIX_COPY: Record<PainId, string> = {
+  emails: "an inbox that answers itself",
+  invoices: "paperwork that files itself",
+  "missed-calls": "a phone line that never misses",
+  content: "a content engine that posts weekly",
+  leads: "leads that qualify themselves",
+  other: "your biggest time drain",
+};
+
 export function LeadCapturePopup() {
-  const { shouldShowPopup, dismiss, markSubmitted } = usePageVisitTracker();
+  const { shouldShowPopup, trigger, dismiss, markSubmitted } =
+    usePageVisitTracker();
+  const [step, setStep] = useState<"pain" | "contact">("pain");
+  const [pain, setPain] = useState<PainId | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+
+  useEffect(() => {
+    if (shouldShowPopup) {
+      trackEvent("lead_popup_shown", { trigger: trigger ?? "unknown" });
+    }
+  }, [shouldShowPopup, trigger]);
+
+  function handleDismiss() {
+    trackEvent("lead_popup_dismissed", {
+      trigger: trigger ?? "unknown",
+      step,
+    });
+    dismiss();
+  }
+
+  function choosePain(id: PainId) {
+    setPain(id);
+    setStep("contact");
+    trackEvent("lead_popup_step", { painPoint: id });
+  }
 
   function validate(): boolean {
     const newErrors: { name?: string; email?: string } = {};
@@ -36,19 +89,35 @@ export function LeadCapturePopup() {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
+          source: "website-lead-popup",
+          painPoint: pain ?? undefined,
         }),
       });
 
       if (!res.ok) throw new Error();
       setStatus("success");
+      trackEvent("lead_submit", { source: "popup", painPoint: pain ?? "" });
       markSubmitted();
 
-      // Auto-close after 3 seconds
-      setTimeout(dismiss, 3000);
+      // Auto-close after 3.5 seconds
+      setTimeout(dismiss, 3500);
     } catch {
       setStatus("error");
     }
   }
+
+  const inputClasses = (hasError?: string) =>
+    cn(
+      "w-full rounded-[var(--radius-button)] border border-bg-subtle bg-bg-card px-4 py-3 text-sm text-text-primary",
+      "placeholder:text-text-muted",
+      "focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500",
+      "transition-colors duration-200",
+      hasError && "border-error focus:border-error focus:ring-error"
+    );
+
+  const painLabel = pain
+    ? PAIN_POINTS.find((p) => p.id === pain)?.label ?? ""
+    : "";
 
   return (
     <AnimatePresence>
@@ -59,7 +128,7 @@ export function LeadCapturePopup() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={dismiss}
+            onClick={handleDismiss}
             className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm"
           />
 
@@ -71,120 +140,186 @@ export function LeadCapturePopup() {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               className={cn(
-                "relative w-full max-w-md pointer-events-auto",
+                "border-beam relative w-full max-w-md pointer-events-auto",
                 "glass bg-bg-card/95 backdrop-blur-xl rounded-[var(--radius-card)]",
                 "border border-white/[0.10] shadow-2xl shadow-black/50 p-8"
               )}
             >
               {/* Close button */}
               <button
-                onClick={dismiss}
+                onClick={handleDismiss}
+                aria-label="Close"
                 className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-white/5 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
 
+              {/* Step dots */}
+              {status !== "success" && (
+                <div className="mb-5 flex items-center gap-1.5">
+                  <span className="h-1 w-6 rounded-full bg-primary-400" />
+                  <span
+                    className={cn(
+                      "h-1 w-6 rounded-full transition-colors duration-300",
+                      step === "contact" ? "bg-primary-400" : "bg-white/[0.12]"
+                    )}
+                  />
+                </div>
+              )}
+
               {status === "success" ? (
-                /* Success State */
+                /* Success */
                 <div className="text-center py-4">
-                  <div className="w-14 h-14 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 16 }}
+                    className="w-14 h-14 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4"
+                  >
                     <CheckCircle2 className="w-7 h-7 text-success" />
-                  </div>
+                  </motion.div>
                   <h3 className="text-xl font-display font-semibold text-text-primary mb-2">
-                    Check your inbox!
+                    On its way!
                   </h3>
                   <p className="text-text-secondary text-sm">
-                    We&apos;ll send your personalized AI automation blueprint within 24 hours.
+                    Your plan for {pain ? FIX_COPY[pain] : "your bottleneck"}{" "}
+                    lands in your inbox within 24 hours.
                   </p>
                 </div>
               ) : (
-                /* Form State */
-                <>
-                  <div className="text-center mb-6">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-600/20 to-accent-600/20 flex items-center justify-center mx-auto mb-4">
-                      <Sparkles className="w-6 h-6 text-primary-400" />
-                    </div>
-                    <h3 className="text-xl font-display font-semibold text-text-primary mb-2">
-                      {leadPopupConfig.heading}
-                    </h3>
-                    <p className="text-text-secondary text-sm leading-relaxed">
-                      {leadPopupConfig.subtext}
-                    </p>
-                  </div>
-
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-1.5">
-                      <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                          if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }));
-                        }}
-                        placeholder="Your name"
-                        className={cn(
-                          "w-full rounded-[var(--radius-button)] border border-bg-subtle bg-bg-card px-4 py-3 text-sm text-text-primary",
-                          "placeholder:text-text-muted",
-                          "focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500",
-                          "transition-colors duration-200",
-                          errors.name && "border-error focus:border-error focus:ring-error"
-                        )}
-                      />
-                      {errors.name && (
-                        <p className="text-xs text-error">{errors.name}</p>
-                      )}
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
-                        }}
-                        placeholder="Your email"
-                        className={cn(
-                          "w-full rounded-[var(--radius-button)] border border-bg-subtle bg-bg-card px-4 py-3 text-sm text-text-primary",
-                          "placeholder:text-text-muted",
-                          "focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500",
-                          "transition-colors duration-200",
-                          errors.email && "border-error focus:border-error focus:ring-error"
-                        )}
-                      />
-                      {errors.email && (
-                        <p className="text-xs text-error">{errors.email}</p>
-                      )}
-                    </div>
-
-                    {status === "error" && (
-                      <p className="text-xs text-error text-center">
-                        Something went wrong. Please try again.
-                      </p>
-                    )}
-
-                    <button
-                      type="submit"
-                      disabled={status === "loading"}
-                      className={cn(
-                        "w-full py-3 rounded-[var(--radius-pill)] text-sm font-medium text-white",
-                        "bg-primary-600 hover:bg-primary-500 active:bg-primary-700",
-                        "shadow-lg shadow-primary-600/20 hover:shadow-primary-500/30",
-                        "transition-all duration-200",
-                        "disabled:opacity-50 disabled:cursor-not-allowed"
-                      )}
+                <AnimatePresence mode="wait" initial={false}>
+                  {step === "pain" ? (
+                    /* Step 1: pick the pain */
+                    <motion.div
+                      key="pain"
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -16 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      {status === "loading" ? "Sending..." : "Get My Free Blueprint"}
-                    </button>
-                  </form>
+                      <h3 className="text-xl font-display font-semibold text-text-primary mb-1">
+                        What&apos;s eating your team&apos;s time?
+                      </h3>
+                      <p className="text-text-secondary text-sm mb-5">
+                        Pick one. We&apos;ll send a specific, free plan to
+                        automate it, not a generic brochure.
+                      </p>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        {PAIN_POINTS.map(({ id, label, icon: Icon }, i) => (
+                          <motion.button
+                            key={id}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.05 + i * 0.05 }}
+                            onClick={() => choosePain(id)}
+                            className={cn(
+                              "flex flex-col items-start gap-2 rounded-xl border border-white/[0.1] bg-bg-base/60 p-3.5 text-left",
+                              "transition-all duration-150",
+                              "hover:border-primary-500/60 hover:bg-primary-600/10 hover:-translate-y-0.5",
+                              "active:scale-95"
+                            )}
+                          >
+                            <Icon size={17} className="text-primary-400" />
+                            <span className="text-xs font-medium leading-snug text-text-primary">
+                              {label}
+                            </span>
+                          </motion.button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ) : (
+                    /* Step 2: contact */
+                    <motion.div
+                      key="contact"
+                      initial={{ opacity: 0, x: 16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 16 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <button
+                        onClick={() => setStep("pain")}
+                        className="mb-3 inline-flex items-center gap-1 text-xs text-text-muted hover:text-text-secondary transition-colors"
+                      >
+                        <ArrowLeft size={12} />
+                        {painLabel}
+                      </button>
+                      <h3 className="text-xl font-display font-semibold text-text-primary mb-1">
+                        Where do we send your fix?
+                      </h3>
+                      <p className="text-text-secondary text-sm mb-5">
+                        We&apos;ll reply within 24 hours with 2-3 proven
+                        automations for {pain ? FIX_COPY[pain] : "this"}. No
+                        spam, ever.
+                      </p>
 
-                  <button
-                    onClick={dismiss}
-                    className="block w-full text-center mt-4 text-xs text-text-faint hover:text-text-muted transition-colors"
-                  >
-                    No thanks, maybe later
-                  </button>
-                </>
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="space-y-1.5">
+                          <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => {
+                              setName(e.target.value);
+                              if (errors.name)
+                                setErrors((prev) => ({ ...prev, name: undefined }));
+                            }}
+                            placeholder="Your name"
+                            autoFocus
+                            className={inputClasses(errors.name)}
+                          />
+                          {errors.name && (
+                            <p className="text-xs text-error">{errors.name}</p>
+                          )}
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                              if (errors.email)
+                                setErrors((prev) => ({ ...prev, email: undefined }));
+                            }}
+                            placeholder="Your email"
+                            className={inputClasses(errors.email)}
+                          />
+                          {errors.email && (
+                            <p className="text-xs text-error">{errors.email}</p>
+                          )}
+                        </div>
+
+                        {status === "error" && (
+                          <p className="text-xs text-error text-center">
+                            Something went wrong. Please try again.
+                          </p>
+                        )}
+
+                        <button
+                          type="submit"
+                          disabled={status === "loading"}
+                          className={cn(
+                            "w-full py-3 rounded-[var(--radius-pill)] text-sm font-medium text-white",
+                            "bg-primary-600 hover:bg-primary-500 active:bg-primary-700",
+                            "shadow-lg shadow-primary-600/20 hover:shadow-primary-500/30",
+                            "transition-all duration-200 hover:scale-[1.015] active:scale-95",
+                            "disabled:opacity-50 disabled:cursor-not-allowed"
+                          )}
+                        >
+                          {status === "loading" ? "Sending..." : "Send My Free Fix"}
+                        </button>
+                      </form>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
+
+              {status !== "success" && (
+                <button
+                  onClick={handleDismiss}
+                  className="block w-full text-center mt-4 text-xs text-text-faint hover:text-text-muted transition-colors"
+                >
+                  No thanks, maybe later
+                </button>
               )}
             </motion.div>
           </div>

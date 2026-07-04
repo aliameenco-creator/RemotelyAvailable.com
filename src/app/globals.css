@@ -283,6 +283,17 @@ html { scroll-behavior: smooth; }
 @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .floaty { animation: floaty 7s ease-in-out infinite; }
 
+/* Case study spotlight: rotation progress fill in the active dot */
+@keyframes spotlight-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.spotlight-progress {
+  animation-name: spotlight-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
 /* Workflow diagram: flowing connector dashes + engine pulse ring */
 @keyframes wf-dash { to { stroke-dashoffset: -24; } }
 .wf-flow { animation: wf-dash 1.1s linear infinite; }

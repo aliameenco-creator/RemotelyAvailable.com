@@ -3,11 +3,61 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  Code2,
+  Megaphone,
+  Menu,
+  Palette,
+  Search,
+  ShoppingBag,
+  Sparkles,
+  Workflow,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Wordmark } from "@/components/layout/Wordmark";
 import { navLinks, serviceNavLinks } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+
+// Mega-menu enrichment for each service link: icon, accent color, and a
+// one-line outcome so the menu itself sells the service.
+const MEGA_INFO: Record<
+  string,
+  { icon: typeof Code2; desc: string; color: string }
+> = {
+  "/services/web-development": {
+    icon: Code2,
+    desc: "Fast sites built to convert",
+    color: "#38BDF8",
+  },
+  "/services/social-media-management": {
+    icon: Megaphone,
+    desc: "Posted for you, every day",
+    color: "#E4405F",
+  },
+  "/services/ai-automations": {
+    icon: Workflow,
+    desc: "Repetitive work, handled",
+    color: "#EA4B71",
+  },
+  "/services/seo-content": {
+    icon: Search,
+    desc: "Get found first on Google",
+    color: "#7fc8a9",
+  },
+  "/services/design": {
+    icon: Palette,
+    desc: "Look established everywhere",
+    color: "#6e77cb",
+  },
+  "/services/shopify-automation": {
+    icon: ShoppingBag,
+    desc: "Your store on autopilot",
+    color: "#95BF47",
+  },
+};
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -113,32 +163,77 @@ export function Navbar() {
                         : "opacity-0 -translate-y-2 pointer-events-none"
                     )}
                   >
-                    <div className="rounded-[var(--radius-card)] p-2 min-w-[220px] bg-bg-card border border-white/[0.1] shadow-2xl shadow-black/50 backdrop-blur-xl">
-                      {serviceNavLinks.map((service) => (
-                        <Link
-                          key={service.href}
-                          href={service.href}
-                          className={cn(
-                            "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm transition-colors duration-150",
-                            pathname === service.href
-                              ? "text-text-primary bg-white/[0.08]"
-                              : "text-text-secondary hover:text-text-primary hover:bg-white/[0.05]"
-                          )}
-                        >
-                          <span>{service.label}</span>
-                          {"isNew" in service && service.isNew && (
-                            <span className="rounded-full bg-primary-600/20 border border-primary-600/30 px-1.5 py-0.5 text-[10px] font-medium text-primary-400 leading-none">
-                              New
-                            </span>
-                          )}
-                        </Link>
-                      ))}
-                      <div className="mt-1 border-t border-white/[0.06] pt-1">
+                    <div className="border-beam w-[min(640px,calc(100vw-2rem))] overflow-hidden rounded-2xl bg-bg-card/95 border border-white/[0.1] shadow-2xl shadow-black/50 backdrop-blur-xl">
+                      <div className="grid grid-cols-2 gap-1 p-2.5">
+                        {serviceNavLinks.map((service) => {
+                          const info = MEGA_INFO[service.href];
+                          const Icon = info?.icon ?? Code2;
+                          const active = pathname === service.href;
+                          return (
+                            <Link
+                              key={service.href}
+                              href={service.href}
+                              className={cn(
+                                "group/item flex items-start gap-3 rounded-xl px-3 py-3 transition-colors duration-150",
+                                active
+                                  ? "bg-white/[0.07]"
+                                  : "hover:bg-white/[0.05]"
+                              )}
+                            >
+                              <span
+                                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200 group-hover/item:scale-110"
+                                style={{
+                                  background: `${info?.color ?? "#e38c35"}1f`,
+                                  color: info?.color ?? "#e38c35",
+                                }}
+                              >
+                                <Icon size={19} aria-hidden="true" />
+                              </span>
+                              <span className="min-w-0 flex-1">
+                                <span
+                                  className={cn(
+                                    "flex items-center gap-2 text-sm font-semibold",
+                                    active
+                                      ? "text-primary-400"
+                                      : "text-text-primary"
+                                  )}
+                                >
+                                  {service.label}
+                                  {"isNew" in service && service.isNew && (
+                                    <span className="rounded-full bg-primary-600/20 border border-primary-600/30 px-1.5 py-0.5 text-[10px] font-medium text-primary-400 leading-none">
+                                      New
+                                    </span>
+                                  )}
+                                </span>
+                                <span className="mt-0.5 block truncate text-xs text-text-muted">
+                                  {info?.desc}
+                                </span>
+                              </span>
+                              <ArrowUpRight
+                                size={14}
+                                className="mt-1 shrink-0 text-primary-400 opacity-0 -translate-x-1 transition-all duration-200 group-hover/item:opacity-100 group-hover/item:translate-x-0"
+                                aria-hidden="true"
+                              />
+                            </Link>
+                          );
+                        })}
+                      </div>
+                      <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] bg-bg-base/40 px-4 py-3">
                         <Link
                           href="/services"
-                          className="flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-primary-400 transition-colors duration-150 hover:bg-white/[0.05]"
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-400 transition-colors hover:text-primary-300"
                         >
                           View All Services
+                          <ArrowUpRight size={14} aria-hidden="true" />
+                        </Link>
+                        <Link
+                          href="/contact"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-primary-600/30 bg-primary-600/10 px-3.5 py-1.5 text-xs font-medium text-primary-400 transition-colors hover:bg-primary-600/20"
+                          data-analytics-event="cta_click"
+                          data-analytics-label="mega-menu:free-plan"
+                        >
+                          <Sparkles size={12} aria-hidden="true" />
+                          Not sure? Get a free plan
                         </Link>
                       </div>
                     </div>
@@ -229,25 +324,38 @@ export function Navbar() {
                     )}
                   >
                     <div className="ml-4 border-l border-white/[0.08] pl-2 py-1">
-                      {serviceNavLinks.map((service) => (
-                        <Link
-                          key={service.href}
-                          href={service.href}
-                          className={cn(
-                            "flex items-center gap-2 px-3 py-2.5 text-sm rounded-lg transition-colors",
-                            pathname === service.href
-                              ? "text-text-primary bg-white/[0.06]"
-                              : "text-text-secondary hover:text-text-primary"
-                          )}
-                        >
-                          <span>{service.label}</span>
-                          {"isNew" in service && service.isNew && (
-                            <span className="rounded-full bg-primary-600/20 border border-primary-600/30 px-1.5 py-0.5 text-[10px] font-medium text-primary-400 leading-none">
-                              New
+                      {serviceNavLinks.map((service) => {
+                        const info = MEGA_INFO[service.href];
+                        const Icon = info?.icon ?? Code2;
+                        return (
+                          <Link
+                            key={service.href}
+                            href={service.href}
+                            className={cn(
+                              "flex items-center gap-2.5 px-3 py-2.5 text-sm rounded-lg transition-colors",
+                              pathname === service.href
+                                ? "text-text-primary bg-white/[0.06]"
+                                : "text-text-secondary hover:text-text-primary"
+                            )}
+                          >
+                            <span
+                              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg"
+                              style={{
+                                background: `${info?.color ?? "#e38c35"}1f`,
+                                color: info?.color ?? "#e38c35",
+                              }}
+                            >
+                              <Icon size={14} aria-hidden="true" />
                             </span>
-                          )}
-                        </Link>
-                      ))}
+                            <span>{service.label}</span>
+                            {"isNew" in service && service.isNew && (
+                              <span className="rounded-full bg-primary-600/20 border border-primary-600/30 px-1.5 py-0.5 text-[10px] font-medium text-primary-400 leading-none">
+                                New
+                              </span>
+                            )}
+                          </Link>
+                        );
+                      })}
                       <Link
                         href="/services"
                         className="flex items-center px-3 py-2.5 text-sm font-medium text-primary-400 transition-colors hover:text-primary-300"

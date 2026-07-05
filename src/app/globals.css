@@ -507,6 +507,8 @@ html { scroll-behavior: smooth; }
 
 @keyframes svc-belt { to { transform: translateX(-50%); } }
 .svc-belt { animation: svc-belt 9s linear infinite; }
+.tool-belt-slow { animation: svc-belt 26s linear infinite; }
+.tool-belt-slow:hover { animation-play-state: paused; }
 
 @keyframes svc-cell {
   0%, 65%, 100% { opacity: 0.14; }

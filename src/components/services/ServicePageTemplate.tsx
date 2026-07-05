@@ -13,6 +13,10 @@ import { ProofSection } from "@/components/sections/ProofSection";
 import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { ServiceShowcase } from "@/components/services/ServiceShowcase";
 import {
+  ToolBeltSection,
+  SERVICE_TOOL_CHIPS,
+} from "@/components/services/ToolBelt";
+import {
   ServiceHeroScene,
   hasHeroScene,
 } from "@/components/services/ServiceHeroScene";
@@ -158,25 +162,29 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
       </section>
 
       {/* Tools */}
-      {service.tools.length > 0 && (
-        <section className="py-16">
-          <Container>
-            <ScrollReveal>
-              <div className="text-center">
-                <p className="text-sm font-medium uppercase tracking-wider text-text-muted mb-4">
-                  Technologies We Use
-                </p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {service.tools.map((tool) => (
-                    <Badge key={tool} variant="default">
-                      {tool}
-                    </Badge>
-                  ))}
+      {SERVICE_TOOL_CHIPS[service.slug] ? (
+        <ToolBeltSection serviceSlug={service.slug} />
+      ) : (
+        service.tools.length > 0 && (
+          <section className="py-16">
+            <Container>
+              <ScrollReveal>
+                <div className="text-center">
+                  <p className="text-sm font-medium uppercase tracking-wider text-text-muted mb-4">
+                    Technologies We Use
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {service.tools.map((tool) => (
+                      <Badge key={tool} variant="default">
+                        {tool}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </ScrollReveal>
-          </Container>
-        </section>
+              </ScrollReveal>
+            </Container>
+          </section>
+        )
       )}
 
       {/* Process */}

@@ -25,6 +25,7 @@ import { Card } from "@/components/ui/Card";
 import { GradientText } from "@/components/ui/GradientText";
 import { ScrollReveal } from "@/components/effects/ScrollReveal";
 import { ServiceShowcase } from "@/components/services/ServiceShowcase";
+import { ToolBeltSection } from "@/components/services/ToolBelt";
 import { cn } from "@/lib/utils";
 
 /* ──────────────────── Animated Counter ──────────────────── */
@@ -446,6 +447,9 @@ export default function ShopifyAutomationClient() {
 
       {/* ============ THEMED SHOWCASE ============ */}
       <ServiceShowcase serviceSlug="shopify-automation" />
+
+      {/* ============ PLATFORM BELT ============ */}
+      <ToolBeltSection serviceSlug="shopify-automation" />
 
       {/* ============ SOCIAL PROOF ============ */}
       <section className="py-24 relative">

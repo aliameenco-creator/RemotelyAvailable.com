@@ -2,6 +2,14 @@
 
 How every lead captured on the website gets stored, answered, and followed up, automatically.
 
+> **No n8n? Use the Google Apps Script instead.** `google-apps-script.gs` in this
+> folder does the whole job inside Google for free: leads land in your Sheet,
+> the visitor gets the lead magnet from your Gmail, and you get an alert email.
+> Setup steps are in the comments at the top of that file. You just point
+> `N8N_LEAD_WEBHOOK_URL` at the deployed script URL; the website code does not
+> change. Everything below still applies (same storage, same routing), n8n is
+> only one of the two ways to run it.
+
 ## The short answer to "one SMTP or separate storage?"
 
 **One sending address, one storage place, and they are not the same thing.**

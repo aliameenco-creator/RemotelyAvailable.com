@@ -14,48 +14,120 @@ import {
 import { navLinks, serviceNavLinks } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
+// A platform/tool logo chip: app-icon style letter mark in the brand color.
+type ToolChip = { name: string; color: string; fg?: string };
+
 // Mega-menu enrichment for each service link: accent color, a one-line
-// outcome for the list, and a hook line for the live hover preview.
+// outcome for the list, a hook line for the live hover preview, and the
+// real platforms we work with (rendered as an animated logo belt).
 const MEGA_INFO: Record<
   string,
-  { desc: string; color: string; preview: string }
+  { desc: string; color: string; preview: string; tools: ToolChip[] }
 > = {
   "/services/web-development": {
     desc: "Fast sites built to convert",
     color: "#38BDF8",
     preview: "A fast site that turns visitors into enquiries, live in weeks.",
+    tools: [
+      { name: "WordPress", color: "#21759B" },
+      { name: "Next.js", color: "#f5f1e8", fg: "#111" },
+      { name: "Shopify", color: "#95BF47", fg: "#111" },
+      { name: "Webflow", color: "#4353FF" },
+      { name: "Wix", color: "#0C6EFC" },
+      { name: "WooCommerce", color: "#96588A" },
+    ],
   },
   "/services/social-media-management": {
     desc: "Posted for you, every day",
     color: "#E4405F",
     preview:
       "A month of on-brand posts, scheduled and published without you.",
+    tools: [
+      { name: "Instagram", color: "#E4405F" },
+      { name: "TikTok", color: "#FE2C55" },
+      { name: "Facebook", color: "#1877F2" },
+      { name: "LinkedIn", color: "#0A66C2" },
+      { name: "YouTube", color: "#FF0000" },
+      { name: "X", color: "#e7e9ea", fg: "#111" },
+    ],
   },
   "/services/ai-automations": {
     desc: "Repetitive work, handled",
     color: "#EA4B71",
     preview:
       "Enquiries answered, leads logged, and you notified while you sleep.",
+    tools: [
+      { name: "n8n", color: "#EA4B71" },
+      { name: "Make", color: "#B02DE9" },
+      { name: "Zapier", color: "#FF4F00" },
+      { name: "OpenAI", color: "#10A37F" },
+      { name: "Gmail", color: "#EA4335" },
+      { name: "Sheets", color: "#34A853" },
+    ],
   },
   "/services/seo-content": {
     desc: "Get found first on Google",
     color: "#7fc8a9",
     preview:
       "Climb to page 1 for the searches your customers actually make.",
+    tools: [
+      { name: "Google", color: "#4285F4" },
+      { name: "Analytics", color: "#F9AB00", fg: "#111" },
+      { name: "Search Console", color: "#458CF5" },
+      { name: "Semrush", color: "#FF642D" },
+      { name: "WordPress", color: "#21759B" },
+    ],
   },
   "/services/design": {
     desc: "Look established everywhere",
     color: "#6e77cb",
     preview:
       "Logo, palette, and type that make you look established from day one.",
+    tools: [
+      { name: "Figma", color: "#F24E1E" },
+      { name: "Photoshop", color: "#31A8FF", fg: "#111" },
+      { name: "Illustrator", color: "#FF9A00", fg: "#111" },
+      { name: "Canva", color: "#00C4CC", fg: "#111" },
+      { name: "Adobe Firefly", color: "#EB1000" },
+    ],
   },
   "/services/shopify-automation": {
     desc: "Your store on autopilot",
     color: "#95BF47",
     preview:
       "Carts recovered and orders fulfilled automatically, around the clock.",
+    tools: [
+      { name: "Shopify", color: "#95BF47", fg: "#111" },
+      { name: "Klaviyo", color: "#f5f1e8", fg: "#111" },
+      { name: "Stripe", color: "#635BFF" },
+      { name: "n8n", color: "#EA4B71" },
+      { name: "Judge.me", color: "#00B67A" },
+    ],
   },
 };
+
+function ToolLogoBelt({ tools }: { tools: ToolChip[] }) {
+  return (
+    <div className="mt-3 overflow-hidden" aria-hidden="true">
+      <div className="svc-belt flex w-max gap-1.5">
+        {[...tools, ...tools].map((t, i) => (
+          <span
+            key={`${t.name}-${i}`}
+            className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/[0.08] bg-bg-card px-2 py-1 font-mono text-[9.5px] text-text-secondary"
+          >
+            <span
+              className="flex h-3.5 w-3.5 items-center justify-center rounded-[4px] text-[8.5px] font-bold leading-none"
+              style={{ background: t.color, color: t.fg ?? "#fff" }}
+            >
+              {t.name.charAt(0).toUpperCase()}
+            </span>
+            {t.name}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const slugFromHref = (href: string) => href.split("/").pop() ?? "";
 
@@ -258,6 +330,11 @@ export function Navbar() {
                             <p className="mt-1 text-xs leading-relaxed text-text-muted">
                               {MEGA_INFO[previewHref]?.preview}
                             </p>
+                            {MEGA_INFO[previewHref]?.tools && (
+                              <ToolLogoBelt
+                                tools={MEGA_INFO[previewHref].tools}
+                              />
+                            )}
                             <span className="mt-2.5 inline-flex items-center gap-1 text-xs font-medium text-primary-400">
                               See it in action
                               <ArrowUpRight size={12} aria-hidden="true" />

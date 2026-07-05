@@ -527,6 +527,15 @@ html { scroll-behavior: smooth; }
 }
 .svc-heart { animation: svc-heart 2.2s ease-in-out infinite; }
 
+@keyframes scene-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+.scene-pop { animation: scene-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .scene-pop { animation: none; }
+}
+
 /* tools */
 .tool-tile { transition: transform var(--dur-base) var(--ease-standard), border-color var(--dur-base); }
 .tool-tile:hover { transform: translateY(-3px); border-color: var(--ra-copper-25) !important; }

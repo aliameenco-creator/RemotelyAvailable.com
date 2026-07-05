@@ -17,6 +17,10 @@ import {
   SERVICE_SLUG_VIGNETTES,
 } from "@/components/services/ServiceVignette";
 import {
+  ServiceHeroScene,
+  hasHeroScene,
+} from "@/components/services/ServiceHeroScene";
+import {
   ukCities,
   getCity,
   getNearbyCities,
@@ -188,15 +192,21 @@ export default async function CityServicePage({ params }: CityServicePageProps) 
               </Button>
             </div>
           </div>
-          {SERVICE_SLUG_VIGNETTES[service.slug] && (
-            <div className="floaty hidden max-w-md rounded-[var(--radius-card)] border border-[var(--border-copper)] bg-bg-card p-5 shadow-[var(--glow-copper)] lg:block">
-              <div className="mb-3 flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] text-text-muted">
-                <span className="h-2 w-2 rounded-full bg-primary-400" />
-                {"// "}
-                {service.name.toLowerCase()} in action
-              </div>
-              <ServiceVignette variant={SERVICE_SLUG_VIGNETTES[service.slug]} />
+          {hasHeroScene(service.slug) ? (
+            <div className="hidden w-full max-w-md lg:block">
+              <ServiceHeroScene serviceSlug={service.slug} />
             </div>
+          ) : (
+            SERVICE_SLUG_VIGNETTES[service.slug] && (
+              <div className="floaty hidden max-w-md rounded-[var(--radius-card)] border border-[var(--border-copper)] bg-bg-card p-5 shadow-[var(--glow-copper)] lg:block">
+                <div className="mb-3 flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] text-text-muted">
+                  <span className="h-2 w-2 rounded-full bg-primary-400" />
+                  {"// "}
+                  {service.name.toLowerCase()} in action
+                </div>
+                <ServiceVignette variant={SERVICE_SLUG_VIGNETTES[service.slug]} />
+              </div>
+            )
           )}
           </div>
         </Container>

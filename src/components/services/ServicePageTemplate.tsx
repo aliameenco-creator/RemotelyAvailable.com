@@ -13,6 +13,10 @@ import { ProofSection } from "@/components/sections/ProofSection";
 import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { ServiceShowcase } from "@/components/services/ServiceShowcase";
 import {
+  ServiceHeroScene,
+  hasHeroScene,
+} from "@/components/services/ServiceHeroScene";
+import {
   ServiceVignette,
   SERVICE_SLUG_VIGNETTES,
 } from "@/components/services/ServiceVignette";
@@ -69,6 +73,17 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
               <p className="mt-4 text-lg text-text-secondary leading-relaxed max-w-2xl">
                 {service.description}
               </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {service.features.slice(0, 3).map((feature) => (
+                  <span
+                    key={feature.title}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-bg-card px-3 py-1.5 text-xs font-medium text-text-secondary"
+                  >
+                    <CheckCircle2 size={13} className="text-success" />
+                    {feature.title}
+                  </span>
+                ))}
+              </div>
               <div className="mt-8">
                 <Button
                   href="/contact"
@@ -82,15 +97,21 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
               </div>
             </div>
             </div>
-            {vignetteVariant && (
-              <div className="floaty hidden max-w-md rounded-[var(--radius-card)] border border-[var(--border-copper)] bg-bg-card p-5 shadow-[var(--glow-copper)] lg:block">
-                <div className="mb-3 flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] text-text-muted">
-                  <span className="h-2 w-2 rounded-full bg-primary-400" />
-                  {"// "}
-                  {service.shortTitle.toLowerCase()} in action
-                </div>
-                <ServiceVignette variant={vignetteVariant} />
+            {hasHeroScene(service.slug) ? (
+              <div className="mx-auto w-full max-w-md pt-4 lg:mx-0 lg:pt-0">
+                <ServiceHeroScene serviceSlug={service.slug} />
               </div>
+            ) : (
+              vignetteVariant && (
+                <div className="floaty hidden max-w-md rounded-[var(--radius-card)] border border-[var(--border-copper)] bg-bg-card p-5 shadow-[var(--glow-copper)] lg:block">
+                  <div className="mb-3 flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] text-text-muted">
+                    <span className="h-2 w-2 rounded-full bg-primary-400" />
+                    {"// "}
+                    {service.shortTitle.toLowerCase()} in action
+                  </div>
+                  <ServiceVignette variant={vignetteVariant} />
+                </div>
+              )
             )}
             </div>
           </ScrollReveal>

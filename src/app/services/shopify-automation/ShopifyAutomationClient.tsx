@@ -261,7 +261,7 @@ const flows = [
     icon: Star,
     title: "Post-Purchase Follow-Up",
     description:
-      "Automated emails after every order \u2014 thank you, product tips, review request, and cross-sell recommendations. Increases repeat purchase rate by 20\u201330%.",
+      "Automated emails after every order: thank you, product tips, review request, and cross-sell recommendations. Increases repeat purchase rate by 20\u201330%.",
   },
   {
     icon: Eye,
@@ -278,7 +278,7 @@ const flows = [
 ];
 
 const valueStack = [
-  { item: "Revenue Recovery System \u2014 5 automated Klaviyo flows", value: "$3,000" },
+  { item: "Revenue Recovery System: 5 automated Klaviyo flows", value: "$3,000" },
   { item: "High-converting popup & signup form setup", value: "$400" },
   { item: "Custom branded email templates (matching your store)", value: "$600" },
   { item: "30-day post-launch optimisation & A/B testing", value: "$800" },
@@ -313,7 +313,7 @@ const results = [
 
 const faqs = [
   {
-    q: "I don\u2019t have a big email list \u2014 will this still work?",
+    q: "I don\u2019t have a big email list. Will this still work?",
     a: "Yes. The abandoned cart and post-purchase flows don\u2019t need a list at all \u2014 they trigger on customer actions that are already happening in your store. The welcome series and popups I build will grow your list simultaneously. These flows work with your existing traffic.",
   },
   {
@@ -357,7 +357,7 @@ const steps = [
     title: "I Build Everything",
     time: "14 days",
     description:
-      "I set up your complete Revenue Recovery System \u2014 all 5 flows, branded templates, popups, and integrations. You don\u2019t have to do anything.",
+      "I set up your complete Revenue Recovery System: all 5 flows, branded templates, popups, and integrations. You don\u2019t have to do anything.",
   },
   {
     icon: TrendingUp,
@@ -401,7 +401,7 @@ export default function ShopifyAutomationClient() {
             <p className="mt-6 text-lg text-text-secondary leading-relaxed sm:text-xl max-w-3xl mx-auto">
               I build automated email systems for Shopify stores that recover
               lost sales, turn browsers into buyers, and generate repeat
-              revenue &mdash; all on autopilot.
+              revenue, all on autopilot.
             </p>
 
           </div>
@@ -534,7 +534,7 @@ export default function ShopifyAutomationClient() {
               <p className="text-text-secondary leading-relaxed">
                 Every day, potential customers visit your store, add products to
                 their cart, and leave. No follow-up email. No reminder. No
-                recovery attempt. That&apos;s money walking out the door &mdash;
+                recovery attempt. That&apos;s money walking out the door,
                 and for most Shopify stores doing $10K&ndash;$50K/month, it adds
                 up to $3,000&ndash;$10,000 in lost revenue every single month.
               </p>
@@ -561,7 +561,7 @@ export default function ShopifyAutomationClient() {
               </h2>
               <p className="mt-4 text-lg text-text-secondary leading-relaxed">
                 5 automated flows that run 24/7, recovering lost sales and
-                driving repeat purchases &mdash; without you lifting a finger.
+                driving repeat purchases without you lifting a finger.
               </p>
             </div>
           </ScrollReveal>
@@ -639,7 +639,7 @@ export default function ShopifyAutomationClient() {
                   </div>
                   <p className="text-sm text-text-secondary leading-relaxed">
                     If your abandoned cart flow doesn&apos;t recover at least ONE
-                    sale within 30 days, I&apos;ll refund you in full &mdash;
+                    sale within 30 days, I&apos;ll refund you in full,
                     and you keep everything I built.
                   </p>
                 </div>
@@ -650,7 +650,7 @@ export default function ShopifyAutomationClient() {
                     size="lg"
                     icon={<ArrowRight size={18} />}
                   >
-                    Contact Us &mdash; Let&apos;s Talk About Your Store
+                    Let&apos;s Talk About Your Store
                   </Button>
                 </div>
               </div>
@@ -668,7 +668,7 @@ export default function ShopifyAutomationClient() {
                 Process
               </span>
               <h2 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
-                How It Works &mdash; 3 Simple Steps
+                How It Works: 3 Simple Steps
               </h2>
             </div>
 
@@ -709,7 +709,7 @@ export default function ShopifyAutomationClient() {
                 size="lg"
                 icon={<ArrowRight size={18} />}
               >
-                Get Started &mdash; Contact Us
+                Get Started Today
               </Button>
             </div>
           </ScrollReveal>

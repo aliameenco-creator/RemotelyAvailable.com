@@ -14,7 +14,7 @@
  *      - Who has access: Anyone
  *    Authorize when prompted, then copy the Web app URL.
  * 5. Wherever the website is hosted, set the environment variable
- *      N8N_LEAD_WEBHOOK_URL = <that Web app URL>
+ *      LEADS_WEBHOOK_URL = <that Web app URL>
  *    The site already POSTs every lead there. No code changes needed.
  * 6. Test: submit a form on the site. You should get a sheet row, the
  *    visitor gets the lead magnet email, and you get an alert email.
@@ -26,7 +26,7 @@
  * ~1500/day on Google Workspace. Each lead uses 2 (visitor + you).
  */
 
-var NOTIFY_EMAIL = "hamza@remotelyavailable.com";
+var NOTIFY_EMAIL = "hello@remotelyavailable.com";
 var FROM_NAME = "Ali from RemotelyAvailable";
 var SHEET_NAME = "Leads";
 

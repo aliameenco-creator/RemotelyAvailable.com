@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     }
 
     const data = result.data;
-    const webhookUrl = process.env.N8N_LEAD_WEBHOOK_URL;
+    const webhookUrl = process.env.LEADS_WEBHOOK_URL;
 
     if (webhookUrl) {
       const webhookResponse = await fetch(webhookUrl, {

@@ -68,7 +68,25 @@ export async function POST(request: Request) {
         }),
       });
 
-      if (!webhookResponse.ok) {
+      // Google Apps Script web apps can redirect a POST to a googleusercontent.com
+      // URL, which drops the body and silently no-ops the script even though the
+      // HTTP status is still 200. Check the JSON body's own `ok` flag too, not
+      // just the HTTP status, so a silent failure surfaces as an error instead
+      // of the site telling the visitor it worked.
+      let webhookOk = webhookResponse.ok;
+      if (webhookOk) {
+        try {
+          const payload = await webhookResponse.json();
+          if (payload && typeof payload.ok === "boolean") {
+            webhookOk = payload.ok;
+          }
+        } catch {
+          // Non-JSON response (e.g. an HTML error page): treat as failure.
+          webhookOk = false;
+        }
+      }
+
+      if (!webhookOk) {
         console.error("Lead webhook failed:", webhookResponse.status);
         return NextResponse.json(
           { error: "Failed to process. Please try again." },

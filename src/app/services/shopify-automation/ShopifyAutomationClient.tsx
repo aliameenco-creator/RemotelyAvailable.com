@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { GradientText } from "@/components/ui/GradientText";
 import { ScrollReveal } from "@/components/effects/ScrollReveal";
+import { ServiceShowcase } from "@/components/services/ServiceShowcase";
 import { cn } from "@/lib/utils";
 
 /* ──────────────────── Animated Counter ──────────────────── */
@@ -442,6 +443,9 @@ export default function ShopifyAutomationClient() {
           </div>
         </Container>
       </section>
+
+      {/* ============ THEMED SHOWCASE ============ */}
+      <ServiceShowcase serviceSlug="shopify-automation" />
 
       {/* ============ SOCIAL PROOF ============ */}
       <section className="py-24 relative">

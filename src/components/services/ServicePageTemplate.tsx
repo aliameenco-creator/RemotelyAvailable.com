@@ -11,6 +11,7 @@ import { CTABanner } from "@/components/sections/CTABanner";
 import { FAQ } from "@/components/sections/FAQ";
 import { ProofSection } from "@/components/sections/ProofSection";
 import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
+import { ServiceShowcase } from "@/components/services/ServiceShowcase";
 import {
   ServiceVignette,
   SERVICE_SLUG_VIGNETTES,
@@ -95,6 +96,9 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
           </ScrollReveal>
         </Container>
       </section>
+
+      {/* Themed showcase */}
+      <ServiceShowcase serviceSlug={service.slug} />
 
       {/* Features */}
       <section className="py-24 bg-bg-card">

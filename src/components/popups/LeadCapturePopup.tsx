@@ -293,7 +293,8 @@ export function LeadCapturePopup() {
 
                         {status === "error" && (
                           <p className="text-xs text-error text-center">
-                            Something went wrong. Please try again.
+                            Couldn&apos;t send just now. Please try again or
+                            email hello@remotelyavailable.com.
                           </p>
                         )}
 

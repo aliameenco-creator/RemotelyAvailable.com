@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import nodemailer from "nodemailer";
 
 const leadSchema = z.object({
   name: z.string().min(2).max(100),
@@ -28,6 +29,31 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
+function getSmtpTransporter() {
+  const host = process.env.SMTP_HOST;
+  const port = parseInt(process.env.SMTP_PORT || "587", 10);
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+
+  if (!host || !user || !pass) return null;
+
+  return nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
+  });
+}
+
+const painLabels: Record<string, string> = {
+  emails: "Answering emails & enquiries",
+  invoices: "Invoices & admin paperwork",
+  "missed-calls": "Missed calls & follow-ups",
+  content: "Social & content creation",
+  leads: "Chasing & qualifying leads",
+  other: "Something else",
+};
+
 export async function POST(request: Request) {
   try {
     const ip =
@@ -53,51 +79,148 @@ export async function POST(request: Request) {
     }
 
     const data = result.data;
+    const source = data.source ?? "website-lead-popup";
+    const notifyEmail =
+      process.env.NOTIFY_EMAIL || "hello@remotelyavailable.com";
+    const firstName = data.name.trim().split(/\s+/)[0] || "there";
+
+    // A lead is "delivered" if at least one channel accepted it. We try the
+    // reliable SMTP notification first, then the optional Google Sheet webhook.
+    let anyConfigured = false;
+    let anyDelivered = false;
+
+    // ── 1. Email notification straight to hello@ (reliable primary path) ──
+    const transporter = getSmtpTransporter();
+    if (transporter) {
+      anyConfigured = true;
+      try {
+        // Notify Ali so he can follow up while the lead is warm.
+        await transporter.sendMail({
+          from: `"Website Leads" <${process.env.SMTP_USER}>`,
+          to: notifyEmail,
+          replyTo: data.email,
+          subject: `New lead: ${data.name} (${source})`,
+          text: [
+            `New lead captured on the website`,
+            ``,
+            `Name: ${data.name}`,
+            `Email: ${data.email}`,
+            `Source: ${source}`,
+            data.painPoint
+              ? `Pain point: ${painLabels[data.painPoint] || data.painPoint}`
+              : ``,
+            ``,
+            `Reply within a few hours for the best close rate.`,
+          ]
+            .filter(Boolean)
+            .join("\n"),
+          html: `
+            <div style="font-family: -apple-system, Segoe UI, Roboto, sans-serif; max-width: 560px;">
+              <h2 style="color:#e38c35; margin:0 0 16px;">New Website Lead</h2>
+              <table style="width:100%; border-collapse:collapse; font-size:15px;">
+                <tr><td style="padding:6px 0; color:#666; width:110px;">Name</td><td style="padding:6px 0;">${data.name}</td></tr>
+                <tr><td style="padding:6px 0; color:#666;">Email</td><td style="padding:6px 0;"><a href="mailto:${data.email}">${data.email}</a></td></tr>
+                <tr><td style="padding:6px 0; color:#666;">Source</td><td style="padding:6px 0;">${source}</td></tr>
+                ${
+                  data.painPoint
+                    ? `<tr><td style="padding:6px 0; color:#666;">Pain point</td><td style="padding:6px 0;">${painLabels[data.painPoint] || data.painPoint}</td></tr>`
+                    : ``
+                }
+              </table>
+              <p style="margin-top:20px; color:#666; font-size:13px;">Reply within a few hours for the best close rate.</p>
+            </div>
+          `,
+        });
+
+        // Acknowledge the visitor so they know it landed (honest: personal
+        // follow-up rather than an automated sequence).
+        await transporter.sendMail({
+          from: `"Ali at RemotelyAvailable" <${process.env.SMTP_USER}>`,
+          to: data.email,
+          replyTo: notifyEmail,
+          subject: `Thanks ${firstName}, I've got your details`,
+          text: [
+            `Hi ${firstName},`,
+            ``,
+            `Thanks for reaching out through the website. I've received your details and I'll personally take a look at your business and get back to you within 24 hours.`,
+            ``,
+            `If it's easier, you can also reply straight to this email or book a free 30-minute call.`,
+            ``,
+            `Ali Ameen`,
+            `RemotelyAvailable`,
+            `https://remotelyavailable.com`,
+          ].join("\n"),
+          html: `
+            <div style="font-family: -apple-system, Segoe UI, Roboto, sans-serif; font-size:15px; line-height:1.6; color:#222; max-width:560px;">
+              <p>Hi ${firstName},</p>
+              <p>Thanks for reaching out through the website. I've received your details and I'll personally take a look at your business and get back to you within 24 hours.</p>
+              <p>If it's easier, you can also reply straight to this email or book a free 30-minute call.</p>
+              <p>Ali Ameen<br>RemotelyAvailable<br><a href="https://remotelyavailable.com">remotelyavailable.com</a></p>
+            </div>
+          `,
+        });
+
+        anyDelivered = true;
+      } catch (err) {
+        console.error("Lead email failed:", err);
+      }
+    }
+
+    // ── 2. Optional: forward to a storage webhook (Google Sheet / n8n) ──
     const webhookUrl = process.env.LEADS_WEBHOOK_URL;
-
     if (webhookUrl) {
-      const webhookResponse = await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          timestamp: new Date().toISOString(),
-          source: data.source ?? "website-lead-popup",
-          painPoint: data.painPoint,
-        }),
-      });
+      anyConfigured = true;
+      try {
+        const webhookResponse = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            timestamp: new Date().toISOString(),
+            source,
+            painPoint: data.painPoint,
+          }),
+        });
 
-      // Google Apps Script web apps can redirect a POST to a googleusercontent.com
-      // URL, which drops the body and silently no-ops the script even though the
-      // HTTP status is still 200. Check the JSON body's own `ok` flag too, not
-      // just the HTTP status, so a silent failure surfaces as an error instead
-      // of the site telling the visitor it worked.
-      let webhookOk = webhookResponse.ok;
-      if (webhookOk) {
-        try {
-          const payload = await webhookResponse.json();
-          if (payload && typeof payload.ok === "boolean") {
-            webhookOk = payload.ok;
+        // Apps Script can return 200 while silently dropping the body on a
+        // redirect, so also check the JSON body's own `ok` flag.
+        let webhookOk = webhookResponse.ok;
+        if (webhookOk) {
+          try {
+            const payload = await webhookResponse.json();
+            if (payload && typeof payload.ok === "boolean") {
+              webhookOk = payload.ok;
+            }
+          } catch {
+            webhookOk = false;
           }
-        } catch {
-          // Non-JSON response (e.g. an HTML error page): treat as failure.
-          webhookOk = false;
         }
-      }
 
-      if (!webhookOk) {
-        console.error("Lead webhook failed:", webhookResponse.status);
-        return NextResponse.json(
-          { error: "Failed to process. Please try again." },
-          { status: 500 }
-        );
+        if (webhookOk) anyDelivered = true;
+        else console.error("Lead webhook failed:", webhookResponse.status);
+      } catch (err) {
+        console.error("Lead webhook error:", err);
       }
-    } else {
+    }
+
+    // ── 3. Nothing configured (local dev): log and succeed so dev works ──
+    if (!anyConfigured) {
       console.log("=== NEW LEAD CAPTURE ===");
       console.log("Name:", data.name);
       console.log("Email:", data.email);
+      console.log("Source:", source);
       console.log("========================");
+      return NextResponse.json({ success: true });
+    }
+
+    // Configured but every channel failed: tell the client so it can show a
+    // real error instead of a false success.
+    if (!anyDelivered) {
+      return NextResponse.json(
+        { error: "Failed to process. Please try again." },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ success: true });

@@ -159,7 +159,8 @@ export function InlineLeadForm({
 
               {status === "error" && (
                 <p className="mt-3 text-center text-xs text-error">
-                  Something went wrong. Please try again.
+                  Couldn&apos;t send just now. Please try again or email
+                  hello@remotelyavailable.com.
                 </p>
               )}
               <p className="mt-4 text-center text-xs text-text-muted">

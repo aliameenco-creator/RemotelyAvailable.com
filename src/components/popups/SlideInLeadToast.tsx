@@ -33,6 +33,7 @@ export function SlideInLeadToast() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const isLocation = pathname?.startsWith("/locations") ?? false;
 
@@ -82,6 +83,7 @@ export function SlideInLeadToast() {
       name.trim().length < 2 ||
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
     ) {
+      setErrorMsg("Add your name and a valid email first.");
       setStatus("error");
       return;
     }
@@ -102,6 +104,9 @@ export function SlideInLeadToast() {
       trackEvent("lead_submit", { source: "slide-in", page: pathname ?? "" });
       setTimeout(() => setVisible(false), 3000);
     } catch {
+      setErrorMsg(
+        "Couldn't send just now. Please try again or email hello@remotelyavailable.com."
+      );
       setStatus("error");
     }
   }
@@ -183,9 +188,7 @@ export function SlideInLeadToast() {
                   />
                 </div>
                 {status === "error" && (
-                  <p className="text-[11px] text-error">
-                    Add your name and a valid email first.
-                  </p>
+                  <p className="text-[11px] text-error">{errorMsg}</p>
                 )}
                 <button
                   type="submit"

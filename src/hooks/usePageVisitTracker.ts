@@ -8,7 +8,6 @@ import {
   getPopupDismissedAt,
   isLeadCaptured,
   markPopupDismissed,
-  markLeadSubmitted,
 } from "@/lib/leadStorage";
 
 export type PopupTrigger = "pages" | "scroll" | "exit";
@@ -82,10 +81,5 @@ export function usePageVisitTracker() {
     markPopupDismissed();
   }
 
-  function markSubmitted() {
-    setShouldShowPopup(false);
-    markLeadSubmitted();
-  }
-
-  return { shouldShowPopup, trigger, dismiss, markSubmitted };
+  return { shouldShowPopup, trigger, dismiss };
 }

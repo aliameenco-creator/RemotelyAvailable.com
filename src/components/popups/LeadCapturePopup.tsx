@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
 import { trackEvent } from "@/lib/analytics";
+import { markLeadSubmitted } from "@/lib/leadStorage";
 import { cn } from "@/lib/utils";
 
 const PAIN_POINTS = [
@@ -38,8 +39,7 @@ const FIX_COPY: Record<PainId, string> = {
 };
 
 export function LeadCapturePopup() {
-  const { shouldShowPopup, trigger, dismiss, markSubmitted } =
-    usePageVisitTracker();
+  const { shouldShowPopup, trigger, dismiss } = usePageVisitTracker();
   const [step, setStep] = useState<"pain" | "contact">("pain");
   const [pain, setPain] = useState<PainId | null>(null);
   const [name, setName] = useState("");
@@ -97,9 +97,12 @@ export function LeadCapturePopup() {
       if (!res.ok) throw new Error();
       setStatus("success");
       trackEvent("lead_submit", { source: "popup", painPoint: pain ?? "" });
-      markSubmitted();
+      // Persist immediately so the popup never re-shows, but don't hide it
+      // yet: shouldShowPopup must stay true for the success screen to
+      // actually render before the auto-close below.
+      markLeadSubmitted();
 
-      // Auto-close after 3.5 seconds
+      // Auto-close after 3.5 seconds, once the success screen has been seen
       setTimeout(dismiss, 3500);
     } catch {
       setStatus("error");

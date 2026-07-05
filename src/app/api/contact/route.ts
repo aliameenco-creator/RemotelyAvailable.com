@@ -121,79 +121,104 @@ export async function POST(request: Request) {
       source: "website-contact-form",
     };
 
-    // ── 1. Forward to n8n webhook if configured ──
-    const webhookUrl = process.env.N8N_WEBHOOK_URL;
+    const notifyEmail =
+      process.env.NOTIFY_EMAIL || "hello@remotelyavailable.com";
 
-    if (webhookUrl) {
-      const webhookResponse = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(process.env.N8N_WEBHOOK_SECRET
-            ? { Authorization: `Bearer ${process.env.N8N_WEBHOOK_SECRET}` }
-            : {}),
-        },
-        body: JSON.stringify(payload),
-      });
+    // A submission is "delivered" if at least one channel accepts it. SMTP to
+    // hello@ is the reliable primary path; the n8n webhook is optional.
+    let anyConfigured = false;
+    let anyDelivered = false;
 
-      if (!webhookResponse.ok) {
-        console.error("Webhook failed:", webhookResponse.status);
+    // ── 1. Send notification email via SMTP (primary, always to hello@) ──
+    const transporter = getSmtpTransporter();
+    if (transporter) {
+      anyConfigured = true;
+      try {
+        await transporter.sendMail({
+          from: `"RemotelyAvailable" <${process.env.SMTP_USER}>`,
+          to: notifyEmail,
+          replyTo: data.email,
+          subject: `New Inquiry from ${data.name}, ${serviceLabels[data.service] || data.service}`,
+          text: [
+            `New contact form submission`,
+            ``,
+            `Name: ${data.name}`,
+            `Email: ${data.email}`,
+            `Company: ${data.company || "N/A"}`,
+            `Service: ${serviceLabels[data.service] || data.service}`,
+            `Budget: ${budgetLabels[data.budget || ""] || data.budget || "N/A"}`,
+            ``,
+            `Message:`,
+            data.message,
+            ``,
+            `Submitted: ${payload.timestamp}`,
+          ].join("\n"),
+          html: `
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background: #09090B; color: #FAFAFA;">
+              <div style="background: #111114; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px;">
+                <h2 style="margin: 0 0 20px; color: #5B7FEF; font-size: 20px;">New Contact Form Submission</h2>
+                <table style="width: 100%; border-collapse: collapse;">
+                  <tr><td style="padding: 8px 0; color: #71717A; width: 100px;">Name</td><td style="padding: 8px 0; color: #FAFAFA;">${data.name}</td></tr>
+                  <tr><td style="padding: 8px 0; color: #71717A;">Email</td><td style="padding: 8px 0;"><a href="mailto:${data.email}" style="color: #5B7FEF;">${data.email}</a></td></tr>
+                  <tr><td style="padding: 8px 0; color: #71717A;">Company</td><td style="padding: 8px 0; color: #FAFAFA;">${data.company || "N/A"}</td></tr>
+                  <tr><td style="padding: 8px 0; color: #71717A;">Service</td><td style="padding: 8px 0; color: #FAFAFA;">${serviceLabels[data.service] || data.service}</td></tr>
+                  <tr><td style="padding: 8px 0; color: #71717A;">Budget</td><td style="padding: 8px 0; color: #FAFAFA;">${budgetLabels[data.budget || ""] || data.budget || "N/A"}</td></tr>
+                </table>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);">
+                  <p style="color: #71717A; margin: 0 0 8px; font-size: 13px;">Message</p>
+                  <p style="color: #A1A1AA; margin: 0; line-height: 1.6; white-space: pre-wrap;">${data.message}</p>
+                </div>
+              </div>
+            </div>
+          `,
+        });
+        anyDelivered = true;
+      } catch (err) {
+        console.error("Contact email failed:", err);
       }
     }
 
-    // ── 2. Send notification email via SMTP ──
-    const transporter = getSmtpTransporter();
-    const notifyEmail = process.env.NOTIFY_EMAIL || "hello@remotelyavailable.com";
+    // ── 2. Optional: forward to an n8n webhook if configured ──
+    const webhookUrl = process.env.N8N_WEBHOOK_URL;
+    if (webhookUrl) {
+      anyConfigured = true;
+      try {
+        const webhookResponse = await fetch(webhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(process.env.N8N_WEBHOOK_SECRET
+              ? { Authorization: `Bearer ${process.env.N8N_WEBHOOK_SECRET}` }
+              : {}),
+          },
+          body: JSON.stringify(payload),
+        });
+        if (webhookResponse.ok) anyDelivered = true;
+        else console.error("Contact webhook failed:", webhookResponse.status);
+      } catch (err) {
+        console.error("Contact webhook error:", err);
+      }
+    }
 
-    if (transporter) {
-      await transporter.sendMail({
-        from: `"RemotelyAvailable" <${process.env.SMTP_USER}>`,
-        to: notifyEmail,
-        replyTo: data.email,
-        subject: `New Inquiry from ${data.name}, ${serviceLabels[data.service] || data.service}`,
-        text: [
-          `New contact form submission`,
-          ``,
-          `Name: ${data.name}`,
-          `Email: ${data.email}`,
-          `Company: ${data.company || "N/A"}`,
-          `Service: ${serviceLabels[data.service] || data.service}`,
-          `Budget: ${budgetLabels[data.budget || ""] || data.budget || "N/A"}`,
-          ``,
-          `Message:`,
-          data.message,
-          ``,
-          `Submitted: ${payload.timestamp}`,
-        ].join("\n"),
-        html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background: #09090B; color: #FAFAFA;">
-            <div style="background: #111114; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px;">
-              <h2 style="margin: 0 0 20px; color: #5B7FEF; font-size: 20px;">New Contact Form Submission</h2>
-              <table style="width: 100%; border-collapse: collapse;">
-                <tr><td style="padding: 8px 0; color: #71717A; width: 100px;">Name</td><td style="padding: 8px 0; color: #FAFAFA;">${data.name}</td></tr>
-                <tr><td style="padding: 8px 0; color: #71717A;">Email</td><td style="padding: 8px 0;"><a href="mailto:${data.email}" style="color: #5B7FEF;">${data.email}</a></td></tr>
-                <tr><td style="padding: 8px 0; color: #71717A;">Company</td><td style="padding: 8px 0; color: #FAFAFA;">${data.company || "N/A"}</td></tr>
-                <tr><td style="padding: 8px 0; color: #71717A;">Service</td><td style="padding: 8px 0; color: #FAFAFA;">${serviceLabels[data.service] || data.service}</td></tr>
-                <tr><td style="padding: 8px 0; color: #71717A;">Budget</td><td style="padding: 8px 0; color: #FAFAFA;">${budgetLabels[data.budget || ""] || data.budget || "N/A"}</td></tr>
-              </table>
-              <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);">
-                <p style="color: #71717A; margin: 0 0 8px; font-size: 13px;">Message</p>
-                <p style="color: #A1A1AA; margin: 0; line-height: 1.6; white-space: pre-wrap;">${data.message}</p>
-              </div>
-            </div>
-          </div>
-        `,
-      });
-    } else if (!webhookUrl) {
-      // Development fallback, log to console
-      console.log("═══ NEW CONTACT FORM SUBMISSION ═══");
+    // ── 3. Nothing configured (local dev): log and succeed ──
+    if (!anyConfigured) {
+      console.log("=== NEW CONTACT FORM SUBMISSION ===");
       console.log("Name:", data.name);
       console.log("Email:", data.email);
       console.log("Company:", data.company || "N/A");
       console.log("Service:", data.service);
       console.log("Budget:", data.budget || "N/A");
       console.log("Message:", data.message);
-      console.log("═══════════════════════════════════");
+      console.log("===================================");
+      return NextResponse.json({ success: true });
+    }
+
+    // Configured but every channel failed: surface a real error.
+    if (!anyDelivered) {
+      return NextResponse.json(
+        { error: "Failed to send. Please try again." },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ success: true });

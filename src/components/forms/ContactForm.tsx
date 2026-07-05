@@ -42,7 +42,6 @@ export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
   );
-  const [loadTime] = useState(Date.now());
 
   const {
     register,
@@ -53,9 +52,8 @@ export function ContactForm() {
   });
 
   async function onSubmit(data: ContactFormData) {
-    // Timing check, bots submit instantly
-    if (Date.now() - loadTime < 3000) return;
-
+    // Bots are filtered by the honeypot field (_hp) server-side; no timing
+    // gate here so legitimate fast submissions always go through.
     setStatus("loading");
     try {
       const res = await fetch("/api/contact", {
@@ -154,7 +152,8 @@ export function ContactForm() {
       {status === "error" && (
         <div className="flex items-center gap-2 rounded-lg bg-error/10 px-4 py-3 text-sm text-error">
           <AlertCircle size={16} />
-          Something went wrong. Please try again or email us directly.
+          Couldn&apos;t send just now. Please try again or email
+          hello@remotelyavailable.com.
         </div>
       )}
 

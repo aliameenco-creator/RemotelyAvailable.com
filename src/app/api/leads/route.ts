@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import nodemailer from "nodemailer";
 
+const CALENDLY_URL = "https://calendly.com/creative-remotelyavailable/30min";
+
 const leadSchema = z.object({
   name: z.string().min(2).max(100),
   email: z.string().email().max(254),
@@ -132,20 +134,24 @@ export async function POST(request: Request) {
           `,
         });
 
-        // Acknowledge the visitor so they know it landed (honest: personal
-        // follow-up rather than an automated sequence).
+        // Drive the visitor to book a call right now while intent is highest.
         await transporter.sendMail({
           from: `"Ali at RemotelyAvailable" <${process.env.SMTP_USER}>`,
           to: data.email,
           replyTo: notifyEmail,
-          subject: `Thanks ${firstName}, I've got your details`,
+          subject: `${firstName}, let's book your free strategy call`,
           text: [
             `Hi ${firstName},`,
             ``,
-            `Thanks for reaching out through the website. I've received your details and I'll personally take a look at your business and get back to you within 24 hours.`,
+            `Thanks for reaching out. The fastest way to get moving is a free 30-minute strategy call with me. Grab whatever time suits you here:`,
             ``,
-            `If it's easier, you can also reply straight to this email or book a free 30-minute call.`,
+            CALENDLY_URL,
             ``,
+            `On the call we'll look at your business and map out exactly what to fix or automate first, so you walk away with a clear plan whether we work together or not.`,
+            ``,
+            `Prefer email? Just reply to this one and tell me what you're working on.`,
+            ``,
+            `Talk soon,`,
             `Ali Ameen`,
             `RemotelyAvailable`,
             `https://remotelyavailable.com`,
@@ -153,9 +159,13 @@ export async function POST(request: Request) {
           html: `
             <div style="font-family: -apple-system, Segoe UI, Roboto, sans-serif; font-size:15px; line-height:1.6; color:#222; max-width:560px;">
               <p>Hi ${firstName},</p>
-              <p>Thanks for reaching out through the website. I've received your details and I'll personally take a look at your business and get back to you within 24 hours.</p>
-              <p>If it's easier, you can also reply straight to this email or book a free 30-minute call.</p>
-              <p>Ali Ameen<br>RemotelyAvailable<br><a href="https://remotelyavailable.com">remotelyavailable.com</a></p>
+              <p>Thanks for reaching out. The fastest way to get moving is a free 30-minute strategy call with me. On it we'll look at your business and map out exactly what to fix or automate first, so you walk away with a clear plan whether we work together or not.</p>
+              <p style="margin:28px 0;">
+                <a href="${CALENDLY_URL}" style="display:inline-block; background:#e38c35; color:#1a1a1a; font-weight:700; text-decoration:none; padding:14px 28px; border-radius:9999px;">Book my free strategy call</a>
+              </p>
+              <p style="color:#666; font-size:13px;">Or copy this link: <a href="${CALENDLY_URL}">${CALENDLY_URL}</a></p>
+              <p>Prefer email? Just reply to this one and tell me what you're working on.</p>
+              <p>Talk soon,<br>Ali Ameen<br>RemotelyAvailable<br><a href="https://remotelyavailable.com">remotelyavailable.com</a></p>
             </div>
           `,
         });

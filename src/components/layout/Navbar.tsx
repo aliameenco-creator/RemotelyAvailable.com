@@ -3,67 +3,70 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  ArrowUpRight,
-  ChevronDown,
-  Code2,
-  Megaphone,
-  Menu,
-  Palette,
-  Search,
-  ShoppingBag,
-  Sparkles,
-  Workflow,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Wordmark } from "@/components/layout/Wordmark";
+import { ServiceGlyph } from "@/components/services/ServiceGlyph";
+import {
+  ServiceVignette,
+  SERVICE_SLUG_VIGNETTES,
+} from "@/components/services/ServiceVignette";
 import { navLinks, serviceNavLinks } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-// Mega-menu enrichment for each service link: icon, accent color, and a
-// one-line outcome so the menu itself sells the service.
+// Mega-menu enrichment for each service link: accent color, a one-line
+// outcome for the list, and a hook line for the live hover preview.
 const MEGA_INFO: Record<
   string,
-  { icon: typeof Code2; desc: string; color: string }
+  { desc: string; color: string; preview: string }
 > = {
   "/services/web-development": {
-    icon: Code2,
     desc: "Fast sites built to convert",
     color: "#38BDF8",
+    preview: "A fast site that turns visitors into enquiries, live in weeks.",
   },
   "/services/social-media-management": {
-    icon: Megaphone,
     desc: "Posted for you, every day",
     color: "#E4405F",
+    preview:
+      "A month of on-brand posts, scheduled and published without you.",
   },
   "/services/ai-automations": {
-    icon: Workflow,
     desc: "Repetitive work, handled",
     color: "#EA4B71",
+    preview:
+      "Enquiries answered, leads logged, and you notified while you sleep.",
   },
   "/services/seo-content": {
-    icon: Search,
     desc: "Get found first on Google",
     color: "#7fc8a9",
+    preview:
+      "Climb to page 1 for the searches your customers actually make.",
   },
   "/services/design": {
-    icon: Palette,
     desc: "Look established everywhere",
     color: "#6e77cb",
+    preview:
+      "Logo, palette, and type that make you look established from day one.",
   },
   "/services/shopify-automation": {
-    icon: ShoppingBag,
     desc: "Your store on autopilot",
     color: "#95BF47",
+    preview:
+      "Carts recovered and orders fulfilled automatically, around the clock.",
   },
 };
+
+const slugFromHref = (href: string) => href.split("/").pop() ?? "";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
+  const [previewHref, setPreviewHref] = useState<string>(
+    serviceNavLinks[0].href
+  );
   const pathname = usePathname();
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -73,11 +76,15 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
+  // Close any open menus when the route changes (adjust-during-render
+  // pattern, avoids a cascading setState-in-effect)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setIsMobileOpen(false);
     setIsMobileServicesOpen(false);
     setIsDesktopDropdownOpen(false);
-  }, [pathname]);
+  }
 
   const isServicePage = pathname.startsWith("/services");
 
@@ -163,60 +170,100 @@ export function Navbar() {
                         : "opacity-0 -translate-y-2 pointer-events-none"
                     )}
                   >
-                    <div className="border-beam w-[min(640px,calc(100vw-2rem))] overflow-hidden rounded-2xl bg-bg-card/95 border border-white/[0.1] shadow-2xl shadow-black/50 backdrop-blur-xl">
-                      <div className="grid grid-cols-2 gap-1 p-2.5">
-                        {serviceNavLinks.map((service) => {
-                          const info = MEGA_INFO[service.href];
-                          const Icon = info?.icon ?? Code2;
-                          const active = pathname === service.href;
-                          return (
-                            <Link
-                              key={service.href}
-                              href={service.href}
-                              className={cn(
-                                "group/item flex items-start gap-3 rounded-xl px-3 py-3 transition-colors duration-150",
-                                active
-                                  ? "bg-white/[0.07]"
-                                  : "hover:bg-white/[0.05]"
-                              )}
-                            >
-                              <span
-                                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200 group-hover/item:scale-110"
-                                style={{
-                                  background: `${info?.color ?? "#e38c35"}1f`,
-                                  color: info?.color ?? "#e38c35",
-                                }}
+                    <div className="border-beam w-[min(700px,calc(100vw-2rem))] overflow-hidden rounded-2xl bg-bg-card/95 border border-white/[0.1] shadow-2xl shadow-black/50 backdrop-blur-xl">
+                      <div className="grid sm:grid-cols-[1fr_264px]">
+                        <div className="flex flex-col gap-0.5 p-2.5">
+                          {serviceNavLinks.map((service) => {
+                            const info = MEGA_INFO[service.href];
+                            const active = pathname === service.href;
+                            const highlighted = previewHref === service.href;
+                            return (
+                              <Link
+                                key={service.href}
+                                href={service.href}
+                                onMouseEnter={() =>
+                                  setPreviewHref(service.href)
+                                }
+                                onFocus={() => setPreviewHref(service.href)}
+                                className={cn(
+                                  "group/item flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-150",
+                                  highlighted || active
+                                    ? "bg-white/[0.06]"
+                                    : "hover:bg-white/[0.05]"
+                                )}
                               >
-                                <Icon size={19} aria-hidden="true" />
-                              </span>
-                              <span className="min-w-0 flex-1">
                                 <span
-                                  className={cn(
-                                    "flex items-center gap-2 text-sm font-semibold",
-                                    active
-                                      ? "text-primary-400"
-                                      : "text-text-primary"
-                                  )}
+                                  className="shrink-0 transition-transform duration-200 group-hover/item:scale-110"
+                                  style={{ color: info?.color ?? "#e38c35" }}
                                 >
-                                  {service.label}
-                                  {"isNew" in service && service.isNew && (
-                                    <span className="rounded-full bg-primary-600/20 border border-primary-600/30 px-1.5 py-0.5 text-[10px] font-medium text-primary-400 leading-none">
-                                      New
-                                    </span>
-                                  )}
+                                  <ServiceGlyph
+                                    slug={slugFromHref(service.href)}
+                                    size={24}
+                                  />
                                 </span>
-                                <span className="mt-0.5 block truncate text-xs text-text-muted">
-                                  {info?.desc}
+                                <span className="min-w-0 flex-1">
+                                  <span
+                                    className={cn(
+                                      "flex items-center gap-2 text-sm font-semibold",
+                                      active
+                                        ? "text-primary-400"
+                                        : "text-text-primary"
+                                    )}
+                                  >
+                                    {service.label}
+                                    {"isNew" in service && service.isNew && (
+                                      <span className="rounded-full bg-primary-600/20 border border-primary-600/30 px-1.5 py-0.5 text-[10px] font-medium text-primary-400 leading-none">
+                                        New
+                                      </span>
+                                    )}
+                                  </span>
+                                  <span className="mt-0.5 block truncate text-xs text-text-muted">
+                                    {info?.desc}
+                                  </span>
                                 </span>
-                              </span>
-                              <ArrowUpRight
-                                size={14}
-                                className="mt-1 shrink-0 text-primary-400 opacity-0 -translate-x-1 transition-all duration-200 group-hover/item:opacity-100 group-hover/item:translate-x-0"
-                                aria-hidden="true"
+                                <ArrowUpRight
+                                  size={14}
+                                  className="shrink-0 text-primary-400 opacity-0 -translate-x-1 transition-all duration-200 group-hover/item:opacity-100 group-hover/item:translate-x-0"
+                                  aria-hidden="true"
+                                />
+                              </Link>
+                            );
+                          })}
+                        </div>
+
+                        {/* Live preview of the hovered service */}
+                        <Link
+                          href={previewHref}
+                          className="hidden border-l border-white/[0.08] bg-bg-base/40 p-4 transition-colors hover:bg-bg-base/60 sm:block"
+                        >
+                          <div key={previewHref} className="scene-pop">
+                            {SERVICE_SLUG_VIGNETTES[
+                              slugFromHref(previewHref)
+                            ] && (
+                              <ServiceVignette
+                                variant={
+                                  SERVICE_SLUG_VIGNETTES[
+                                    slugFromHref(previewHref)
+                                  ]
+                                }
                               />
-                            </Link>
-                          );
-                        })}
+                            )}
+                            <p className="mt-3 text-sm font-semibold text-text-primary">
+                              {
+                                serviceNavLinks.find(
+                                  (s) => s.href === previewHref
+                                )?.label
+                              }
+                            </p>
+                            <p className="mt-1 text-xs leading-relaxed text-text-muted">
+                              {MEGA_INFO[previewHref]?.preview}
+                            </p>
+                            <span className="mt-2.5 inline-flex items-center gap-1 text-xs font-medium text-primary-400">
+                              See it in action
+                              <ArrowUpRight size={12} aria-hidden="true" />
+                            </span>
+                          </div>
+                        </Link>
                       </div>
                       <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] bg-bg-base/40 px-4 py-3">
                         <Link
@@ -326,7 +373,6 @@ export function Navbar() {
                     <div className="ml-4 border-l border-white/[0.08] pl-2 py-1">
                       {serviceNavLinks.map((service) => {
                         const info = MEGA_INFO[service.href];
-                        const Icon = info?.icon ?? Code2;
                         return (
                           <Link
                             key={service.href}
@@ -339,13 +385,13 @@ export function Navbar() {
                             )}
                           >
                             <span
-                              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg"
-                              style={{
-                                background: `${info?.color ?? "#e38c35"}1f`,
-                                color: info?.color ?? "#e38c35",
-                              }}
+                              className="shrink-0"
+                              style={{ color: info?.color ?? "#e38c35" }}
                             >
-                              <Icon size={14} aria-hidden="true" />
+                              <ServiceGlyph
+                                slug={slugFromHref(service.href)}
+                                size={18}
+                              />
                             </span>
                             <span>{service.label}</span>
                             {"isNew" in service && service.isNew && (
